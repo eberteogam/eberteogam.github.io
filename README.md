@@ -25,9 +25,15 @@ The local environment has been tested with the following versions:
   - Node.js v14.17.0
   - PNPM v7.15.0
 
+## Development guidelines
+ - The main branch of the repository is the `dev` branch. Always start your development branch from there and open your pull requests targeting this branch, unless instructed otherwise (e.g., it's part of a larger feature development). 
+ - For smaller developments and bugfixes the branch name should be `issue/<issue-code>` (for Lombiq-developers, e.g. `issue/SANTA-123`) or `issue/<short-description>` (e.g., `issue/adding-sponsors-widget`). 
+ - For a large features (that involves thorough testing and involves other "issue branches") the branch name should be `feature/<short-description>` (e.g., `feature/upgrade-to-1-8`). 
+ - Force push is disabled.
+
 ## 1. Install Prerequisite Software
 - **Ensure there are no existing Node.js or npm installations on your system.**  If you previously installed Node.js (especially in C:\Program Files), 
-uninstall it and remove any related paths from your system environment variables to avoid conflicts. his is line one.
+uninstall it and remove any related paths from your system environment variables to avoid conflicts.
   <br><br>
 - **Install nvm (Node Version Manager)**:
    - Download and install `nvm-setup.exe` from [nvm-windows releases](https://github.com/coreybutler/nvm-windows/releases).
@@ -60,21 +66,48 @@ uninstall it and remove any related paths from your system environment variables
    - Download and install .NET SDK `< v8.0` from [Microsoft .NET](https://dotnet.microsoft.com/en-us/download).
 
 ## 2. Verify Installed Versions
-Run the following commands to confirm the correct versions are installed:
+- Run the following commands to confirm the correct versions are installed:
 ```bash
 dotnet --version
 node -v
 pnpm -v
 ```
 
-## 3. Building and Running the Solution
+## 3.Setting the Database
 
-### Option 1: Build using an VS IDE
+- ### Option 1: Using the default Orchard Core Credentials for admin access
+  - The repository is configured to automatically map to a local SQL Server instance through the `appsettings.Development.json` file.
+  - In your local environment, ensure you have SQL Server Management Studio (SSMS) or any other SQL client installed.
+    Open SSMS and connect to your local SQL Server instance using the following credentials, after it press `Connect`:
+    - `Server Type:` Database Engine
+    - `Server Name:`(localdb)\MSSQLLocalDB
+    - `Authentication:` Windows Authentication`
+
+    <br><br><br>
+
+    ![img.png](img.png)
+    - Once connected, create a new database named `santamonica.gov`(See Iron Mountain ScreenShots for naming conventions).
+
+- ### Option 2: Using the Orchard Core Setup Database
+  - Delete the `appsettings.Development.json` file in the `src/Orchard.Web` directory. This will force the application to use the default Orchard Core setup database.
+
+## 4. Cloning, Building and Running the Project
+- ### Cloning
+  - Start cloning santamonica.gov.core Github repository to your local environment. From santamonica.gov.core repository,
+    select `<> Code` dropdown and copy the HTTPS URL address. In your local environment, open a command prompt in the directory
+    where you want to clone the repository and run the following command:
+```bash
+git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
+```
+
+- ### Building and Running
+  -   ### Option 1: Build using VS IDE
+- Open Visual Studio start window, under Get started select Clone a repository. Paste the previously copied git location under Repository Location field. Specify a path and then click on Clone.
 - Navigate to the parent directory of the project and build/run it. The application will be hosted on:
   - `https://localhost:44300`
   - `http://localhost:8080`
 
-### Option 2: Build Using CLI
+### Option 2: Build using CLI
 - Navigate to the parent directory of the project. And run the following command:
   ```bash
   dotnet run --project src/Orchard.Web/Orchard.Web.csproj
