@@ -20,12 +20,12 @@ declare global {
                     'lodash.snakecase@4.1.1/index.js': {
                         table: 'sys_module'
                         id: '1f0f4e5caa6f45a9a1d013f15ebc189a'
-                        deleted: true
+                        deleted: false
                     }
                     'lodash.snakecase@4.1.1/package.json': {
                         table: 'sys_module'
                         id: 'ccb1f60c775a495196b0779c2a79e00c'
-                        deleted: true
+                        deleted: false
                     }
                     package_json: {
                         table: 'sys_module'
