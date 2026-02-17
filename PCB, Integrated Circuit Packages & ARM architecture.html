@@ -1,0 +1,333 @@
+<table style="border-collapse: collapse; width: 100.04%; height: 15.3958px;" border="3"><colgroup><col style="width: 100%; color: black;"></colgroup>
+    <tbody>
+    <tr style="height: 15.3958px;">
+        <td style="text-align: center; height: 15.3958px;"><strong><span style="color: rgb(224, 62, 45);">Micro-Controllers</span></strong></td>
+    </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p>Can store limited binary data and execute programs in high-level languages. Integrate CPU, memory, and peripherals but have less processing power than SoCs.&nbsp;</p>
+<p style="text-align: center;">Arduino&lt;STM&lt;Espressif</p>
+<details class="mce-accordion" open="open">
+    <summary><span style="color: rgb(224, 62, 45);"><strong>Arduino Family</strong></span></summary>
+    <ul style="list-style-position: inside;">
+        <li>ATmega Series (ATmega328P used in Arduino Uno)</li>
+        <li>ATtiny Series (ATtiny85 for mini projects)</li>
+        <li>ARM Cortex (Arduino Zero, Due)</li>
+    </ul>
+</details>
+<details class="mce-accordion" open="open">
+    <summary><strong><span style="color: rgb(224, 62, 45);">STMicroelectronics<br></span></strong></summary>
+    <ul style="list-style-position: inside;">
+        <li>STM32 Series</li>
+        <li>STM8 Series</li>
+        <li>SPC5 Series</li>
+    </ul>
+</details>
+<details class="mce-accordion" open="open">
+    <summary><span style="color: rgb(224, 62, 45);"><strong>Espressif family (ESP8266&lt;ESP32) Interface:&nbsp;SPI, UART</strong></span></summary>
+    <ul style="list-style-position: inside;">
+        <li>ESP8266 Series&nbsp;
+            <ul style="list-style-position: inside;">
+                <li>ESP8266EX: Single-core MCU, Wi-Fi only, up to 160MHz, 1-4 MB SPI Flash.</li>
+                <li>ESP-01 Module: Basic module using ESP8266EX.</li>
+                <li>ESP-12E/F: More GPIOs and integrated Flash, often used in NodeMCU boards.</li>
+            </ul>
+        </li>
+        <li>ESP32 Series: (Advanced)<br>
+            <ul style="list-style-position: inside;">
+                <li>ESP32: Dual-core, Wi-Fi + Bluetooth, up to 240MHz, integrated RAM + Flash options.</li>
+                <li>ESP32-WROOM-32: Common module with built-in 4MB Flash.</li>
+                <li>ESP32-WROVER: More RAM (8MB) with PSRAM support.</li>
+                <li>ESP32-C3: RISC-V based, single-core, lower power, Wi-Fi + BLE.</li>
+                <li>ESP32-S2: Single-core, Wi-Fi only, more security features.</li>
+                <li>ESP32-S3: Dual-core, optimized for AI/ML, Wi-Fi + Bluetooth.</li>
+            </ul>
+        </li>
+    </ul>
+</details>
+<p>&nbsp;</p>
+<p>For brighter lights (like LED strips) = Set the power to wall power supply in the schematic design.</p>
+<p>&nbsp;</p>
+<details class="mce-accordion" open="open">
+    <summary><strong><span style="color: rgb(224, 62, 45);">ESP8266 ESP-01LED Blink Sequence Sample</span></strong></summary>
+    <p>int led_light_11 = 11; <br>int led_light_12 = 12; <br>int led_light_13 = 13; <br><br>void setup() {<!-- --><br>&nbsp; pinMode(led_light_11, OUTPUT);<br>&nbsp; pinMode(led_light_12, OUTPUT);<br>&nbsp; pinMode(led_light_13, OUTPUT);<br>&nbsp; Serial.begin(9600);<br>}<br><br>void loop() {<!-- --><br>&nbsp; for(int i = 0; i &lt; 2; i++) {<!-- --><br>&nbsp; &nbsp; int led_light = led_light_11 + i;<br>&nbsp; &nbsp; digitalWrite(led_light, HIGH);<br>&nbsp; &nbsp; delay(300); <br>&nbsp; &nbsp; digitalWrite(led_light, LOW);<br>&nbsp; }<br>}</p>
+</details>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 100.04%; height: 15.4px;" border="3"><colgroup><col style="width: 100%; color: black;"></colgroup>
+    <tbody>
+    <tr style="height: 15.4px;">
+        <td style="text-align: center; height: 15.4px;"><strong><span style="color: rgb(224, 62, 45);">Memory Chips</span></strong></td>
+    </tr>
+    </tbody>
+</table>
+<p>These are programmable storage memory chips. They store large amounts of data but cannot run code on their own. They require an external processor to access and process the data.&nbsp;NO executables.</p>
+<details class="mce-accordion" open="open">
+    <summary><span style="color: rgb(224, 62, 45);"><strong>EEPROM (24XX Series, I&sup2;C <span style="color: rgb(126, 140, 141);">(Inter-Integrated Circuit)</span> Interface/Protocol):</strong></span></summary>
+    <ul style="list-style-position: inside;">
+        <li>24C02, 24C04, 24C08, 24C16, 24C32, 24C64, 24C128, 24C256, 24C512
+            <ul style="list-style-position: inside;">
+                <li>AT24C256 &ndash; 256Kb EEPROM memory for data storage.</li>
+            </ul>
+        </li>
+    </ul>
+</details>
+<p>&nbsp;</p>
+<details class="mce-accordion" open="open">
+    <summary><span style="color: rgb(224, 62, 45);"><strong>SPI Flash Memory (25XX Series, SPI<span style="color: rgb(126, 140, 141);">(Serial Peripheral Interface)</span> Interface/Protocol):</strong></span></summary>
+    <ul style="list-style-position: inside;">
+        <li>25Q32, 25Q64, 25Q128, 25Q256
+            <ul style="list-style-position: inside;">
+                <li>Winbond W25Q64 &ndash; 64Mbit (8MB) SPI Flash, used in ESP modules.</li>
+            </ul>
+        </li>
+    </ul>
+</details>
+<p>&nbsp;</p>
+<details class="mce-accordion" open="open">
+    <summary><span style="color: rgb(224, 62, 45);"><strong>NOR &amp; NAND Flash (Larger Storage, <span style="color: rgb(224, 62, 45);">Parallel interface):</span><br></strong></span></summary>
+    <ul style="list-style-position: inside;">
+        <li>Spansion GL512S110HA02</li>
+        <li>Winbond W25N01 (1Gb NAND Flash)</li>
+        <li>SK Hynix H26M42003GMR (e-NAND)</li>
+    </ul>
+</details>
+<p>&nbsp;</p>
+<details class="mce-accordion" open="open">
+    <summary><strong><span style="color: rgb(224, 62, 45);">e-NAND&nbsp;<br></span></strong><span style="color: rgb(224, 62, 45);"><span style="color: rgb(0, 0, 0);">Raw storage, <span style="color: rgb(224, 62, 45);"><span style="color: rgb(0, 0, 0);">no controller in the package</span></span>. It requires an external controller to manage data handling and mimic the behavior of an eMMC.</span></span><strong><span style="color: rgb(224, 62, 45);"><br></span></strong></summary>
+    <ul style="list-style-position: inside;">
+        <li>SK Hynix H26M42003GMR</li>
+    </ul>
+</details>
+<p>&nbsp;</p>
+<details class="mce-accordion" open="open">
+    <summary><strong><span style="color: rgb(224, 62, 45);">eMMC<br></span></strong><span style="color: rgb(0, 0, 0);">Have a NAND and an integrated controller inside the same physical package.&nbsp;</span></summary>
+    <ul style="list-style-position: inside;">
+        <li>SanDisk SDIN5D2-8G</li>
+    </ul>
+    <div>&nbsp;</div>
+    <p><strong><span style="color: rgb(224, 62, 45);">eMMC layout files</span></strong></p>
+    <ul style="list-style-position: inside;">
+        <li><strong style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">boot1.bin:&nbsp;</strong>
+            <ul style="list-style-position: inside;">
+                <li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">Partition1: Bootloader</span></li>
+                <li>Partition2: Environment&nbsp;</li>
+            </ul>
+        </li>
+        <li style="font-weight: bold;"><strong>boot2.bin</strong></li>
+        <li style="font-weight: bold;"><strong>ext_csd.bin(RPMB aerea)</strong></li>
+        <li><strong>useaerea.bin</strong>
+            <ul style="list-style-position: inside;">
+                <li>Partition1: Kernel, Device tree files</li>
+                <li>Partition2: Root file System</li>
+            </ul>
+        </li>
+    </ul>
+    <div style="padding-left: 40px;">&nbsp;</div>
+    <div style="padding-left: 40px;">A .bin file is read in raw hexadecimal and ASCII content. Some bin readers:</div>
+    <div>
+        <ul style="list-style-position: inside;">
+            <li>Windows: hex editor (HxD/Frhed).</li>
+            <li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">Linux: GHex or command‑line tool 'hexdump -C userarea.bin'</span></li>
+        </ul>
+    </div>
+    <div>&nbsp;</div>
+</details>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 100.04%; height: 15.4px;" border="3"><colgroup><col style="width: 100%; color: black;"></colgroup>
+    <tbody>
+    <tr style="height: 15.4px;">
+        <td style="text-align: center; height: 15.4px;"><strong><span style="color: rgb(224, 62, 45);">Memory Chips Readers</span></strong></td>
+    </tr>
+    </tbody>
+</table>
+<p style="text-align: center;">&nbsp;</p>
+<details class="mce-accordion" open="open">
+    <summary>&nbsp;CH341A - <a href="https://github.com/YTEC-info/CH341A-Softwares" rel="nofollow">Github Repository</a></summary>
+    <p style="text-align: left;">The reader/programmer is the CH341A.&nbsp;</p>
+    <p style="text-align: left;">The 8 Pin Chip Clip is the grabber for the 24xx and 25xx series.&nbsp;</p>
+    <img title="CH341A.png" src="/sys_attachment.do?sys_id=69c20f9b832b1210745b9696feaad366" alt="" width="545" height="469">&nbsp;</details>
+<p>&nbsp;</p>
+<details class="mce-accordion" open="open">
+    <summary>UFI Box - <a href="https://www.ufi-box.com/pages/downloads" rel="nofollow">Software</a></summary>
+    <p>The UFI box is an EMMC reader.&nbsp;</p>
+    <p>The BGA socket reads 166-172series and the TPA sockets reads 221 Series</p>
+    <p>eMCP153/169, eMCP162/186, eMCP221, eMCP529</p>
+    <p>Socket1:&nbsp;</p>
+    <ul style="list-style-position: inside;">
+        <li>153/169-FBGA</li>
+        <li>162/186-FBGA</li>
+    </ul>
+    <p>Socket2</p>
+    <ul style="list-style-position: inside;">
+        <li>221-FBGA</li>
+        <li>254-FBGA</li>
+    </ul>
+    <p>[Picture]</p>
+</details>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 100.04%; height: 15.4px;" border="3"><colgroup><col style="width: 100%; color: black;"></colgroup>
+    <tbody>
+    <tr style="height: 15.4px;">
+        <td style="text-align: center; height: 15.4px;"><strong><span style="color: rgb(224, 62, 45);">System-on-Chip (SoC)</span></strong></td>
+    </tr>
+    </tbody>
+</table>
+<p>A complete computing system on a single package with a CPU, GPU, and peripherals. It does NOT have large internal storage like memory chips and relies on external storage (eMMC, UFS, SSD) to run an operating system and applications.&nbsp;</p>
+<details class="mce-accordion" open="open">
+    <summary>Nvidia Tegra</summary>
+    <p>ARM CPU</p>
+</details>
+<details class="mce-accordion" open="open">
+    <summary>Apple Silicon</summary>
+    <p>ARM CPU</p>
+</details>
+<details class="mce-accordion" open="open">
+    <summary>Renesas R-Car</summary>
+    <p>ARM CPU</p>
+</details>
+<details class="mce-accordion" open="open">
+    <summary>Broadcom BCM</summary>
+    <p>ARM Cortex CPU</p>
+</details>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 100.04%; height: 15.4px;" border="3"><colgroup><col style="width: 100%; color: black;"></colgroup>
+    <tbody>
+    <tr style="height: 15.4px;">
+        <td style="text-align: center; height: 15.4px;"><strong><span style="color: rgb(224, 62, 45);">Packaging Style</span></strong></td>
+    </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p>Packaging type can hold by microcontrollers, memory Chips, Logic ICs, Op-Amps, Microprocessors.&nbsp;</p>
+<ul style="list-style-position: inside;">
+    <li>DIP (Dual In-Line): Pins on two sides, breadboard-friendly: ATmega328P, 24C256 EEPROM</li>
+    <li>QFP (Quad Flat Pack): Pins on all four sides of the chip &nbsp; &nbsp;ATmega2560, ESP32-S3</li>
+    <li>BGA (Ball Grid Array): Solder balls underneath, very compact. SK Hynix H26M42003GMR (e-NAND)</li>
+</ul>
+<p>There are only two main mounting types for electronic components:</p>
+<p>1. Through-Hole Technology (THT) or Insertion Mounting or Pin-In-Hole</p>
+<ul style="list-style-position: inside;">
+    <li>Pins go through holes in the PCB and are soldered underneath.</li>
+</ul>
+<div>
+    <div>
+        <p>2. Surface Mount Technology (SMT)</p>
+        <ul style="list-style-position: inside;">
+            <li>Components sit on the surface of the PCB and are soldered directly.</li>
+        </ul>
+        <p>🚫 No other standard mounting types exist for general PCBs.</p>
+        <ul style="list-style-position: inside;">
+            <li>Some niche techniques (like COB and Press-Fit) are just variations of SMT or special cases.</li>
+        </ul>
+        <p>&nbsp;</p>
+    </div>
+</div>
+<p style="text-align: center;"><img title="types of packages.png" src="/sys_attachment.do?sys_id=f1c20f9b832b1210745b9696feaad37d" alt="" width="635" height="316"></p>
+<p style="text-align: center;">&nbsp;</p>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 100.04%; height: 15.4px;" border="3"><colgroup><col style="width: 100%; color: black;"></colgroup>
+    <tbody>
+    <tr style="height: 15.4px;">
+        <td style="text-align: center; height: 15.4px;"><strong><span style="color: rgb(224, 62, 45);">Communications Protocols&nbsp;</span></strong></td>
+    </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p>SPI - Serial Peripheral Interface: Requires four wires: MISO, MOSI, SCLK, and CS. Communication is faster, but covers short distances, Supports single-master and multi-slave communication.</p>
+<p>IIC - Inter-Integrated Circuit: Requires 2 wires: SCL and SDA. Communication is slower, but covers long distances, Supports multi-master and multi-slave communication.</p>
+<p>UART - Universal Asynchronous Receiver/Transmitter. Requires 2 wires: TX and RX. Communication is slower, but covers long distances. Supports point-to-point communication.</p>
+<p>CAN - To ensure the security of transmission a large number of means are used to ensure timely and accurate data transmission. At the same time, the identification code is used to solve the problem of bus conflicts. This ensures that the high-priority devices communicate first. That's why CAN can be used in industries and automobiles that require high levels of safety.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 99.9852%;" border="1"><colgroup><col style="width: 99.8668%;"></colgroup>
+    <tbody>
+    <tr>
+        <td style="text-align: center;"><span style="color: rgb(224, 62, 45);"><strong>Desolder Techniques</strong></span></td>
+    </tr>
+    </tbody>
+</table>
+<ul style="list-style-position: inside;">
+    <li>For THT:&nbsp;
+        <ul style="list-style-position: inside;">
+            <li>Small amount use desoldering pump.</li>
+            <li>Large amount use solder wix (Add cooper to wix first if it&rsquo;s going hard)</li>
+        </ul>
+    </li>
+    <li>For SMT:
+        <ul style="list-style-position: inside;">
+            <li>ChipQuick special alloy that remains molten far longer than standard, use flux before applying ChipQuick</li>
+        </ul>
+    </li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 100.04%; height: 15.4px;" border="3"><colgroup><col style="width: 100%; color: black;"></colgroup>
+    <tbody>
+    <tr style="height: 15.4px;">
+        <td style="text-align: center; height: 15.4px;"><strong><span style="color: rgb(224, 62, 45);">FPC vs FFC</span></strong></td>
+    </tr>
+    </tbody>
+</table>
+<p style="text-align: left;">FPC cable printed circuit similar to PCB but in cable, we can use memory chips or MCUs. While FFC are designed to do 1:1 connection.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table style="border-collapse: collapse; width: 99.9852%;" border="1"><colgroup><col style="width: 99.8668%;"></colgroup>
+    <tbody>
+    <tr>
+        <td style="text-align: center;"><span style="color: rgb(224, 62, 45);"><strong>RasperryPI3</strong></span></td>
+    </tr>
+    </tbody>
+</table>
+<p><span style="color: rgb(224, 62, 45);"><strong>Raspberry Pi in headless mode (w/ HDMI)</strong></span></p>
+<ul style="list-style-position: inside;">
+    <li>Create a .bat file in the SD card where the linux image is being hosted.<span style="color: rgb(45, 194, 107);">(Partitions)</span><br>
+        <ul style="list-style-position: inside;">
+            <li>&gt;touch /path_to_your_sd_card/boot/ssh</li>
+        </ul>
+    </li>
+    <li>To enable wifi, before ssh to instance. &gt;<span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">nano /boot/wpa_supplicant.conf:</span>
+        <ul style="list-style-position: inside;">
+            <li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">country=US ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev update_config=1 network={ ssid="WiFiName" psk="WiFiPassword" key_mgmt=WPA-PSK }</span></li>
+        </ul>
+    </li>
+</ul>
+<p><span style="color: rgb(224, 62, 45);"><strong>To set up local host using an inverse proxy ssh</strong></span></p>
+<ul style="list-style-position: inside;">
+    <li style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);">Use traveler personal routers. </span></li>
+</ul>
+<table style="border-collapse: collapse; width: 99.9366%; margin-left: auto; margin-right: auto;" border="1"><colgroup><col style="width: 99.8095%;"></colgroup>
+    <tbody>
+    <tr>
+        <td style="text-align: center;"><span style="color: rgb(224, 62, 45);"><strong>KiCad</strong></span></td>
+    </tr>
+    </tbody>
+</table>
+<ul style="list-style-position: inside;">
+    <li style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0);"><strong>Fritzing/DipTrace &lt; KiCad/Eagle &lt; AltiumDesigner/CadenceAllegro/MentorXpedition</strong></span></li>
+</ul>
+<p><strong><span style="color: rgb(224, 62, 45);">IC (Integrated Circuit) packages: </span></strong>Micro-controllers with more space between parts when soldering.</p>
+<p style="padding-left: 40px;"><strong>DIP&lt;SOIC&lt;QFN&lt;DFN</strong></p>
+<p><strong><span style="color: rgb(45, 194, 107);">DIP (Dual In-line Package) || SOIC (Small Outline IC) || QFN (Quad Flat No-lead) || DFN (Dual Flat No-lead)</span></strong></p>
+<p>Number of pins when choosing the MC (8, 8W, 20, 10): It's the number of metal leads, sticking out from the MC and inserted into the PCB holes. W means the chip is a bit wider than its regular package.</p>
+<ul style="list-style-position: inside;">
+    <li style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">Creating the schematic design, set the footprint for every asset</li>
+    <li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">Then run the design Rule Check (DRC) and move to the PCB editor</span></li>
+    <li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">Migrate the Arduino code to the MC and e</span>xport it under .Gerber extension</li>
+    <li>Send the .Gerber file to manufacturer. Some names: JLCPCB, PCBWay, OSH Park, Seeed Studio</li>
+    <li><span style="background-color: rgb(var(--sn-tinymce_content-background,var(--now-form-field--background-color,var(--now-color_background--primary,var(--now-color--neutral-0,255,255,255))))); color: rgb(var(--sn-tinymce_content-text,var(--now-form-field--color,var(--now-color_text--primary,var(--now-color--neutral-18,22,27,28)))));">To enclosure use Fusion 360/Tinkercad/3D printer</span></li>
+</ul>
+<p><br><strong><span style="color: rgb(224, 62, 45);">Digital layer:</span></strong> Holds electrical noise components, microC, digital ICs. To follow a good convention placed on the top side&nbsp;<br><strong><span style="color: rgb(224, 62, 45);">Analog layer:</span></strong> quiet components. Sensors, analog ICs. It is placed on the bottom side.</p>
+<p>&nbsp;</p>
+<p style="text-align: center;"><img src="/sys_attachment.do?sys_id=31c20f9b832b1210745b9696feaad36e" width="253" height="168"></p>
+<p style="text-align: center;">&nbsp;</p>
+<p><strong><span style="color: rgb(224, 62, 45);">Footprints:</span></strong><span style="color: rgb(224, 62, 45);"> <span style="color: rgb(0, 0, 0);">The dimensions used in every symbol. Step used when migrating for the schematic design to the PCB design.&nbsp;</span></span></p>
+<p><strong><span style="color: rgb(224, 62, 45);">Resistor Diagram</span></strong></p>
+<p style="text-align: center;"><img src="/sys_attachment.do?sys_id=39c20f9b832b1210745b9696feaad36c" width="325" height="145"></p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: left;"><span style="color: rgb(224, 62, 45);"><strong>Sources:</strong></span> &nbsp;<a href="https://www.youtube.com/watch?v=_KH0bFncdmQ">https://www.youtube.com/watch?v=_KH0bFncdmQ</a>&nbsp;</p>
+<p style="text-align: left;">&nbsp;</p>

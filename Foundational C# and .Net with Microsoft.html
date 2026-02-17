@@ -1,0 +1,113 @@
+<table style="border-collapse: collapse; width: 100.016%; border-width: 5px;" border="1"><colgroup><col style="width: 99.906%;"></colgroup>
+    <tbody>
+    <tr>
+        <td style="text-align: center; border-width: 5px;"><span style="color: rgb(224, 62, 45);"><strong>Concept</strong></span></td>
+    </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p>Replace 'if', by:&nbsp;<br>&nbsp; switch (){case "1":break;}</p>
+<p><span style="color: rgb(224, 62, 45);"><strong>String &lt;=&gt; Int</strong></span></p>
+<ul style="list-style-position: inside;">
+    <li>ToString() || Convert.ToInt32() || Parse(var) || int.TryParse(value, out result) || decimal.TryParse(myInput, out myInputDecimal)&nbsp;</li>
+</ul>
+<p><span style="color: rgb(224, 62, 45);"><strong>String &lt;=&gt; Array</strong></span></p>
+<ul style="list-style-position: inside;">
+    <li>ToCharArray() || char[] valueArray = value.ToCharArray(); || Split() || new string(valueArray) || Array.Sort(array) || Array.Reverse(array)</li>
+    <li>&nbsp;Array.Clear(array, 0, 2)&nbsp; Array.Resize(ref array, 6) || Array.Reverse(valueArray) || String.Join(",", valueArray);</li>
+</ul>
+<p><strong><span style="color: rgb(224, 62, 45);">Casting process</span></strong> is when switching from a type (double to int), value gets wider or narrow. <br><br>for (int i = 0; i &lt; maxPets; i++){ <br>&nbsp; if (ourAnimals[i, 0] != "ID #: ") <br>&nbsp; { <br>&nbsp; Console.WriteLine(ourAnimals[i, 0]);&nbsp;<br>&nbsp; for (int j = 0; j &lt; 6; j++) <br>&nbsp; &nbsp; { <br>&nbsp; &nbsp; &nbsp; &nbsp;Console.WriteLine(ourAnimals[i, j]); <br>&nbsp; &nbsp; } <br>&nbsp; } <br>} <br><br>foreach (var x in xArray) <br><br></p>
+<ul style="list-style-position: inside;">
+    <li>Split() -&gt; Reverse process of Join() || Format() on a string type&nbsp;<br><br>string first = "Hello"; <br>string second = "World"; <br>string.Format("{0} {1}", first, second) // Hello World! <br>or <br>Console.WriteLine($"{first} {second}!");</li>
+</ul>
+<p>&nbsp;</p>
+<p>To CURRENCY ':C'; READABLE NUMS ':N'; PERCENTAGES ':P'&nbsp;<br>decimal varX = 123.45m; <br>Console.WriteLine($"Price: {varX:C}"); // $ <br><br>decimal x = 123456.78912m; <br>Console.WriteLine($"{x:N4} U"); //123,456.79 U <br><br>decimal x = .36785m; <br>Console.WriteLine($"{x:P2}"); // 36.79&nbsp;</p>
+<ul style="list-style-position: inside;">
+    <li>Blank spaces: PadLeft(), PadRight()&nbsp;</li>
+    <li>Compare 2 strings: Trim(), TrimStart(), TrimEnd(), GetHashcode()</li    >
+    <li>To determine what's inside or retrieve just a part of the string Contains(), StartsWith(), EndsWith(), Substring()</li>
+    <li>Modify a string by replacing, inserting, or removing parts Replace(), Insert(), Remove()</li>
+    <li>IndexOf(): locate the position of one or more chars string inside a larger string</li>
+    <li>Substring(): to return the part of the larger string that follows the character positions you specify.&nbsp;</li>
+</ul>
+<p>string message = "Find what is (inside the parentheses)";&nbsp;<br><br>int openingPosition = message.IndexOf('('); <br>int closingPosition = message.IndexOf(')'); <br>int length = closingPosition - openingPosition;&nbsp;<br>Console.WriteLine(message.Substring(openingPosition, length));<br><br>IndexOfAny() <br><br>string message = "Help (find) the {opening symbols}"; <br>char[] openSymbols = { '[', '{', '(' }; <br>int startPosition = 6; <br>int openingPosition = message.IndexOfAny(openSymbols); <br>Console.WriteLine($"WITHOUT startPosition: {message.Substring(openingPosition)}");&nbsp;</p>
+<p>openingPosition = message.IndexOfAny(openSymbols, startPosition);&nbsp;<br>Console.WriteLine($"WITH startPosition: {message.Substring(openingPosition)}"); <br><br>Found WITHOUT using startPosition: (find) the {opening symbols} <br>Found WITH using startPosition 6: {opening symbols} <br><br>.Remove(5, 20); -&gt; When there's a standard and consistent position of the chars to remove from the string. <br>.Replace("--"," ")-&gt; method when you must replace one or more chars w a different one. <br><br>Correct way. Passing same value type. void Multiply(int a, int b, int c) <br><br>string word = "snake"; <br>string ReverseWord(string word) {&nbsp;<br>&nbsp; string result = ""; <br>&nbsp; for (int i = word.Length - 1; i &gt;= 0; i--) { <br>&nbsp;&nbsp;&nbsp; result += word[i]; <br>&nbsp; } <br>&nbsp; return result; //ekans <br>} <br><br>try &amp; catch <br><br><strong>Master code debugger. dont re-read your code 5 times or add console.WriteLine() statements throughout your code. Conditional breakpoints can save you lots of time on DEBUG &amp; RUN. Variable, Watch and CallStack section.&nbsp;</strong><br><br><br>If you don't use braces ({}) after control flow statements (like if, else, for, while, etc.), then only the immediately following statement is considered to be inside the control flow block.</p>
+<p style="padding-left: 40px;">if (condition)&nbsp;<br>DoSomething(); <br>DoSomethingElse();&nbsp;</p>
+<p>In this case, DoSomething() will be executed if the condition is true, while DoSomethingElse() will always be executed regardless of the condition, because it's not inside the if block. Even if identation is applied this wont work.&nbsp;<br><br>try-&gt;catch-&gt;finally <br><br>ArrayTypeMismatchException <br>DivideByZeroException <br>FormatException <br>IndexOutOfRangeException <br>InvalidCastException <br>NullReferenceException <br>OverflowException <br>General one-&gt; catch (Exception ex) Not recommended to catch all exceptions like this, because it can make debugging harder. <br><br>ArgumentException <br>InvalidOperationException <br>NotSupportedException <br>IOException <br>FormatException <br><br>Jagged Array (string[][]) and Multidimensional Array (string[,]): <br><br>&nbsp;<br><strong><span style="color: rgb(224, 62, 45);">Tips in mind:</span></strong></p>
+<ul style="list-style-position: inside;">
+    <li>A escape sequences used to add double quotes to a literal string? '\"'</li>
+    <li>Casts the operands to truncate the result</li>
+    <li>An IDE is a suite of tools that supports the full software development lifecycle.</li>
+    <li>IntelliSense helps developers refactor their code.&nbsp;</li>
+    <li>The .NET Class Library contains definitions for data types used in C#.</li>
+    <li>Method invocation operator required to execute a method: ()</li>
+    <li>An else statement can't be placed before an else if statement.&nbsp;</li>
+    <li>A bad reason to use a code comment is explaining how a new C# keyword works.</li>
+    <li>Valid comparison operators: ==, !=, &gt;, &lt;, &gt;=, and &lt;=.&nbsp;</li>
+    <li>Showing/removing the curly braces for code blocks associated with an if statement - Always choose a style that improves readability.</li>
+    <li>Used to exit out of a for loop before the iteration has completed: <strong>break;</strong>&nbsp;</li>
+    <li>Behavior of either a do-while or while iterative statement: A do-while statement executes a code block at least once</li>
+    <li>Important to scope a variable at its lowest necessary level because it ensures that application resources and the security footprint are kept small.</li>
+    <li>data type with a range of whole numbers between 0 and 65535 in C#: <strong>ushort </strong></li>
+    <li>When changing a string value 4.123456789 into a decimal avoid using (decimal)</li>
+    <li>null is a value that indicates a variable points to nothing in memory.</li>
+    <li>Console.WriteLine("C110".PadLeft(6, '0')); // 00C110</li>
+    <li>foreach and for are good choices to iterate small arrays like {"cat", "fox", "dog"}, but for loop is more useful when you need to evaluate a specific range of elements.</li>
+    <li>For loop to evaluate a range of elements - allows to specify index ranges. 'foreach' loop is ideal for traversing an array without requiring control of the index.</li>
+    <li>Suppose there's a method named ConvertCurrency. A valid method signature would be: <strong>void ConvertCurrency(); </strong></li>
+    <li>A 3 integer parameters method is: void Multiply(int a, int b, int c)&nbsp;</li>
+    <li>A data type returned from the following statement: return 100 * 0.5; it;s A double type&nbsp;</li>
+    <li>To return a string value return 'a';</li>
+    <li>Code debugging is the process to isolate and fix issues in code logic.&nbsp;</li>
+    <li>Responsible software testing are developers and testers.</li>
+    <li>Developers can access to the contents of an exception at runtime and used to take corrective action.</li>
+    <li>The Manage Breakpoints section enables the developer to set breakpoints on code lines</li>
+    <li>To configure and start a debug session use The Run and Debug controls panel .</li>
+    <li>The preLaunchTask attribute on a launch configuration is used to specify a task to run before debugging your program.&nbsp;</li>
+    <li>The console attribute of a launch configuration is used for to specify the type of console that's used when the application is launched.</li>
+    <li>The base class that all derived exception types inherit from is named Exception.</li>
+    <li>A method throw an exception when the method can't complete its intended purpose.</li>
+    <li>An ArgumentOutOfRangeException exception is thrown when the value of an argument is outside the allowable range of values as defined by the method.&nbsp;</li>
+    <li>To declare a variable with a limited scope inside a code block, declare the variable outside of the code block</li>
+    <li>The purpose of the Main Method in console application, It is the entry point of the application</li>
+    <li>To convert a numeric value to a string with a specific number of decimal places, use <strong>value.ToString("0.##") </strong></li>
+    <li>A method to concatenate strings, it's Concat()</li>
+    <li>A feature in Visual Studio that helps identify the value of a variable during the debugging is the locals window&nbsp;</li>
+    <li>When an exception is thrown inside a catch block, the finally block is executed</li>
+    <li>The role of the finally block in exception handling, It is used to clean up resources</li>
+    <li>To compare a variable named option against multiple values in a switch statement <br><br>switch (option){&nbsp;<br>&nbsp; case value1: <br>&nbsp; case value2: <br>&nbsp; case value3: <br>&nbsp; break; <br>&nbsp; default: <br>&nbsp; break; <br>} <br><br></li>
+    <li>The lifetime of a variable declared inside a code block is limited to the scope of the code block</li>
+    <li>To call a method named PrintMessage from the Main method in PrintMessage();</li>
+</ul>
+<p><span style="color: rgb(224, 62, 45);"><strong>.NET Commands</strong></span></p>
+<ul style="list-style-position: inside;">
+    <li><span style="color: rgb(224, 62, 45);"><strong>Model:</strong></span> So far manually added&nbsp;</li>
+    <li><span style="color: rgb(224, 62, 45);"><strong>Controller:</strong></span> &gt;dotnet aspnet-codegenerator controller -name MoviesController -m Movie -dc MvcMovie.Data.MvcMovieContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries --databaseProvider sqlite&nbsp;<br><br>
+        <ul style="list-style-position: inside;">
+            <li><span style="color: rgb(0, 0, 0);">The automatic creation of these files and file updates is known as scaffolding.</span></li>
+            <li><strong>Scaffolding creates:</strong> A controller Controller/{*}.cs&nbsp;<br>Razor view files for Create, Delete, Details, Edit, and Index pages Views/{*}.cshtml <br>A db context class: Data/{*}.cs</li>
+            <li><strong>Scaffolding updates:</strong> Registers the db context in Program.cs.&nbsp;<br>Adds a db connection string to the appsettings.json. <br><br></li>
+        </ul>
+    </li>
+    <li><span style="color: rgb(224, 62, 45);"><strong>Migration:</strong></span> &gt;dotnet ef migrations add InitialCreate || Generates a&nbsp;<strong>Migrations/{timestamp}_InitialCreate.cs</strong> file.
+        <ul style="list-style-position: inside;">
+            <li>'InitialCreate' is the name. By convention a name should describe the migration process.</li>
+            <li>This is the first migration, so the generated class contains code to create the db.&nbsp;</li>
+            <li>The db will be based on the model specified in the class from Data/{file}.cs. <br>&gt;ef database update</li>
+            <li>Updates the db to the latest migration. This runs Up method from the Migrations/{time-stamp}_InitialCreate.cs file.&nbsp;<br><br></li>
+        </ul>
+    </li>
+    <li><span style="color: rgb(224, 62, 45);">Exist Model Validation:</span>&nbsp;[ValidateAntiForgeryToken] attribute validates the hidden XSRF token</li>
+</ul>
+
+
+X11 and Wayland are display protocols,
+GNOME, XFCE, KDE are desktop environments (graphical interfaces)
+for Linux systems like Debian, Ubuntu, Kali, etc.
+
+
+
+Debian
+Kali Linux (based on Debian)
+Raspberry Pi OS (also based on Debian)
+Ubuntu (also based on Debian)
