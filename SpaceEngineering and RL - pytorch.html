@@ -7,6 +7,7 @@
         body {
           background-color:#1f1f1f;
           color:#bfbfbf !important;
+          text-align: center;
 
           li { padding: 5px 0px; }
 
@@ -28,23 +29,41 @@
           }
         }
 
+        .back-home {
+          display: inline-block;
+          margin: 30px auto;
+          padding: 12px 28px;
+          font-size: 1.2em;
+          font-weight: bold;
+          color: rgb(140, 140, 250);
+          border: 2px solid rgb(140, 140, 250);
+          border-radius: 8px;
+          text-decoration: none;
+          transition: background-color 0.2s, color 0.2s;
+        }
+
+        .back-home:hover {
+          background-color: rgb(140, 140, 250);
+          color: #1f1f1f;
+        }
+
     </style>
   </head>
 
   <body>
     <h1>Spacecraft Soft Ring Capture to Hard Ring Capture Dynamics with Monte Carlo Envelope Simulation and Reinforcement Learning Policies in Basilisk - Pytorch</h1>
 
-    <h2>Docking Stage</h2>
-    <iframe src="https://drive.google.com/file/d/1EL7AuKkcrY4RPd8igrSXpQiaYfl9N_zd/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
+    <h2>Simulink Model</h2>
+    <img src="https://drive.google.com/thumbnail?id=1kglwpXTk07I590vB-PdVedQKNGyPXocv&sz=w1600" alt="Simulink Model" style="width: 90%; max-width: 1400px;"/>
 
     <h2>Rendez-vous Stage</h2>
-    <iframe src="https://drive.google.com/file/d/19vSaRKRST5uTfWsYDIm-vwI0q6IbZyCA/preview" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
+    <iframe src="https://drive.google.com/file/d/19vSaRKRST5uTfWsYDIm-vwI0q6IbZyCA/preview?autoplay=1" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
 
-    <h2>Simulink Model</h2>
-    <img src="https://drive.google.com/thumbnail?id=1kglwpXTk07I590vB-PdVedQKNGyPXocv&sz=w1000" alt="Simulink Model" style="width: 640px; max-width: 100%;"/>
+    <h2>Docking Stage</h2>
+    <iframe src="https://drive.google.com/file/d/1EL7AuKkcrY4RPd8igrSXpQiaYfl9N_zd/preview?autoplay=1" width="640" height="480" allow="autoplay" allowfullscreen></iframe>
 
     <p>
-      <a href="index.html">&larr; Back to Homepage</a>
+      <a class="back-home" href="index.html">&larr; Back to Homepage</a>
     </p>
   </body>
 </html>
