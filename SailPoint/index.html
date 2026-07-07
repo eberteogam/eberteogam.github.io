@@ -143,68 +143,84 @@
             <li>SN: An attribute should be modified automatically if it's found in a .csv, they built on top of 'Import Sets'.</li>
         </ul>
     </div>
+    
+    <br><hr><hr><br>
+
+    <h2>Core Modules</h2>
+    <ul>
+        <li>Access Cert</li>
+            <ul>
+                <li>Authorized user reviews, revokes access governance. Streamlined audit reports</li>
+            </ul>
+        <li>Access Request</li>
+        <li>Automated Provisioning</li>
+            <ul>
+                <li> Less Operation Cost. More Productivity; automated de-provisioning access to terminated employees</li>
+            </ul>
+        <li>Separation of Duties (SoD)</li>
+            <ul>
+                <li>Splitting task into multiple parts and requesting multiple help </li>
+            </ul>
+        <li>Password Management</li>
+    </ul>
+
+    <h2>Task Processing Engine</h2>
+    <p>It’s a service from the ISC that receives all the tasks of the VA</p>
+    <p> A Cluster -> has multiple VAs. Contrasting Kubernetes, where a Cluster -> Nodes (Machine/Instance/VM) -> Pods -> Containers</p>
+    <p> SP: Cluster -> VA(EC2,VM) -> Task Engine -> Task</p>
+    <p> K8: Cluster -> Node (EC2,VM) -> Pod -> Container (CRI-O, containerd)</p>
+    <p> Auto Scaling, Load Balancing, Self-healing</p>
+    <p> User -> Organizational Admin -> Help Desk -> Cert. Admin -> Report Admin -> Role Admin -> Source Admin. </p>
+
+    <p> Organization Admin -> Full Access to ISC</p>
+    <p> Source Admin -> CRUD sources & Access Profiles</p>
+    <p> Role Admin -> CRUD Certification Campaign</p>
+    <p> Report Admin -> CRUD Roles</p>
+    <p> Help Desk -> CRUD Reports</p>
+    <p> User </p>
+
+    <p>Some sources can be Workday, SalesForce, Oracle DB</p>
+    <p>Source Config</p>
+    <ul>
+        <li>Authoritative Source: Third parties where main trusted list of employees exist. (This could be Workday, Active Directory or within the SailPoint Source)</li>
+        <li>Identity Warehouse: Stores identity data for processing and reporting</li>
+    </ul>     
 </body>
 
 </html>
 
-To Do
-Organize notes
-Organize what days I have to finish the chapters to get the second SP cert
-Acquire the SP tenant 400 points
-Check the courses from Silvana
-Talk with Jang WeChat
+
+<!--Add pictures in reference to .-->
 
 
+<!--Salesforce 2 frameworks Ligthing and VisualForce.-->
 
+<!--New User/Profile:-->
+<!--&gt;Setup>Users>Profiles -> It has objects & fields settings to change/modify access lvl for users-->
+<!--&gt;Setup>Users>New User-->
 
+<!--Campaign Type: Required (Value, Record, Page Layout)-->
+<!--A campaign can be created from a prospect Obj.-->
 
+<!-- -To Organize fields in layout - go to objects-->
 
+<!-- -Workflows:-->
+<!--&gt;Setup>Process Automation-->
 
-Salesforce 2 frameworks  Ligthing and VisualForce.
+<!-- -Lead Order-->
+<!--Cient Mapping >Setup >Custom MetadataType-->
+<!--To map make sure they same data type-->
 
-Auth toke is required to have access to the development environment locally.
+<!--To see Reports: >Setup >'search bar' Reports-->
 
-New User/Profile:
->Setup>Users>Profiles -> It has objects & fields settings to change/modify access lvl for users
->Setup>Users>New User
+<!--To extends a class we use 'virtual' in the method and class-->
 
-Campaign Type: Required (Value, Record, Page Layout)
-A campaign can be created from a prospect Obj.
+<!--SFObject <&ndash;&gt; db tables-->
+<!--SFField <&ndash;&gt; db columns-->
+<!--SF Record <&ndash;&gt; db row-->
+<!--Objects automatically created by SF are named 'Standard Objects'-->
+<!--Onjects manually created are named 'Custom Objects'-->
 
--To Organize fields in layout - go to objects
-
--Workflows:
->Setup>Process Automation
-
--Lead Order
-Cient Mapping >Setup >Custom MetadataType
-To map make sure they same data type
-
-To see Reports: >Setup >'search bar' Reports
-
-To extends a class we use 'virtual' in the method and class
-
-SFObject <--> db tables
-SFField <--> db columns
-SF Record <--> db row
-Objects automatically created by SF are named 'Standard Objects'
-Onjects manually created are named 'Custom Objects'
-
-Static initializer blockss
-static{}-> runs only when the class is loader
-WebApi w Credentials
-
-
-SailPoint Page
-
-
-
-
-
-Sat night LAX (you n noah) - 8:45pm(Picking you up)
-
-
-$4K - 115Miles - Clean title
-
-
-5-9pm
+<!--Static initializer blocks-->
+<!--static{}-> runs only when the class is loader-->
+<!--WebApi w Credentials-->
