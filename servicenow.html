@@ -1,3 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ServiceNow System Administration Notes â€” Teo Gamarra</title>
+    <meta name="description" content="CSA study notes: CMDB &amp; CSDM, ACLs, Flow Designer, update sets, catalogs, and instance administration.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ðŸ›°ï¸</text></svg>">
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Teo Gamarra</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#research">Research &amp; Notes</a>
+      <a href="index.html#certifications">Certifications</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="wrap">
+      <h1 class="page-title">ServiceNow System Administration Notes</h1>
+      <p class="page-sub">CSA study notes: CMDB &amp; CSDM, ACLs, Flow Designer, update sets, catalogs, and instance administration.</p>
+      <div class="paper">
 <p>&nbsp;</p>
 <table style="border-collapse: collapse; width: 100.011%; border-width: 3px; border-color: rgb(0, 0, 0); height: 15.3889px;" border="1"><colgroup><col style="width: 99.9054%;"></colgroup>
     <tbody>
@@ -147,3 +169,11 @@
     <p>If KB application column is set to global, it won&rsquo;t visualize unless you modify ACL.<br><span style="color: rgb(224, 62, 45);"><strong>To view Knowledge Articles on SP with no account</strong></span><br>Enable KManagement (com.snc.knowledge_serviceportal).<br>All &gt; Service Portal &gt; Pages &gt; <span style="color: rgb(45, 194, 107);"><strong>kb_home</strong></span>&nbsp;from Pages list.<br>Check the&nbsp;Public&nbsp;box on the Page form and&nbsp;Update.<br>User roles MUST include&nbsp;snc_external&nbsp;<br>Repeat steps for&nbsp;<strong><span style="color: rgb(45, 194, 107);">kb_article_view</span></strong>&nbsp;and&nbsp;<strong><span style="color: rgb(45, 194, 107);">kb_search</span></strong>&nbsp;pages.<br>User criteria settings allow public and external access to knowledge bases.<br><strong><span style="color: rgb(224, 62, 45);">IMPORTANT</span></strong><br>&nbsp;Knowledge &gt; Administration &gt; Knowledge Bases -&gt; go to the <span style="color: rgb(45, 194, 107);"><strong>Can Read</strong></span>&nbsp;tab and <strong><span style="color: rgb(45, 194, 107);">Cannot Read</span></strong> tab and remove any entries.<br>&gt;sys_public.list &gt; Page&nbsp;column: kb_find -&gt; Active column true<br>kb_view &gt; Active&nbsp;column&nbsp;true.<br>As a public user, try&nbsp;&lt;instance-name&gt;/kb_find.do.</p>
 </details>
 <p>&nbsp;</p>
+      </div>
+      <p style="text-align: center;">
+        <a class="back-home" href="index.html">&larr; Back to Homepage</a>
+      </p>
+    </div>
+    <script src="assets/site.js" defer></script>
+  </body>
+</html>

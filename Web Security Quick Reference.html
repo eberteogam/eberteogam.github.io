@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Web Security Quick Reference — CSP, CORS, CSRF &amp; OAuth — Teo Gamarra</title>
+    <meta name="description" content="A quick mental model for CSP vs CORS vs CSRF, plus OAuth 2.0 and OpenID Connect flows and GraphQL introspection queries.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Teo Gamarra</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#research">Research &amp; Notes</a>
+      <a href="index.html#certifications">Certifications</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="wrap">
+      <h1 class="page-title">Web Security Quick Reference</h1>
+      <p class="page-sub">The 60-second mental model for CSP vs CORS vs CSRF — plus OAuth 2.0 / OpenID Connect flows and GraphQL introspection.</p>
+      <div class="paper">
+
+        <h2>CSP — Content-Page Related</h2>
+        <p>Defends against <strong>XSS</strong>. Think: <em>"only load scripts from…"</em>. The standard HTTP CSP directives come from W3C/MDN: <code>default-src</code>, <code>script-src</code>, <code>script-src-elem</code>, <code>style-src</code>, <code>style-src-elem</code>, <code>connect-src</code>.</p>
+
+        <h2>CORS — API Related</h2>
+        <p>When the page and controller live on the <strong>same server</strong>, CORS does nothing — you don't need it. It matters for RESTful APIs where the back-end server differs from the front-end server: you set CORS <em>on the API</em> to define which domains are allowed to read its responses from browser JavaScript.</p>
+
+        <h2>CSRF — Form Related</h2>
+        <p>The CSRF token defends form submissions. The attack doesn't work when the attacker would need both the session cookie <em>and</em> the CSRF token — the token is what the forged cross-site request can't obtain.</p>
+
+        <h2>OAuth 2.0 + OpenID Connect</h2>
+        <ul>
+          <li><strong>Full auth flow (OAuth 2.0 + OIDC):</strong>
+            <ol>
+              <li>User authenticates at <code>/connect/authorize</code> → returns a <strong>code</strong>, given <code>redirect_uri</code> + <code>client_id</code> + scope <code>openid</code> &amp; role.</li>
+              <li><code>/connect/token</code> → returns <strong>access token + ID token</strong>, given <code>client_id</code> + <code>client_secret</code> + code + <code>redirect_uri</code>.</li>
+            </ol>
+          </li>
+          <li><strong>Solely OAuth 2.0 (machine-to-machine):</strong>
+            <ol>
+              <li>Access token = <code>client_id</code> + <code>client_secret</code>.</li>
+              <li>Requests carry <code>Bearer</code> + access token — no user, no ID token, no SSO.</li>
+            </ol>
+          </li>
+        </ul>
+
+        <h2>GraphQL Introspection</h2>
+        <p>Handy queries to explore an unfamiliar schema:</p>
+        <pre><code>{ __schema { queryType { fields { name } } } }
+{ __schema { types { name } } }
+{ __type(name: "ContentItem") { fields { name } } }</code></pre>
+
+        <h2>Related Vocabulary</h2>
+        <ul>
+          <li><strong>SLA</strong> → customer-facing (external, sometimes internal).</li>
+          <li><strong>OLA</strong> → internal, between teams.</li>
+          <li><strong>SLI</strong> → the metric you measure (e.g. availability of 2xx responses, uptime %, latency).</li>
+          <li><strong>SLO</strong> → the target for an SLI over a period — your reliability promise to yourself.</li>
+          <li><strong>Secret management</strong> (e.g. HashiCorp Vault) → secret rotation and audit trail.</li>
+        </ul>
+
+      </div>
+      <p style="text-align: center;">
+        <a class="back-home" href="index.html">&larr; Back to Homepage</a>
+      </p>
+    </div>
+    <script src="assets/site.js" defer></script>
+  </body>
+</html>

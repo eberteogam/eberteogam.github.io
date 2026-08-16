@@ -2,11 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ISC Identity Security Cloud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SailPoint Identity Security Cloud — Teo Gamarra</title>
+    <meta name="description" content="IAM &amp; IGA concepts — RBAC, access request processes, policies, ATLAS microservices, and the ServiceNow ↔ SailPoint integration.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../assets/site.css">
 </head>
 <body>
-    <div class="container">
+    <nav class="site-nav">
+      <a class="brand" href="../index.html">Teo Gamarra</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#research">Research &amp; Notes</a>
+      <a href="../index.html#certifications">Certifications</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+    <div class="wrap">
+    <h1 class="page-title">SailPoint Identity Security Cloud</h1>
+    <p class="page-sub">IAM &amp; IGA study notes — RBAC, access requests, policies, and the ServiceNow ↔ SailPoint integration. See also my <a href="../SailPoint%20IdentityIQ%20Journal.html">IdentityIQ learning journal</a>.</p>
+    <div class="container paper">
 
         <p>IAM - <strong> Identity </strong> Access Management: Framework of business policies ensuring right identities can access organization’s data.</p>
         <p><strong>Identity </strong>Refers to an individual app / bot. <strong>Important:</strong> Set automation, access management</p>
@@ -142,9 +156,7 @@
             <li>SP: Used in IdentityNow to manipulate attributes with no coding 'converting_case', concatenating, conditional(logic) used in identity orchestration</li>
             <li>SN: An attribute should be modified automatically if it's found in a .csv, they built on top of 'Import Sets'.</li>
         </ul>
-    </div>
-    
-    <br><hr><hr><br>
+        <br><hr><hr><br>
 
     <h2>Core Modules</h2>
     <ul>
@@ -184,11 +196,7 @@
     <ul>
         <li>Authoritative Source: Third parties where main trusted list of employees exist. (This could be Workday, Active Directory or within the SailPoint Source)</li>
         <li>Identity Warehouse: Stores identity data for processing and reporting</li>
-    </ul>     
-</body>
-
-</html>
-
+    </ul>
 
 <!--Add pictures in reference to .-->
 
@@ -224,3 +232,11 @@
 <!--Static initializer blocks-->
 <!--static{}-> runs only when the class is loader-->
 <!--WebApi w Credentials-->
+    </div>
+    <p style="text-align: center;">
+      <a class="back-home" href="../index.html">&larr; Back to Homepage</a>
+    </p>
+    </div>
+    <script src="../assets/site.js" defer></script>
+  </body>
+</html>

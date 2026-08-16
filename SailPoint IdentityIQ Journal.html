@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SailPoint IdentityIQ — Learning Journal — Teo Gamarra</title>
+    <meta name="description" content="A structured learning journal for SailPoint IdentityIQ: installation, identity cubes, aggregation and correlation, policies, certifications, roles, Beanshell rules, and debugging tools.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Teo Gamarra</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#research">Research &amp; Notes</a>
+      <a href="index.html#certifications">Certifications</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="wrap">
+      <h1 class="page-title">SailPoint IdentityIQ — Learning Journal</h1>
+      <p class="page-sub">A structured multi-month training log: from installing IIQ on Tomcat to policies, certifications, roles, and Beanshell rules. Companion to my <a href="SailPoint/index.html">Identity Security Cloud notes</a>.</p>
+      <div class="paper">
+
+        <div class="toc">
+          <strong>On this page</strong>
+          <ul>
+            <li><a href="#install">Installation</a></li>
+            <li><a href="#concepts">Core concepts</a></li>
+            <li><a href="#onboarding">App onboarding</a></li>
+            <li><a href="#policies">Policies</a></li>
+            <li><a href="#certs">Certifications</a></li>
+            <li><a href="#risk">Risk model</a></li>
+            <li><a href="#roles">Roles</a></li>
+            <li><a href="#rules">Rules &amp; Beanshell</a></li>
+            <li><a href="#debug">Debugging tools</a></li>
+            <li><a href="#lifecycle">Lifecycle &amp; workflows</a></li>
+            <li><a href="#journal">Session journal</a></li>
+          </ul>
+        </div>
+
+        <h2 id="install">Installation (Tomcat + MySQL)</h2>
+        <ul>
+          <li>Everything in SailPoint is an object: IIQ represents most platform entities as object types, each implemented as a Java class (<code>WEB-INF\classes\sailpoint\object</code>).</li>
+          <li><code>WEB-INF\classes\iiq.properties</code> holds the properties for all databases; <code>WEB-INF\bin&gt; iiq console</code> connects.</li>
+          <li>First schema run (<code>create_identityiq_tables.mysql</code>) creates three databases: <code>identityiq</code>, <code>identityiqah</code>, <code>identityiqplugin</code>.</li>
+          <li>Environment: set <code>JAVA_HOME</code>, <code>CATALINA_HOME</code>, <code>JRE_HOME</code>; start MySQL (<code>net start MySQL80</code> / <code>MySQL84</code>), connect with <code>mysql -u root -p -h 127.0.0.1 -P 3306</code>, then Tomcat's <code>startup.bat</code>.</li>
+          <li><strong>Linux flow:</strong> drop the <code>.war</code> in <code>/webapps</code> (Tomcat auto-extracts; otherwise <code>jar -xvf</code>), optionally extend attributes in <code>IdentityExtended.hbm.xml</code>, <code>chmod +x iiq</code> then <code>./iiq schema</code> (generates the DB scripts for MySQL/PostgreSQL/Oracle), source the SQL, configure <code>iiq.properties</code>, then <code>./iiq console</code> → <code>import init.xml</code> (default system objects; <code>init-lcm.xml</code> optional). Patching: update the war, source <code>upgrade_identityiq_tables.mysql</code>, <code>./iiq patch x.xpx</code>, run Tomcat.</li>
+          <li>Version bookkeeping lives in <code>spt_database_version</code> (and <code>spt_hist_database_version</code> on the ah schema) — system and schema versions must match the patch level.</li>
+          <li>Beanshell documentation ships with the instance: <code>…/identityiq/doc/Javadoc/index.html</code>.</li>
+        </ul>
+
+        <h2 id="concepts">Core Concepts</h2>
+        <ul>
+          <li><strong>Identity Cube</strong> — the employee object (UI: Attributes; identities are added via Lifecycle Manager).</li>
+          <li><strong>Authoritative app</strong> — only identity-related data (the trusted source of people). <strong>Non-authoritative apps</strong> — access-related data, drivers, roles, others.</li>
+          <li><strong>Aggregation</strong> — create an app, link it to the third-party system, then run an aggregation task; SailPoint pulls the data in for mapping in the Manager Correlation module. Correlation Manager is similar to setting foreign keys (e.g. Manager ↔ EmployeeID).</li>
+          <li><strong>Entitlements</strong> — the actual actions a user is authorized to do in other apps; stored in the Entitlement Catalog.</li>
+          <li><strong>Orphan account</strong> — an identity in a third-party app that isn't part of the HR employee source. <strong>Manual correlation</strong> is the process of resolving an orphan account to an identity. A merged identity with multiple app access reads like: Bob, Smith, "Accounts Payable, Accounting, Payroll".</li>
+          <li><strong>Refresh</strong> is done in ID Mapping / updateExistingId; run tasks from Setup &gt; Tasks; chain them with the Sequential Task Launcher.</li>
+          <li><strong>Business need</strong> map: Access Certification, Access Request (entitlement or role = collection of entitlements), Automated Provisioning, Password Management (AD), Policy Management (rules &amp; regulations). The business model behind it: Policy Model, Role Model, Workflow Engine, Identity Warehouse (repository), Reports, Risk Model (confidence level 0–1000).</li>
+          <li><strong>Provisioning</strong> — access allocation and revocation, creating entities and entitlements — acts on objects in response to events.</li>
+        </ul>
+
+        <h2 id="onboarding">Onboarding Applications</h2>
+        <ul>
+          <li>Authoritative app from CSV: Application Definition with AppType <em>DelimitedFile</em> → aggregation task → ID mapping per attribute.</li>
+          <li>Non-authoritative apps: set connector type → account schema → account correlation (mapping between the authoritative data and the app's attributes) → rules (correlation &amp; customization). Orphan accounts get discovered here.</li>
+          <li><strong>JDBC connector</strong> (e.g. MySQL): <code>getObjectSQL</code> is the equivalent of a DTO; the JDBC connector ships four OOTB rules. Server-based connectors (LDAP, AD) have no rules — their schemas are preconfigured.</li>
+          <li><strong>LDAP connector:</strong> single domain. Vocabulary: <code>cn</code> common name, <code>dn</code> distinguished name, <code>dc</code> domain component, <code>ou</code> organizational unit, <code>sn</code> surname. LDAP is the protocol; <code>slapd</code> is the server. <strong>AD connector:</strong> supports multiple domains.</li>
+          <li>Apps can also be onboarded/merged via XML — one app, several rules, and aggregation tasks combined in one import (Settings &gt; Import from file); a SQL join across databases can feed a single app.</li>
+          <li>Multiple-owner apps: define a <strong>workgroup</strong> so several users hold the owner entitlement. Groups/populations are identity sets by criteria (advanced analytics filters), used mainly for advanced certifications.</li>
+          <li>Reset options while practicing: delete identities and managed attributes, or Tasks &gt; Prune Identity Cubes; <em>wipeout</em> = drop the DB and regenerate the schema.</li>
+        </ul>
+
+        <h2 id="policies">Policies</h2>
+        <ul>
+          <li>A policy is a violation trigger on entitlements/activity; run it via tasks. The policy owner is notified and takes action; violations can be <em>allowed</em> or <em>revoked</em>. Policies can be attached to certifications and reports.</li>
+          <li>Types: <strong>Activity</strong> (audit account behavior, e.g. logins per day), <strong>Account</strong> (one account per app — a second one triggers it), <strong>Risk</strong> (score threshold), <strong>Advanced</strong> (e.g. no login for 190 days).</li>
+          <li>Naming collision to keep straight: a "policy" in SailPoint is a triggered violation; in ServiceNow a UI Policy is just front-end behavior.</li>
+        </ul>
+
+        <h2 id="certs">Certifications</h2>
+        <ul>
+          <li>A certification is the <strong>automated periodic review</strong> of policies, set up as a campaign (Setup &gt; Certifications). A certification contains multiple identities; each identity has multiple items to approve/revoke.</li>
+          <li>Types: <strong>Identity certifications</strong> (targeting particular identities) and <strong>event-driven certifications</strong> (location/department/region change, new onboarding — rule-based).</li>
+          <li>States to know: policy decisions are Allow/Revoke; <em>Open</em> = pending access review; access decisions are Approve/Revoke; <em>Complete</em> = every action taken. <em>Completed</em> means all story tasks done — sign-off requires everything clear.</li>
+          <li>An optional <strong>challenge period</strong>: when a revoke is contested, you cannot sign off the certification until it's resolved.</li>
+          <li>Best practice: set up an <strong>electronic signature</strong> (Global Settings) to sign off certifications.</li>
+          <li>Completion happens in My Work &gt; Access Reviews; monitor via Setup &gt; Certifications, Intelligence &gt; Advanced Analytics (type: AccessReview), and Intelligence &gt; Reports.</li>
+        </ul>
+
+        <h2 id="risk">Risk Model</h2>
+        <ul>
+          <li>Optional topic — many orgs cover it via third parties. Identities &gt; Identity Risk Model and Applications &gt; Application Risk Model.</li>
+          <li>Flags trusted identities/applications by security threat on a 0–1000 score: Low &lt; Medium &lt; High risk profiles. Score varies with the target and source system access. Threats are declared role-access-based or entitlement-based; overall scores under Intelligence. Default report templates exist.</li>
+        </ul>
+
+        <h2 id="roles">Roles</h2>
+        <ul>
+          <li>A role is an object encapsulating sets of access — a collection of entitlements (think AD roles). Four types: <strong>Organizational</strong> (container), <strong>Business</strong> (assigned — the UI display, e.g. "Dev"), <strong>IT</strong> (detected — stores the entitlements, e.g. AWS), <strong>Entitlement</strong>.</li>
+          <li>Flow: Business Role — required/permitted → IT Roles → Entitlements. Inherited roles create parent/child structures.</li>
+          <li>Ways to define roles: manual; <strong>Business Role Mining</strong> (creates roles from existing data); <strong>IT Role Mining</strong> (attribute-based, e.g. Region); <strong>Entitlement Analysis</strong> (checkout-style: add apps to a cart); XML (Debug page, search "bundle" — roles are exportable as XML); API/rule.</li>
+          <li>Role Mining with ordered identity attributes creates one role per attribute value, with an optional name prefix (e.g. prefix <em>Demo</em> + attribute <em>Origin</em> → Demo.America, Demo.Asia, Demo.Europe). Every mined role must be enabled; create IT roles from Role Mining Results &gt; Task Results.</li>
+          <li>To apply roles to identities, run the task <em>"Refresh assigned, detected roles and promote additional entitlements."</em></li>
+          <li><strong>Provisioning Policy</strong> — the form generated when a role is requested (Lifecycle Manager), the rough equivalent of a ServiceNow UI Policy.</li>
+        </ul>
+
+        <h2 id="rules">Rules &amp; Beanshell</h2>
+        <ul>
+          <li>Rules are where Beanshell customization lives; getters/setters are defined in the Rule Registry. Prefer <code>getEmail()</code>-style getters; use <code>getAttribute("email")</code> when the key isn't defined.</li>
+          <li>Key rule types: <strong>BuildMapRule</strong> (map two identities into one application before aggregating), <strong>PreIterateRule</strong> (runs before aggregation — e.g. convert XML to CSV), <strong>PostIterateRule</strong> (after — e.g. send a completion notification), <strong>MapToResourceObjectRule</strong> (modifies the Identity Cube).</li>
+          <li>In business processes there are <em>scripts</em> and <em>rules</em> — a script is defined once and not reused; a rule is reusable.</li>
+          <li>Rule source is wrapped as <code>&lt;Source&gt;&lt;![CDATA[ … ]]&gt;</code> in the XML.</li>
+        </ul>
+
+        <h2 id="debug">Debugging &amp; Operations Tools</h2>
+        <ul>
+          <li><strong>iiq console / SDK:</strong> <code>connectorDebug &lt;App&gt; iterate</code> (accounts or groups), <code>count/list identity|application|bundle</code> (bundle = roles), <code>import path/rule.xml</code>, delete by sysID.</li>
+          <li><strong>JConsole</strong> (Java console, OOB) to monitor health; the <strong>Administrator Console</strong> manages tasks on deployment (PIDs) and provisioning.</li>
+          <li>Syslogs: Global Settings &gt; IIQ Configuration &gt; Miscellaneous. Audits: Global Settings &gt; Audit Config + Intelligence &gt; Advanced Analytics.</li>
+          <li><strong>Log4j:</strong> uncomment the class to enable, e.g. <code>log4j.logger.sailpoint.api.Aggregator=debug</code>.</li>
+          <li>Reports live under Intelligence &gt; Reports (OOB templates included); reports and tasks are stored as <code>TaskDefinition</code> objects (XML) — view/modify raw queries from the Debug pages.</li>
+          <li>Real orgs keep all IIQ objects in Git; the build process pushes through a QA pipeline.</li>
+        </ul>
+
+        <h2 id="lifecycle">Lifecycle Manager &amp; Workflows</h2>
+        <ul>
+          <li>Lifecycle Manager authorizes access and profile creation when new identities appear. Its components import via <code>init-lcm.xml</code>, then patch the instance.</li>
+          <li><strong>Lifecycle events:</strong> Joiner, Mover, Leaver — each has a business process (workflow), e.g. create/close tickets in an ITSM system as part of the logic. Certifications trigger on joiner and mover, not leaver.</li>
+          <li>Provisioning policies (Lifecycle Manager &gt; Identity Provisioning Policies) drive custom validation forms; Manage User Access adds/removes entitlement access; password synchronization (Login Configuration) authenticates multiple systems with one password.</li>
+          <li><strong>SSD</strong> (Services Standard Deployment) encompasses: Services Standard Build (SSB), Framework (SSF), Performance (SSP), Test (SST), and the IIQ Testing Framework (ITF).</li>
+        </ul>
+
+        <h2 id="journal">Session-by-Session Journal</h2>
+        <details>
+          <summary><strong>Open the dated log (Aug → Oct)</strong></summary>
+          <ul>
+            <li><strong>Aug 23–25</strong> — IAM landscape: Okta for SSO/auth vs. SailPoint for provisioning/IAM; business needs, business model, and business data framing; tasks (aggregation, refresh), Compliance Manager and Lifecycle Manager overview.</li>
+            <li><strong>Aug 26</strong> — IIQ 7.2 install on Linux/Tomcat: war extraction, <code>iiq schema</code>, SQL sourcing, <code>init.xml</code> import, patching.</li>
+            <li><strong>Aug 29</strong> — IIQ 8.1 install on Windows localhost: JRE/JVM environment variables, same flow.</li>
+            <li><strong>Aug 31 – Sep 1</strong> — Identity Cubes, authoritative apps, aggregation theory; authoritative app hands-on from a delimited file with manager correlation.</li>
+            <li><strong>Sep 6–8</strong> — Non-authoritative onboarding: correlation, data transformation, orphan accounts, manual correlation; JDBC/LDAP/AD connector theory.</li>
+            <li><strong>Sep 12–14</strong> — Multi-source app builds (SQL joins, XML merges); managing uncorrelated accounts; ID mapping and correlation; groups, populations, and workgroups.</li>
+            <li><strong>Sep 19–23</strong> — Policies (activity/account/risk/advanced) and violations; certifications theory and monitoring; risk model theory.</li>
+            <li><strong>Sep 22–26</strong> — Certifications hands-on with challenge periods and e-signatures; risk model hands-on; roles theory and the Business → IT → Entitlement flow; role mining.</li>
+            <li><strong>Sep 27–28</strong> — Debug tooling (JConsole, syslogs, Log4j, SDK console); Beanshell rule types; Sequential Task Launcher.</li>
+            <li><strong>Oct 7–18</strong> — CI/CD build process notes, deployment accelerator, workflow imports; reports as TaskDefinition XML; Lifecycle Manager, provisioning policies, password sync; lifecycle events (joiner/mover/leaver) and SSD framework.</li>
+          </ul>
+        </details>
+
+      </div>
+      <p style="text-align: center;">
+        <a class="back-home" href="index.html">&larr; Back to Homepage</a>
+      </p>
+    </div>
+    <script src="assets/site.js" defer></script>
+  </body>
+</html>

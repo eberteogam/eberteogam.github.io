@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DevOps Environments — Docker, WSL &amp; Git — Teo Gamarra</title>
+    <meta name="description" content="Working notes on Docker internals and CLI patterns, systemd in containers, Podman, WSL2 tuning, Unix diagnostics, and Git team workflows.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Teo Gamarra</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#research">Research &amp; Notes</a>
+      <a href="index.html#certifications">Certifications</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="wrap">
+      <h1 class="page-title">DevOps Environments — Docker, WSL &amp; Git</h1>
+      <p class="page-sub">Working notes: Docker layer mechanics and CLI patterns, systemd inside containers, WSL2 tuning, Unix diagnostics, and Git team workflow.</p>
+      <div class="paper">
+
+        <div class="toc">
+          <strong>On this page</strong>
+          <ul>
+            <li><a href="#layers">Docker layer mechanics</a></li>
+            <li><a href="#cli">Docker CLI patterns</a></li>
+            <li><a href="#compose">Compose &amp; Dockerfile</a></li>
+            <li><a href="#systemd">systemd in containers</a></li>
+            <li><a href="#wsl">WSL2</a></li>
+            <li><a href="#unix">Unix diagnostics</a></li>
+            <li><a href="#terminals">Terminals</a></li>
+            <li><a href="#git">Git workflow</a></li>
+            <li><a href="#misc">Odds &amp; ends</a></li>
+          </ul>
+        </div>
+
+        <h2 id="layers">Docker Layer Mechanics</h2>
+        <ul>
+          <li>Each Dockerfile line (<code>FROM</code>, <code>RUN</code>, <code>COPY</code>, <code>ENV</code>, …) is a <strong>cache layer</strong>, rebuilt when that instruction's inputs change. When one layer changes, it executes itself and <strong>invalidates everything after it</strong> — no more cache from that point on.</li>
+          <li>Inspect layers on Windows with <code>docker history</code> (or watch the cache during the build); on Linux (Docker Engine) they live under <code>/var/lib/docker/overlay2/</code>.</li>
+          <li>Windows 11 requires WSL2 — a docker command actually runs inside WSL2 as Linux.</li>
+          <li>Docker disables apt cache files to save space during layer builds (<code>apt-config dump | grep Dir::C</code> shows <code>pkgcache</code>/<code>srcpkgcache</code> empty — not normal in an LXD container). To re-enable, comment out everything in <code>/etc/apt/apt.conf.d/docker-clean</code> and <code>apt update</code>.</li>
+          <li>Chain of artifacts: a <strong>Dockerfile</strong> builds into an <strong>image</strong> (<code>-t imageName:Tag</code>); an image is <em>run</em> into a <strong>container</strong> (takes <code>--privileged</code>, port mappings <code>-p</code>, <code>-d</code> for background); a container is <em>started</em> with <code>start</code>; its internal terminal is accessed with <code>exec</code>.</li>
+        </ul>
+
+        <h2 id="cli">Docker CLI Patterns</h2>
+        <ul>
+          <li><code>docker exec -it &lt;container&gt; bash</code> — open a shell in a living container (on Linux this makes bash PID 1's child rather than systemd).</li>
+          <li><code>docker run --rm -it &lt;img&gt; bash</code> — interact with an image live: <code>--rm</code> deletes the temp container on exit; <code>-it</code> gives you the interactive shell; <code>-v "$PWD":/src -w /src</code> mounts the local directory into the container.</li>
+          <li>Disposable .NET build environment: <code>docker run --rm -it -v "$PWD":/src -w /src mcr.microsoft.com/dotnet/sdk:9.0 bash</code></li>
+          <li>Cache cleanup: <code>docker buildx prune</code> (nicer interface) or <code>docker builder prune</code> (legacy).</li>
+          <li><code>docker build -t image -f dockerfile</code> — build defaults to a file named <code>Dockerfile</code>; use <code>-f</code> otherwise.</li>
+          <li><code>run</code> is for temporary environments — it knows nothing about port mappings, volumes, or env vars unless you explicitly add them, and its listening IP is randomized inside the engine unless <code>-p</code> is specified. Compose services use their declared internal IPs/ports.</li>
+          <li>Docker volumes on Windows live at <code>\\wsl$\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes</code>.</li>
+        </ul>
+
+        <h2 id="compose">Compose &amp; Dockerfile Structure</h2>
+        <ul>
+          <li>Conventions: <code>docker compose up</code> looks for <code>compose.yaml</code> by default (old default <code>docker-compose.yml</code>); use <code>-f</code> for custom names. In the compose file, a service's <code>build: .</code> looks for the Dockerfile. Mental model: <strong>Dockerfile → image; compose → build/run process</strong>.</li>
+          <li><code>compose.override.yaml</code> for local development is best practice.</li>
+          <li><code>docker compose -f x.yml run --rm &lt;service&gt;</code> gives a temporary container; <code>up</code> creates containers, <code>down</code> deletes them; <code>-d</code> runs in background.</li>
+          <li>Volume keys: left side binds to the local host, right side to the container. If no volume is declared, a new volume exists only inside the container — not on the host.</li>
+          <li>Dockerfile vocabulary: <code>FROM</code> = base image; <code>WORKDIR</code> = mkdir + cd in the <em>container's</em> filesystem; <code>ENTRYPOINT</code> = what runs at start. Stages: <strong>build</strong> (heavy tools — SDK, Node, compilers) → <strong>publish</strong> → <strong>runtime</strong> (only what's needed to run; lighter). Multiple build/runtime stages are allowed. Best practice: <code>CMD ["my-service", "server"]</code>.</li>
+          <li>Image references: <code>sdk:9.0</code> → .NET SDK; <code>aspnet:9.0</code> → ASP.NET runtime.</li>
+        </ul>
+
+        <h2 id="systemd">systemd in Containers (and Podman)</h2>
+        <ul>
+          <li>Best practice is <em>not</em> having systemd in a Docker container — that's why it doesn't come OOB. If you need it: pull an image containing systemd, run with cgroups configured, or use Podman.</li>
+          <li>To make systemd PID 1 in Docker: the Dockerfile needs <code>CMD ["/lib/systemd/systemd"]</code>; <code>docker exec</code> <em>without</em> <code>-it bash</code> so PID 1 comes from the image; and run with <code>--privileged</code> or you'll hit cgroup/mount issues.</li>
+          <li><strong>Podman</strong> exposes systemd mode explicitly (<code>--systemd=true|false</code>), whereas Docker has no such option — cgroups must be set up and systemd installed manually.</li>
+          <li>systemd controls all <em>units</em>: <code>.service</code>, <code>.socket</code>, <code>.timer</code>, <code>.mount</code>, <code>.target</code>. There are cgroups v1 and v2.</li>
+          <li><strong>Portainer password reset:</strong> stop the Portainer container → <code>docker pull portainer/helper-reset-password</code> → <code>docker run --rm -v portainer_data:/data portainer/helper-reset-password</code> → start it again.</li>
+        </ul>
+
+        <h2 id="wsl">WSL2</h2>
+        <ul>
+          <li>Control Panel &gt; Programs &gt; Turn Windows features on/off: <em>WSL</em> and <em>Virtual Machine Platform</em> must be enabled — required for distro installation (not for the wsl2 engine itself).</li>
+          <li><code>%USERPROFILE%\.wslconfig</code> = independent Linux configuration (RAM, processors). Docker Desktop's Settings &gt; Resources &gt; Advanced limits derive from and match it.</li>
+          <li>Sizing intuition: <strong>more RAM, fewer cores</strong> = plenty of desk space but not enough hands to work quickly; <strong>less RAM, more cores</strong> = many workers with nowhere to put tasks.</li>
+        </ul>
+
+        <h2 id="unix">Unix Diagnostics</h2>
+        <ul>
+          <li>PIDs live in <code>/proc</code>; see what a PID is executing with <code>cat /proc/&lt;PID&gt;/comm</code>.</li>
+          <li>Swap size: <code>swapon --show</code>. Memory usage: <code>top</code>.</li>
+          <li>Ports: install <code>net-tools</code>, then <code>netstat -tulpen</code>.</li>
+          <li>Processes: install <code>procps</code> for <code>ps</code> (the Unix equivalent of PowerShell's <code>Get-Process</code>) — <code>ps aux | grep 'name'</code>.</li>
+        </ul>
+
+        <h2 id="terminals">Terminals</h2>
+        <ul>
+          <li>Windows PowerShell — object-oriented, functions, integrates with .NET, COM objects, APIs. <code>cmd.exe</code> — plain text. Linux — Bash.</li>
+          <li><code>rm -rf</code> = recursive + force. <code>$Env:PATH</code> merges system and user environment variables.</li>
+          <li>ZoomIt when presenting.</li>
+        </ul>
+
+        <h2 id="git">Git Team Workflow</h2>
+        <ul>
+          <li><code>git fetch</code> — what's new on the remote, without applying it. <code>git status</code> — commits ahead/behind and changed files. <code>git pull</code> — apply all remote changes locally.</li>
+          <li>Pulling a big commit while preserving local edits: <em>stash</em> (without committing), pull, then <em>pop</em> the stash.</li>
+          <li>Exporting changes between repositories: create a <em>patch</em> in the source repo and <em>apply</em> it in the target.</li>
+          <li>Branch flow: dev branch (has fixes) → staging branch (production/main); every deploy is a hotfix (green canary deployment). Branch naming convention: <code>feature/issue/task . feature_name</code>.</li>
+          <li>Deployment slots: a staging slot with its staging DB and a production slot with its production DB, exchanged with a <strong>swap</strong>.</li>
+          <li><strong>GitHub Actions:</strong> a step is either <code>uses</code> (a reusable piece) or <code>run</code> (a shell command). Permissions can apply to all jobs in a workflow file or to one specific job.</li>
+        </ul>
+
+        <h2 id="misc">Odds &amp; Ends</h2>
+        <ul>
+          <li><strong>CKAN vs Snowflake:</strong> CKAN (open-source open-data portal platform used by governments) stores a CSV and lets you search by title/tags/description — but can't query the contents; Snowflake loads the CSV into a table and runs SQL on it. One is a library catalog, the other a research database.</li>
+          <li><strong>Graphviz:</strong> <code>digraph</code> = arrow edges, <code>graph</code> = plain lines; <code>rankdir</code> (TB/LR/BT/RL) is root-level only — inside a subgraph it's ignored; <code>[dir=back]</code> points an arrow against the root level; containers must be named starting with <code>cluster_</code>.</li>
+          <li><strong>"Lift &amp; Shift":</strong> putting everything inside a VM/instance without using managed services.</li>
+          <li><strong>VCF</strong> (VMware Cloud Foundation): full-stack private cloud built around Day-0/1/2/3 operations, using vRA (Infrastructure-as-Code + governance policies).</li>
+          <li><strong>Secret management</strong> (HashiCorp Vault): secret rotation and audit trail.</li>
+        </ul>
+
+      </div>
+      <p style="text-align: center;">
+        <a class="back-home" href="index.html">&larr; Back to Homepage</a>
+      </p>
+    </div>
+    <script src="assets/site.js" defer></script>
+  </body>
+</html>

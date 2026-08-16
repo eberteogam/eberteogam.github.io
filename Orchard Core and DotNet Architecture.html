@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Orchard Core 2.0 &amp; .NET Architecture — Teo Gamarra</title>
+    <meta name="description" content="Working notes on Orchard Core 2.0 and .NET: tenants, recipes vs migrations, YesSql, appsettings precedence, the dotnet CLI, MSBuild props/targets, Kestrel vs IIS, and Spring Boot translations.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Teo Gamarra</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#research">Research &amp; Notes</a>
+      <a href="index.html#certifications">Certifications</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="wrap">
+      <h1 class="page-title">Orchard Core 2.0 &amp; .NET Architecture</h1>
+      <p class="page-sub">Working notes from maintaining a production Orchard Core CMS — tenants, recipes, YesSql, the dotnet CLI, and MSBuild internals.</p>
+      <div class="paper">
+
+        <div class="toc">
+          <strong>On this page</strong>
+          <ul>
+            <li><a href="#nutshell">Orchard Core in a nutshell</a></li>
+            <li><a href="#tenants">Configuration &amp; tenants</a></li>
+            <li><a href="#recipes">Recipes vs migrations</a></li>
+            <li><a href="#yessql">YesSql</a></li>
+            <li><a href="#database">The database layer</a></li>
+            <li><a href="#cli">dotnet CLI survival kit</a></li>
+            <li><a href="#msbuild">MSBuild &amp; the Node pipeline</a></li>
+            <li><a href="#servers">Kestrel vs IIS</a></li>
+            <li><a href="#conventions">Routing &amp; DI conventions</a></li>
+            <li><a href="#springboot">Spring Boot translations</a></li>
+            <li><a href="#linq">LINQ</a></li>
+            <li><a href="#debugging">Debugging imports</a></li>
+          </ul>
+        </div>
+
+        <h2 id="nutshell">Orchard Core in a Nutshell</h2>
+        <ul>
+          <li>Front end is <code>.liquid</code> or <code>.cshtml</code>; the back end is .NET Core.</li>
+          <li>Plugins (extensions) live in Admin &gt; Configuration &gt; Features. If a feature is called <code>OrchardCore.*</code>, it's built into OC. Lombiq (Hungary-based) focuses on extensions.</li>
+          <li>A <strong>tenant</strong> is an isolated site within Orchard Core — each with its own database, users, themes, modules, configuration, and content.</li>
+          <li>NuGet packages are declared in <code>.csproj</code> — the equivalent of <code>build.gradle</code> / <code>pom.xml</code>.</li>
+          <li>Ports are set in <code>LaunchSettings.json</code>; leave default ports for web dev.</li>
+          <li>Orchard historically used NHibernate; today it's YesSql.</li>
+          <li>When developing an Orchard Core feature you're building a <strong>module (class library)</strong>, not a standalone application — <code>dotnet run</code> will produce <em>"The current OutputType is 'Library'"</em>. That's expected; use <code>dotnet build</code>.</li>
+        </ul>
+
+        <h2 id="tenants">Configuration &amp; the Tenant Lifecycle</h2>
+        <ul>
+          <li>The root <code>appsettings.json</code> and <code>appsettings.Development.json</code> are standard .NET Core — app-wide defaults and initial setup. <code>App_Data/Sites/Default/appsettings.json</code> is Orchard-specific and loaded <em>per tenant</em>; the per-tenant file always wins over root settings.</li>
+          <li><code>OrchardCore_AutoSetup</code> is only used the first time a tenant is created (or if it doesn't exist yet). Once the tenant exists, only the files in its own folder control its DB/provider — not auto-setup or global settings. However, if the tenant file exists but misses needed objects, it falls back to the root <code>appsettings*.json</code> for those objects.</li>
+          <li><strong>SQLite:</strong> an empty connection string means Orchard Core auto-creates a local database file. <strong>MySQL:</strong> an empty connection string fails setup — you must create the database yourself and provide connection details.</li>
+          <li>In the root development settings, the <code>Tenants</code> array points at which recipe will run.</li>
+        </ul>
+
+        <h2 id="recipes">Recipes vs Migrations</h2>
+        <ul>
+          <li>The theme's <strong>Setup recipe</strong> (<code>Themes/…/Recipes/*.recipe.json</code>) is where the site's packages are assembled — think of it as tables <em>and</em> seeds in one file:
+            <ul>
+              <li><code>steps: [{ "enable": … }]</code> — migrations, data seeds, table creation (think Laravel's migrations)</li>
+              <li><code>steps: [{ "Values": … }]</code> — content items, initial data inserted into the migrated tables (think Laravel's seeders)</li>
+            </ul>
+          </li>
+          <li>Typical features a setup recipe enables: <code>OrchardCore.Admin</code> (dashboard), <code>OrchardCore.Deployment</code> (import/export UI), <code>OrchardCore.Contents</code>, <code>OrchardCore.Recipes</code>, <code>OrchardCore.ContentTypes</code>, <code>OrchardCore.ContentFields</code>, <code>OrchardCore.Menu</code>, <code>OrchardCore.Taxonomies</code>, <code>OrchardCore.Alias</code>, <code>OrchardCore.Autoroute</code>.</li>
+          <li>Modules define their tables and columns through YesSql in C#-based migrations (<code>src/Modules/…/Migrations.cs</code>).</li>
+        </ul>
+
+        <h2 id="yessql">YesSql — a Document Store on a Relational DB</h2>
+        <ul>
+          <li>Strictly a .NET library, written in C# — not compatible with other frameworks. It's the exception among ORMs: a <strong>document-database style on top of a relational DB</strong>, similar to Marten.</li>
+          <li>It maps your getters/setters as a <strong>MapIndex</strong> that goes onto a document-model DB in object format. The <strong>Document table</strong> is always present — it's how documents are stored as JSON — in both standalone YesSql and Orchard Core.</li>
+          <li>Querying flow: <strong>set an index, then query the index — never the raw object.</strong> The provider does the mapping. LINQ and indexing are the main query paths.</li>
+          <li>Since data is stored as JSON, if I need to query by an attribute I have to create a new index table indexing that attribute.</li>
+          <li>YesSql by itself doesn't support C#-based migrations — it auto-creates tables from registered documents and indexes. Inside Orchard Core, C#-based migrations exist via <code>DataMigration</code> classes and <code>SchemaBuilder</code> — that's Orchard's own system layered on top.</li>
+          <li>ORM equivalents: EF Core (.NET) ⇔ Eloquent (Laravel) ⇔ Hibernate/JPA (Spring Boot). YesSql sits apart, as does Marten.</li>
+        </ul>
+
+        <h2 id="database">The Database Layer</h2>
+        <ul>
+          <li>The tenant's DB name lives in <code>App_Data/Sites/Default/appsettings.json</code>; all views are in the DB; log events are documents.</li>
+          <li><code>ContentItemIndex</code> maps to the Content Items module; the <code>Document</code> table depends on it — it holds the complete page as JSON, which gets rendered.</li>
+          <li><strong>SQL Server LocalDB</strong> quick facts: main files are <code>.mdf</code> / <code>.ldf</code>; instance <code>(localdb)\MSSQLLocalDB</code>; files under <code>%LOCALAPPDATA%\Microsoft\Microsoft SQL Server Local DB\Instances\MSSQLLocalDB</code>; trusted connection string: <code>Server=(localdb)\MSSQLLocalDB;Database=Devdb;Trusted_Connection=True;</code></li>
+          <li>Document-oriented DB models (SQL or NoSQL) center on a main Document table using JSON or XML, and can also store media assets. Key-value models (e.g. Redis) store data as unique key/value pairs.</li>
+        </ul>
+
+        <h2 id="cli">dotnet CLI Survival Kit</h2>
+        <ul>
+          <li><code>dotnet build</code> — builds without opening listening ports; checks errors and produces artifacts. Accepts <code>.sln</code> and <code>.csproj</code>.</li>
+          <li><code>dotnet run --project src/…/file.csproj</code> — always builds first, restores NuGet packages, and opens ports. Works only on <code>.csproj</code>, never <code>.sln</code>. Add <code>--no-build</code> to skip the build and just open ports.</li>
+          <li><code>dotnet clean</code> — deletes <code>bin</code> and <code>obj</code> (all build cache). ≈ <code>mvn clean</code>.</li>
+          <li><code>dotnet restore</code> — downloads NuGet dependencies declared in <code>.csproj</code>.</li>
+          <li><code>dotnet publish</code> — compiles the whole project into a folder with the <code>.dll</code> (compiled app), <code>.deps.json</code>, and <code>.runtimeconfig.json</code>.</li>
+          <li><code>dotnet watch</code> — hot reload: applies code changes (method bodies, Razor, static files) without restarting the process; bigger changes trigger an automatic rebuild. Different from both <code>run --no-build</code> and <code>build</code>.</li>
+          <li><code>dotnet pack --configuration Release</code> creates a NuGet package; consume with <code>dotnet add package &lt;Name&gt;</code>.</li>
+          <li><strong>Terminology:</strong> an <em>artifact</em> is the build output (.dll) that gets stored and deployed. A <em>solution</em> (<code>.sln</code>) just tells the IDE/MSBuild which projects are included, their dependencies, and build configurations — it can contain many projects, while a <code>.csproj</code> defines exactly one.</li>
+        </ul>
+        <h3>Diagnosing builds</h3>
+        <ul>
+          <li><code>--verbosity detailed</code> prints errors and messages while the build runs; append <code>&gt; build.log 2&gt;&amp;1</code> to export to a file.</li>
+          <li><code>dotnet build …csproj -bl:msbuild.binlog</code> creates a structured log for deep inspection — open it with MSBuild Structured Log Viewer (use <em>build</em>, not <em>run</em>). Or just <code>dotnet build /bl</code>.</li>
+          <li><code>dotnet list package --include-transitive</code> — visualize every package and transitive dependency of a csproj.</li>
+          <li><code>dotnet nuget list source</code> — shows the source order used; regardless of declared order, the SDK always checks the local cache first (<code>%USERPROFILE%\.nuget\packages</code>). Whichever source serves a package — nuget.org or an offline feed — it ends up in that global cache, along with all transitive dependencies.</li>
+          <li><code>dotnet package search &lt;Name&gt; --source https://api.nuget.org/v3/index.json --take 10</code></li>
+          <li>Logging convention: <code>Console.WriteLine($"My Var is: {nameVari}")</code>.</li>
+          <li>Clean, disposable build environment with Docker: <code>docker run --rm -it -v "$PWD":/src -w /src mcr.microsoft.com/dotnet/sdk:9.0 bash</code></li>
+        </ul>
+
+        <h2 id="msbuild">MSBuild <code>.props</code> / <code>.targets</code> &amp; the Node Pipeline</h2>
+        <ul>
+          <li>A NuGet package can ship <code>build/</code> folders that MSBuild auto-imports into consuming projects: the <strong><code>.props</code></strong> file is imported early and only <em>declares</em> properties — the binding between local file paths and what will be run — while the <strong><code>.targets</code></strong> file holds the executable <code>&lt;Target&gt;</code>/<code>&lt;Exec&gt;</code>/<code>&lt;MSBuild&gt;</code> actions in the package's build tree.</li>
+          <li>That's how Node/corepack/pnpm run inside a .NET build: neither Node nor npm/pnpm is invoked by Orchard Core itself — they're triggered by the Lombiq NodeJS Extensions package, whose <code>.targets</code> hook into the build lifecycle and execute the front-asset pipeline (asset copying → JavaScript → Markdown → styles) for every class library that has a <code>package.json</code> following the Node convention. A project without <code>package.json</code> is skipped — no pnpm build.</li>
+        </ul>
+
+        <h2 id="servers">Kestrel vs IIS</h2>
+        <ul>
+          <li><strong>Kestrel</strong> is the default server for .NET Core; it appears in Task Manager as <code>dotnet.exe</code>. IIS Express shows as <code>iisexpress.exe</code>.</li>
+          <li><code>web.config</code> is only an IIS configuration file. Kestrel configuration must be done in C# (<code>Program.cs</code>) — you cannot put Kestrel config in <code>web.config</code>, nor IIS config in <code>Program.cs</code>.</li>
+          <li><code>HttpContext.RequestAborted</code> is signaled by Kestrel when the client disconnects. A <code>cancellationToken</code> handles server-side cancellation of HTTP requests — the equivalent of <code>AbortController</code>/<code>AbortSignal</code> around <code>fetch()</code> in JS.</li>
+        </ul>
+
+        <h2 id="conventions">Routing, Controllers &amp; DI Conventions</h2>
+        <ul>
+          <li><strong>URL routing:</strong> <code>{ModuleName}/(Admin if declared)/{controllerName}/{functionName}/{id?}</code></li>
+          <li><strong>Naming:</strong> constructor parameter <code>mediaAuditService</code> (camelCase) · private field <code>_mediaAuditService</code> (underscore + camelCase) · interface <code>IMediaAuditService</code> (PascalCase with I prefix).</li>
+          <li><strong>Declaring controllers:</strong> admin page → <code>[Admin]</code>; front end → <code>[Area("YourModule")]</code>; APIs → <code>[Route(…)]</code> or <code>[ApiController]</code> + <code>[Area]</code> + <code>[Route("")]</code>, with <code>[HttpGet/Post(…)]</code> on actions.</li>
+          <li><strong>The service pattern:</strong> Controller → depends on a service <em>interface</em> (the contract — the list of method signatures the service class exposes). The service <em>class</em> implements it and injects <code>ISession</code> or <code>IContentManager</code> (for higher-level ops) in its constructor — business logic + data-access queries in one place.</li>
+          <li><strong>DI flavors:</strong> constructor injection, setter injection, method/parameter injection, property injection.</li>
+          <li><code>Task&lt;T&gt;</code> is an async wrapper — the equivalent of <code>Promise&lt;T&gt;</code>.</li>
+        </ul>
+
+        <h2 id="springboot">Spring Boot ↔ .NET Translations</h2>
+        <ul>
+          <li>DI registrations in <code>Program.cs</code>/<code>Startup.cs</code> (<code>services.AddScoped&lt;IMyService, MyService&gt;()</code>) ≈ Spring Boot bean configuration (<code>@Service</code> + <code>@Autowired</code>).</li>
+          <li><code>private final MyService service</code> (Java) ⇔ <code>private readonly IMediaAuditService mediaAuditService</code> (C#).</li>
+          <li>NuGet packages in <code>.csproj</code> ≈ Maven/Gradle dependencies in <code>pom.xml</code>/<code>build.gradle</code>.</li>
+          <li><code>dotnet clean</code> ≈ <code>mvn clean</code>.</li>
+          <li>Recipes ≈ Laravel migrations + seeders (see above); EF Core ⇔ Eloquent ⇔ Hibernate/JPA.</li>
+        </ul>
+
+        <h2 id="linq">LINQ</h2>
+        <ul>
+          <li>Prefer the lambda default methods — <code>GroupBy</code>, <code>Max</code>, <code>Average</code>, <code>Where</code>, <code>OrderBy</code>, <code>Select</code>, <code>Distinct</code> — for massive objects, not hand-rolled higher-order functions. Pagination: <code>Skip(#).Take(#)</code>.</li>
+          <li>LINQ also has a query syntax, but stick with the default methods. It's a query language over ORM providers — the methods and syntax both compile down to the provider.</li>
+        </ul>
+
+        <h2 id="debugging">Debugging Deployment Imports &amp; OpenAPI</h2>
+        <ul>
+          <li><em>"Unexpected error occurred while importing the deployment package"</em> — the detailed error is in the back log. The usual three culprits: a rendering error due to a broken URL, a duplicate alias or object, or a JSON key expected at the end of an object.</li>
+          <li><strong>OpenAPI:</strong> .NET has an OOB <code>swagger/v1/swagger.json</code> route available — just add in <code>Program.cs</code>/<code>Startup.cs</code>:
+            <pre><code>app.UseSwaggerUI(options =&gt;
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+});</code></pre>
+          </li>
+        </ul>
+
+      </div>
+      <p style="text-align: center;">
+        <a class="back-home" href="index.html">&larr; Back to Homepage</a>
+      </p>
+    </div>
+    <script src="assets/site.js" defer></script>
+  </body>
+</html>

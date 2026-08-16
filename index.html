@@ -1,34 +1,16 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Teo Gamarra's Homepage</title>
-    <style>
-        body {
-          background-color:#1f1f1f;
-          color:#bfbfbf !important;
-
-          li { padding: 5px 0px; }
-
-          *::-webkit-scrollbar-track-piece {
-            background-color:rgba(255, 255, 255, 0.2
-            ) !important;
-          }
-
-          *::-webkit-scrollbar-track {
-            background-color:rgba(255, 255, 255, 0.3) !important;
-          }
-
-          *::-webkit-scrollbar-thumb {
-            background-color:rgba(255, 255, 255, 0.5) !important;
-          }
-
-          a {
-            color: rgb(140, 140, 250);
-          }
-        }
-
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Teo Gamarra — Software & Cloud Engineer</title>
+    <meta name="description" content="Teo Gamarra — software and cloud engineer: .NET & Orchard Core, AWS, ServiceNow CMDB/CSDM, identity (SailPoint IAM/IGA), Moveworks AI agents, and embedded hardware. Knowledge base, projects in microservices, spacecraft RL simulation, and hardware reverse engineering.">
+    <meta property="og:title" content="Teo Gamarra — Software & Cloud Engineer">
+    <meta property="og:description" content="AWS, ServiceNow, and embedded hardware. Microservices, spacecraft RL simulation, and hardware reverse engineering.">
+    <meta property="og:image" content="https://eberteogam.github.io/headshot.jpg">
+    <meta property="og:url" content="https://eberteogam.github.io/">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+    <link rel="stylesheet" href="assets/site.css">
     <script>
       function swapImage() {
         if (Math.random() > 0.9) {
@@ -41,139 +23,329 @@
   <!-- <body onload="swapImage()"> -->
   <!-- code to trigger seeing my old picture -->
   <body>
-    <h1>Teo Gamarra's Homepage</h1>
-    <img id="headshot" src="headshot.jpg" alt="Picture" style="width: 15%"/>
-    <br>
-    <h2>Who am I?</h2>
-    <p>
-      I am a software/cloud engineer specialized in <a href="https://www.aws.com/">AWS</a> and software architecture across multiple frameworks.
-      Shared my expertise working at <a href="https://www.santamonica.gov/">City of Santa Monica </a><a style="color:red;" href="https://drive.google.com/file/d/1WXdUuRtm7FIhijJZKz48Y96GQjIa9ps7/view?usp=sharing">(Recog. Letter)</a>, <a href="https://www.ironmountain.com/">Iron Mountain</a>, <a href="https://thelegalleads.com/">The Legal Leads</a> <a style="color:red;" href="https://drive.google.com/file/d/1jal5Sf4Jkr8wYdn4_uK8kvJJMOwUEEk2">(Recog. Letter)</a> & <a href="https://www.endoscopysuperstore.com"> Endescopy Superstore</a>
-    <br>
-      <b>Interests:</b> Automated software testing pipelines-QA-MicroServices, cloud architecture, electronic terminations, and GPIO micro-soldering.
-    </p>
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Teo Gamarra</a>
+      <a href="#projects">Projects</a>
+      <a href="#research">Research &amp; Notes</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
-    <h2>Contacting Me</h2>
-    <p>
-      Email: eberteo at hotmail dot com
-    </p>
-    <h2>Degrees</h2>
-    <ul>
-      <li>
-	Bachelor of Science in Computer Science, expected to be awarded by the <a href="https://w2.csun.edu/">California State University of Northridge</a>
-      </li>
-      <ul>
-        <li>
-          <a href="SpaceEngineering%20and%20RL%20-%20pytorch.html">Specialization in Spacecraft Soft Ring Capture to Hard Ring Capture Dynamics with Monte Carlo Envelope Simulation and Reinforcement Learning Policies in Basilisk - Pytorch </a></br>
-        </li>
-      </ul>
-      
-      
-      <li>
-	<a href="https://drive.google.com/file/d/1iTNcJsXGnwBt9eDtk1RVl0QqWhSCfB1N/view?usp=sharing">Associate of Science in Computer Science</a>, Awarded by the <a href="https://www.bakersfieldcollege.edu/">Bakersfied College</a> in 2021
-      </li>
-      <ul>
-        <li>
-	  <a style="color:red; " href="https://drive.google.com/file/d/1KR1_gDdYnQKKkvtiLMdGQpIhou7ssoBP/view?usp=sharing">Recognition Diploma in Physics</a></br>
-        </li>
-        <li>
-	  <a style="color:red;" href="https://drive.google.com/file/d/1TEr7jL5eWbzBpRJu3UJgoWsJqh2NDBBs/view?usp=sharing">Recognition letter from the Science and Mathematics Department</a>
-        </li>
-      </ul>
-    </ul>
-    <h2>Active Projects</h2>
-    <ul> 
-      <li>
-        <a href="https://documenter.getpostman.com/view/12028505/2sAYHzFhes">
-          <!--          This projects aims at teaching how microservices and  containerization work together in the real professional world following the R-R auto-scaling algorythim for high traffic -->
-          <strong>Built a microservice app on a Raspberry Pi server; Docker-containerized auto-scaling a Round-Robin load algorithm.</strong>
-        </a>
-      </li>
-<!--      <li>-->
-<!--        <a href="https://www.amazon.com/iot-esp8266-pcb-board-integrating-relay-motor/dp/V00QGCBGZQ?th=1">-->
-<!--          <strong>Designed a PCB on Altium Designer holding a microcontroller and a relay motor for IoT dynamic lighting, sold over 500 units on Amazon</strong>-->
-<!--        </a>-->
-<!--      </li>-->
+    <div class="wrap">
 
-    </ul>
-
-    <h2>Current Research</h2>
-    <ul>
-      <li>
-        <a href="https://dev201701.service-now.com/kb_view.do?sysparm_article=KB0010010">
-          <strong>PCB, Integrated Circuit Packages & ARM architecture</strong>
-        </a>
-      </li>
-
-      <li>
-        <a href="https://dev201701.service-now.com/kb_view.do?sysparm_article=KB0010015">
-          <strong>Reverse Engineering on Tesla vehicles</strong>
-        </a>
-      </li>
-
-    </ul>
-
-    <h2>Publications</h2>
-    <ul class="pub">
-      <li>
-        <b>
-        <a href="https://dev201701.service-now.com/kb_view.do?sysparm_article=KB0010011">
-          <strong>Ethical Cybersecurity ISO 27001/27099</strong>
-        </a>
-        </b>
-      </li>
-      <li>
-        <b>
-          <a href="https://dev201701.service-now.com/kb_view.do?sysparm_article=KB0010009">
-	    Telecommunications Bootcamp & Network
+      <section class="hero">
+        <img id="headshot" class="headshot" src="headshot.jpg" alt="Teo Gamarra"/>
+        <div class="intro">
+          <span class="chip">📍 Los Angeles Area, CA · Open to opportunities</span>
+          <h1>Teo Gamarra</h1>
+          <p class="tagline">Software &amp; cloud engineer — .NET &amp; <a href="https://aws.amazon.com/">AWS</a>, ServiceNow platform &amp; CMDB/CSDM, identity (IAM/IGA), AI service agents, and embedded hardware.</p>
+          <p><b>Interests:</b> automated testing pipelines &amp; QA, microservices, cloud architecture, electronic terminations, and GPIO micro-soldering.</p>
+          <div class="hero-actions">
+            <a class="btn solid" href="#projects">View my work</a>
+            <a class="btn" href="#contact">Contact me</a>
+            <!-- Drop your resume PDF in the repo root as TeoGamarra-Resume.pdf, then uncomment:
+            <a class="btn" href="TeoGamarra-Resume.pdf">Résumé (PDF)</a>
+            -->
+          </div>
+        </div>
+        <div class="badges">
+          <a href="https://www.servicenow.com/community/user/viewprofilepage/user-id/600876">
+            <img src="https://www.google.com/s2/favicons?domain=servicenow.com&amp;sz=32" alt="ServiceNow logo"/>
+            <span>ServiceNow</span>
           </a>
-        </b>
-        <br />
-	  <b> Field Technician trained to do Electrical RJ45 terminations, box terminations, APs, firewall/switch upgrades, VOIP systems </b>
-        <br />
-	 <a href="https://drive.google.com/file/d/1n8xbkXK0_XFNRwoOUXXlch7bKZPQwZTj/view?usp=sharing"> Certificate</a> awarded by the <a href="https://www.theclickexperts.com/">TCE Academy</a></b>, 2024
-      </li>
-      <li>
-        <b>
-          <a href="https://dev201701.service-now.com/kb_view.do?sysparm_article=KB0010012">
-            ServiceNow System Administrator
+          <a href="https://developer.sailpoint.com/discuss/u/eberteo/summary">
+            <img src="https://www.google.com/s2/favicons?domain=sailpoint.com&amp;sz=32" alt="SailPoint logo"/>
+            <span>SailPoint</span>
           </a>
-        </b>
-        <br />
-        <b>Immersed in the System Administrator Career Journey and SN architecture, working in my CSA</b>
-        <br />
-	<a href="https://drive.google.com/file/d/1aDPP_Xu28UcCErUFO2-UsLf-OCWjxcNR/view?usp=sharing">Flow Designer Micro-Certificate</a> awarded by <a href="https://nowlearning.servicenow.com/lxp/en/pages/journey-overview?id=journey_overview&journey_id=55f79b4a1b96add013f9a6c1b24bcb30">Service Now</a></b>, 2023
-        <br />
-	<a href="https://drive.google.com/file/d/1NnGTwanUwpMVEkbKU3GUOghB6LQFLafu/view?usp=sharing">Performance Analytics Micro-Certificate</a> awarded by <a href="https://nowlearning.servicenow.com/lxp/en/pages/journey-overview?id=journey_overview&journey_id=55f79b4a1b96add013f9a6c1b24bcb30">Service Now</a></b>, 2023
-        <br />
-	<a href="https://drive.google.com/file/d/1NefEzBc3DDWNtiblYoimQn7FU_acfx78/view?usp=sharing">Junior Micro-Certificate</a> awarded by <a href="https://nowlearning.servicenow.com/lxp/en/pages/journey-overview?id=journey_overview&journey_id=55f79b4a1b96add013f9a6c1b24bcb30">Service Now</a></b>, 2023
-      </li>
-      <li>
-        <a href="https://dev201701.service-now.com/kb_view.do?sysparm_article=KB0010013">
-          <b> Foundational C# with Microsoft </b>
-        </a>
-        <br />
-          <b>Object-oriented Programming</b>
-        <br />
-	<a href="https://www.freecodecamp.org/certification/fcca33bb84b-3b5c-4c49-a621-de0eb307bfc8/foundational-c-sharp-with-microsoft">Certificate </a>
-      </li>
-      <li><strong>Rupeos</strong>
-        <br />
-        Built the
-        <a href="https://www.figma.com/board/sLEJf6iOlu4VjCmvluQvMa/Rupeos-Back-end-Structure?node-id=0-1&t=7L0vDura54sqZlQD-1">Automatic Deployment Architecture for Microservices</a>.
-      </li>
+          <a href="https://community.moveworks.com/members/eberteo-2595">
+            <img src="https://www.google.com/s2/favicons?domain=moveworks.com&amp;sz=32" alt="Moveworks logo"/>
+            <span>Moveworks</span>
+          </a>
+        </div>
+      </section>
 
-    </ul>
-  <h2>Teacher Assistant Volunteer</h2>
-    <ul>
-      <li>
-	<a href="https://bridges.edu/"><strong>Robotics Mentor (Bridges Academy) (Fall 2022)</strong></a>
-      </li>      
-    </ul>
+      <section id="skills">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-row">
+          <div class="skill-group">
+            <h3>Cloud &amp; Backend</h3>
+            <div class="tags">
+              <span class="tag">AWS</span>
+              <span class="tag">C# / .NET</span>
+              <span class="tag">Orchard Core CMS</span>
+              <span class="tag">Docker / WSL2</span>
+              <span class="tag">Microservices</span>
+              <span class="tag">CI/CD &amp; QA automation</span>
+              <span class="tag">PyTorch</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Enterprise Platforms</h3>
+            <div class="tags">
+              <span class="tag">ServiceNow</span>
+              <span class="tag">CMDB / CSDM</span>
+              <span class="tag">SailPoint ISC &amp; IIQ</span>
+              <span class="tag">IAM / IGA</span>
+              <span class="tag">Moveworks AI agents</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Hardware &amp; Engineering</h3>
+            <div class="tags">
+              <span class="tag">PCB design (Altium)</span>
+              <span class="tag">Micro-soldering</span>
+              <span class="tag">GPIO</span>
+              <span class="tag">MATLAB / Simulink</span>
+              <span class="tag">RJ45 / network terminations</span>
+              <span class="tag">VOIP systems</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <h2>Other Contact Information</h2>
-    <ul>
-      <li>Linkedin: <a href="https://www.linkedin.com/in/eberteo/">eberteo</a></li>
-      <li>Github: <a href="https://github.com/eberteogam">eberteogam</a></li>
-    </ul>
+      <section id="experience">
+        <h2 class="section-title">Experience</h2>
+        <ul class="timeline">
+          <li>
+            <span class="what"><a href="https://www.santamonica.gov/">City of Santa Monica</a></span>
+            — <a style="color: red;" href="https://drive.google.com/file/d/1WXdUuRtm7FIhijJZKz48Y96GQjIa9ps7/view?usp=sharing">Recognition letter</a><br>
+            Software engineering across the city's .NET (Orchard Core) CMS, ServiceNow platform &amp; CMDB/CSDM, and AI service agents.
+          </li>
+          <li>
+            <span class="what"><a href="https://www.ironmountain.com/">Iron Mountain</a></span>
+          </li>
+          <li>
+            <span class="what"><a href="https://thelegalleads.com/">The Legal Leads</a></span>
+            — <a style="color: red;" href="Recognition%20Letter%20TLL.pdf">Recognition letter</a>
+          </li>
+          <li>
+            <span class="what"><a href="https://www.endoscopysuperstore.com">Endoscopy Superstore</a></span>
+          </li>
+        </ul>
+      </section>
+
+      <section id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="card-grid">
+          <a class="card" href="SpaceEngineering%20and%20RL%20-%20pytorch.html">
+            <img class="thumb" src="SpaceProject/Simulink%20Model.png" alt="Simulink model of the spacecraft capture dynamics"/>
+            <div class="card-body">
+              <h3>Spacecraft Capture Dynamics with Reinforcement Learning</h3>
+              <p>Soft-ring to hard-ring capture simulation with Monte Carlo envelopes and RL policies in Basilisk &amp; PyTorch. Includes rendez-vous and docking videos.</p>
+            </div>
+          </a>
+          <a class="card" href="https://documenter.getpostman.com/view/12028505/2sAYHzFhes">
+            <div class="thumb-icon">🐳</div>
+            <div class="card-body">
+              <h3>Microservices on a Raspberry Pi Server</h3>
+              <p>Docker-containerized microservice app with auto-scaling using a Round-Robin load algorithm. Full API documentation on Postman.</p>
+            </div>
+          </a>
+          <a class="card" href="https://www.figma.com/board/sLEJf6iOlu4VjCmvluQvMa/Rupeos-Back-end-Structure?node-id=0-1&amp;t=7L0vDura54sqZlQD-1">
+            <div class="thumb-icon">⚙️</div>
+            <div class="card-body">
+              <h3>Rupeos — Automatic Deployment Architecture</h3>
+              <p>Designed the automatic deployment architecture for microservices; back-end structure documented in Figma.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section id="research">
+        <h2 class="section-title">Knowledge Base — Research &amp; Notes</h2>
+        <input type="search" id="kb-search" placeholder="🔎 Search the knowledge base — e.g. CMDB, Docker, YesSql, RJ45…" aria-label="Search knowledge base">
+
+        <h3 class="kb-cat">Enterprise Platforms &amp; Identity</h3>
+        <div class="card-grid">
+          <a class="card" href="ServiceNow%20CMDB%20and%20CSDM.html">
+            <div class="thumb-icon">🧭</div>
+            <div class="card-body">
+              <h3>ServiceNow CMDB &amp; CSDM v5</h3>
+              <p>Implementation notes: Ingest → Govern → Insight, IRE identification &amp; reconciliation, CMDB Health, and the full CSDM domain and table model.</p>
+            </div>
+          </a>
+          <a class="card" href="Moveworks%20Agent%20Studio.html">
+            <div class="thumb-icon">🤖</div>
+            <div class="card-body">
+              <h3>Moveworks Agent Studio</h3>
+              <p>Building AI service agents: plugins, conversational processes, compound actions, DSL, slots &amp; resolvers, and knowledge ingestion.</p>
+            </div>
+          </a>
+          <a class="card" href="servicenow.html">
+            <div class="thumb-icon">🗂️</div>
+            <div class="card-body">
+              <h3>ServiceNow System Administration</h3>
+              <p>CSA study notes: ACLs, Flow Designer, update sets, catalogs, and instance administration.</p>
+            </div>
+          </a>
+          <a class="card" href="ServiceNow%20Platform%20Practices.html">
+            <div class="thumb-icon">🛠️</div>
+            <div class="card-body">
+              <h3>ServiceNow Platform Practices</h3>
+              <p>Field notes: SN IDE &amp; Fluent, migration strategies, ATF, Process Mining, KCS, Portal internals, Agile delivery, and scripting conventions.</p>
+            </div>
+          </a>
+          <a class="card" href="SailPoint/index.html">
+            <div class="thumb-icon">🪪</div>
+            <div class="card-body">
+              <h3>SailPoint Identity Security Cloud</h3>
+              <p>IAM &amp; IGA concepts — RBAC, access request processes, policies, and the ServiceNow ↔ SailPoint integration.</p>
+            </div>
+          </a>
+          <a class="card" href="SailPoint%20IdentityIQ%20Journal.html">
+            <div class="thumb-icon">📔</div>
+            <div class="card-body">
+              <h3>SailPoint IdentityIQ — Learning Journal</h3>
+              <p>Multi-month training log: IIQ installation, aggregation &amp; correlation, policies, certifications, roles, and Beanshell rules.</p>
+            </div>
+          </a>
+        </div>
+
+        <h3 class="kb-cat">Hardware &amp; Networks</h3>
+        <div class="card-grid">
+          <a class="card" href="Reverse%20Engineering%20on%20Tesla%20Models%203%20S%20X.html">
+            <div class="thumb-icon">🔋</div>
+            <div class="card-body">
+              <h3>Reverse Engineering on Tesla Models 3, S &amp; X</h3>
+              <p>Teardown notes on the Media Control Unit and battery modules — cell diagnosis, laser-weld replacement, and weak-cell bypass.</p>
+            </div>
+          </a>
+          <a class="card" href="PCB,%20Integrated%20Circuit%20Packages%20&amp;%20ARM%20architecture.html">
+            <div class="thumb-icon">🔌</div>
+            <div class="card-body">
+              <h3>PCB, Integrated Circuit Packages &amp; ARM Architecture</h3>
+              <p>Microcontroller families, IC packages, footprints, and schematic-to-PCB workflow notes.</p>
+            </div>
+          </a>
+          <a class="card" href="Telecommunications%20Bootcamp%20&amp;%20Network.html">
+            <div class="thumb-icon">📡</div>
+            <div class="card-body">
+              <h3>Telecommunications Bootcamp &amp; Network</h3>
+              <p>Field technician training: cabling categories, RJ45 &amp; box terminations, APs, firewall/switch upgrades, and VOIP systems.</p>
+            </div>
+          </a>
+        </div>
+
+        <h3 class="kb-cat">Software, Security &amp; DevOps</h3>
+        <div class="card-grid">
+          <a class="card" href="DevOps%20Environments.html">
+            <div class="thumb-icon">🐧</div>
+            <div class="card-body">
+              <h3>DevOps Environments — Docker, WSL &amp; Git</h3>
+              <p>Docker layer mechanics and CLI patterns, systemd in containers, Podman, WSL2 tuning, Unix diagnostics, and Git team workflow.</p>
+            </div>
+          </a>
+          <a class="card" href="Orchard%20Core%20and%20DotNet%20Architecture.html">
+            <div class="thumb-icon">🌿</div>
+            <div class="card-body">
+              <h3>Orchard Core 2.0 &amp; .NET Architecture</h3>
+              <p>Production CMS notes: tenants, recipes vs migrations, YesSql, the dotnet CLI, MSBuild props/targets, and Spring Boot translations.</p>
+            </div>
+          </a>
+          <a class="card" href="Web%20Security%20Quick%20Reference.html">
+            <div class="thumb-icon">🛡️</div>
+            <div class="card-body">
+              <h3>Web Security Quick Reference</h3>
+              <p>The 60-second mental model for CSP vs CORS vs CSRF, plus OAuth 2.0 / OIDC flows and GraphQL introspection.</p>
+            </div>
+          </a>
+          <a class="card" href="Ethical%20Cybersecurity%20ISO%2027001_27099.html">
+            <div class="thumb-icon">🔐</div>
+            <div class="card-body">
+              <h3>Ethical Cybersecurity — ISO 27001/27099</h3>
+              <p>CIA &amp; IAAA models, encryption, penetration-testing concepts, and security best practices.</p>
+            </div>
+          </a>
+          <a class="card" href="Foundational%20C%23%20and%20.Net%20with%20Microsoft.html">
+            <div class="thumb-icon">💠</div>
+            <div class="card-body">
+              <h3>Foundational C# and .NET with Microsoft</h3>
+              <p>Object-oriented programming notes from the Microsoft + freeCodeCamp certification path.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section id="certifications">
+        <h2 class="section-title">Certifications &amp; Recognitions</h2>
+        <div class="cert-grid">
+          <div class="cert">
+            <div class="cert-name"><a href="https://drive.google.com/file/d/1aDPP_Xu28UcCErUFO2-UsLf-OCWjxcNR/view?usp=sharing">Flow Designer Micro-Certificate</a></div>
+            <div class="cert-meta">ServiceNow · 2023</div>
+          </div>
+          <div class="cert">
+            <div class="cert-name"><a href="https://drive.google.com/file/d/1NnGTwanUwpMVEkbKU3GUOghB6LQFLafu/view?usp=sharing">Performance Analytics Micro-Certificate</a></div>
+            <div class="cert-meta">ServiceNow · 2023</div>
+          </div>
+          <div class="cert">
+            <div class="cert-name"><a href="https://drive.google.com/file/d/1NefEzBc3DDWNtiblYoimQn7FU_acfx78/view?usp=sharing">Junior Micro-Certificate</a></div>
+            <div class="cert-meta">ServiceNow · 2023</div>
+          </div>
+          <div class="cert">
+            <div class="cert-name"><a href="https://www.freecodecamp.org/certification/fcca33bb84b-3b5c-4c49-a621-de0eb307bfc8/foundational-c-sharp-with-microsoft">Foundational C# with Microsoft</a></div>
+            <div class="cert-meta">Microsoft + freeCodeCamp</div>
+          </div>
+          <div class="cert">
+            <div class="cert-name"><a href="https://drive.google.com/file/d/1n8xbkXK0_XFNRwoOUXXlch7bKZPQwZTj/view?usp=sharing">Telecommunications Field Technician</a></div>
+            <div class="cert-meta"><a href="https://www.theclickexperts.com/">TCE Academy</a> · 2024</div>
+          </div>
+          <div class="cert">
+            <div class="cert-name"><a style="color: red;" href="https://drive.google.com/file/d/1KR1_gDdYnQKKkvtiLMdGQpIhou7ssoBP/view?usp=sharing">Recognition Diploma in Physics</a></div>
+            <div class="cert-meta">Bakersfield College</div>
+          </div>
+          <div class="cert">
+            <div class="cert-name"><a style="color: red;" href="https://drive.google.com/file/d/1TEr7jL5eWbzBpRJu3UJgoWsJqh2NDBBs/view?usp=sharing">Recognition letter from the Science &amp; Mathematics Department</a></div>
+            <div class="cert-meta">Bakersfield College</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="education">
+        <h2 class="section-title">Education</h2>
+        <ul class="timeline">
+          <li>
+            <span class="what">Bachelor of Science in Computer Science <span class="when">California State University, Northridge — expected</span></span>
+            Specialization: <a href="SpaceEngineering%20and%20RL%20-%20pytorch.html">Spacecraft Soft-Ring to Hard-Ring Capture Dynamics with Monte Carlo Envelope Simulation and Reinforcement Learning Policies (Basilisk · PyTorch)</a>
+          </li>
+          <li>
+            <span class="what"><a href="https://drive.google.com/file/d/1iTNcJsXGnwBt9eDtk1RVl0QqWhSCfB1N/view?usp=sharing">Associate of Science in Computer Science</a> <span class="when"><a href="https://www.bakersfieldcollege.edu/">Bakersfield College</a> — 2021</span></span>
+            Recognition Diploma in Physics and a recognition letter from the Science &amp; Mathematics Department.
+          </li>
+        </ul>
+      </section>
+
+      <section id="volunteering">
+        <h2 class="section-title">Volunteering</h2>
+        <ul class="timeline">
+          <li>
+            <span class="what"><a href="https://bridges.edu/">Robotics Mentor — Bridges Academy</a> <span class="when">Fall 2022</span></span>
+            Teacher assistant volunteer mentoring students in robotics.
+          </li>
+        </ul>
+      </section>
+
+      <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <p>Email: eberteo at hotmail dot com</p>
+        <ul>
+          <li>LinkedIn: <a href="https://www.linkedin.com/in/eberteo/">eberteo</a></li>
+          <li>GitHub: <a href="https://github.com/eberteogam">eberteogam</a></li>
+        </ul>
+      </section>
+
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/eberteo/">LinkedIn</a>
+        <a href="https://github.com/eberteogam">GitHub</a>
+        <a href="https://www.servicenow.com/community/user/viewprofilepage/user-id/600876">ServiceNow Community</a>
+        <a href="https://developer.sailpoint.com/discuss/u/eberteo/summary">SailPoint Developer</a>
+        <a href="https://community.moveworks.com/members/eberteo-2595">Moveworks Community</a>
+      </div>
+      Teo Gamarra · eberteogam.github.io
+    </footer>
+    <script src="assets/site.js" defer></script>
   </body>
 </html>

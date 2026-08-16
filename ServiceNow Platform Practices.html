@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ServiceNow Platform Practices — Teo Gamarra</title>
+    <meta name="description" content="Field notes on ServiceNow beyond the CMDB: the SN IDE and Fluent, migration strategies, ATF, Process Mining, KCS, Service Portal internals, Agile delivery, LDAP imports, and scripting conventions.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Teo Gamarra</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#research">Research &amp; Notes</a>
+      <a href="index.html#certifications">Certifications</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="wrap">
+      <h1 class="page-title">ServiceNow Platform Practices</h1>
+      <p class="page-sub">Field notes beyond the CMDB — the SN IDE &amp; Fluent, migration, testing, Process Mining, KCS, Portal internals, Agile delivery, and scripting conventions. Vocabulary: row = record, column = field, data = value.</p>
+      <div class="paper">
+
+        <div class="toc">
+          <strong>On this page</strong>
+          <ul>
+            <li><a href="#ide">SN IDE &amp; Fluent</a></li>
+            <li><a href="#migration">Migration</a></li>
+            <li><a href="#atf">ATF</a></li>
+            <li><a href="#mining">Process Mining</a></li>
+            <li><a href="#kcs">KCS</a></li>
+            <li><a href="#portal">Service Portal internals</a></li>
+            <li><a href="#agile">Agile &amp; project delivery</a></li>
+            <li><a href="#ldap">LDAP &amp; transforms</a></li>
+            <li><a href="#scripting">Scripting conventions</a></li>
+            <li><a href="#performance">Performance practices</a></li>
+            <li><a href="#misc">Platform miscellany</a></li>
+          </ul>
+        </div>
+
+        <h2 id="ide">ServiceNow IDE &amp; Fluent</h2>
+        <ul>
+          <li><strong>Fluent</strong> develops app metadata in <code>.now.ts</code>; TypeScript handles imports/integration. Repositories need a <code>package.json</code> and <code>now.config.json</code>.</li>
+          <li>Switch SDK versions with <code>sn_glider.default_to_bundled_sdk</code>. The IDE can clone from git or convert existing app metadata to Fluent.</li>
+          <li>File anatomy: <code>index.now.ts</code> defines tables; <code>src/server/*</code> holds server-side metadata — BRs, script includes, scheduled jobs run as server-side node modules; client side lives in <code>src/client/</code>.</li>
+          <li>Create the metadata <em>first</em> when building an app — otherwise you won't know the required <code>key: value</code> fields Fluent expects.</li>
+          <li>To convert an app: command palette → <em>Convert an app</em>, then choose file-by-file or right-click → <em>Convert Directory to Fluent</em>. Converted files land in <code>fluent/generated</code>.</li>
+        </ul>
+
+        <h2 id="migration">Migration: App Repository vs Update Sets</h2>
+        <ul>
+          <li><strong>Application Repository mode:</strong> System Applications &gt; My Company Applications → <em>Publish to My Application Repository</em>; install on another instance from the same menu (Not Installed). Prefer this over Update Sets when an app goes through multiple development phases — <strong>versioning is tracked</strong>, and scoped apps become available to any instance in the org at any version.</li>
+          <li><strong>Update Sets:</strong> no version tracking. When changing app scope, change the sys_id within the customer set and the current instance. To see which tables sync with Customer Updates: Dictionary, filter attributes = <code>*update_synch</code> — true means included; absent/false means records aren't synced.</li>
+          <li><strong>Migration planning notes:</strong> pull only last year's closed incidents into a new instance (enough for KPIs); new and active legacy incidents will need their workflows rebuilt as flows in the new instance; any API modification is a high-risk factor; deploy dev → QA when a sprint completes.</li>
+          <li><strong>Fix Forward:</strong> never back out an update set from production — create another update set and move it forward.</li>
+          <li>Data-seed templates can be created with the toggle template bar.</li>
+        </ul>
+
+        <h2 id="atf">ATF — Automated Test Framework</h2>
+        <ul>
+          <li>Focus ATFs on economic impact: ACLs, domain separation, encryption.</li>
+          <li>Templates exist: <em>Quick Start Tests</em> by scope and feature, and the <em>NowCreate Asset Test</em> template for architecture.</li>
+          <li>Use a pipeline between QA instances with <strong>Suites</strong> as the steps.</li>
+        </ul>
+
+        <h2 id="mining">Process Mining</h2>
+        <p>An app that analyzes flow/process data to visualize it — surfacing bottlenecks and improvement opportunities. The flow is generated from audit-log data based on how the project is set up. Three ways in:</p>
+        <ol>
+          <li>Point it at a table and the fields of interest (e.g. Incident + "State" for the last year) and run — the diagram builds automatically from changes to the chosen field.</li>
+          <li>From a KPI → run <em>Process Analysis</em> → set dates and use case → Workbench → Process Mining.</li>
+          <li>From a report or table → right-click → <em>Launch Process Mining</em> → set filters → nodes are created → the Insight tab hosts opportunities, each with analytics insights and clusters.</li>
+        </ol>
+        <ul>
+          <li>Workspace flow: Create project → choose table → filters/conditions → parameters → <em>Mine</em>. Filtered data goes through an ML process (same infrastructure as Predictive Intelligence) that generates the nodes.</li>
+          <li>No AI license is needed to run mining; enabling Analysis (an AI feature) improves performance.</li>
+        </ul>
+
+        <h2 id="kcs">KCS — Knowledge-Centered Service</h2>
+        <ul>
+          <li>Start with stakeholders — who's involved — and a governance plan.</li>
+          <li>Implementation: build a knowledge-sharing culture, define roles and responsibilities, set goals and metrics, and map process/workflow — start where performance is lowest.</li>
+          <li>KM rollout: get clear ideas and process flow <em>before</em> setting up technology; clean your knowledge bases before moving them; keep a clear governance structure (the right people accessing the right content in the right context — knowledge workflows help).</li>
+          <li>Ensure resources can handle the 30-day stage; solve questions in a timely manner and document new updates; measure metrics — how it helped, the boost, the numbers.</li>
+        </ul>
+
+        <h2 id="portal">Service Portal Internals (AngularJS)</h2>
+        <ul>
+          <li>The Portal runs AngularJS with Angular UI Bootstrap (different from regular Bootstrap). <code>ui.bootstrap</code> is recognized by default; the original library is deprecated, and the version your portal uses depends on its configuration — inspect the Network tab filtered by <em>bootstrap</em> or <em>angular</em> and use the URL to find the sys_id in your instance. Useful component: <code>typeahead</code>.</li>
+          <li><strong>GlideRecord</strong> bypasses ACLs; <strong>GlideRecordSecure</strong> (its subclass) respects them.</li>
+          <li>Portal &gt; Theme: you can create multiple CSS Includes that override the default UI Bootstrap precedence on <code>html, body</code>.</li>
+          <li>Key tables: <code>sp_instance</code> — where a widget is used, on which page; <code>sp_log</code> — which pages are actively in use (page + portal + lots of other data).</li>
+          <li>DOM manipulation is not supported in the Portal — when the Portal first shipped, client-side DOM manipulation caused a great deal of problems.</li>
+          <li><strong>UI Builder</strong> (Next Experience) targets internal fulfillers working requests/incidents/cases/approvals; the AngularJS Portal targets internal/external requesters.</li>
+        </ul>
+
+        <h2 id="agile">Agile &amp; Project Delivery</h2>
+        <ul>
+          <li>Story description: <em>As a &lt;who&gt;, I want &lt;what&gt;, so that &lt;why&gt;</em>. Acceptance criteria: <em>Given &lt;pre-conditions&gt;, when &lt;action&gt;, then &lt;expected results&gt;</em>.</li>
+          <li>Planning &amp; tracking: Agile Development &gt; Themes; Project &gt; Projects &gt; All; or a project's Related Links → <em>Agile Planning and Tracking</em> (VTB + backlog + tracking, 3-in-1). A <strong>theme</strong> is what multiple stories and epics have in common. Scrum itself is just the board planning/tracking (Story, Epic, Theme, Backlog).</li>
+          <li>Execution types: <strong>Waterfall</strong> includes tasks (StartNow methodology); <strong>Hybrid</strong> includes tasks <em>and</em> stories, and shows the Agile Planning &amp; Tracking link.</li>
+          <li>Daily standups: 10 people max, three questions — yesterday, today, blockers.</li>
+          <li><strong>Completed</strong> = all tasks of a story done; <strong>Done</strong> = the Product Owner approved the story. Sprint retrospective after every sprint: what went well, where to improve. HealthScan (now OOTB) checks adherence to technical leading practices at the end of every sprint.</li>
+          <li>Architecture flows from the <strong>Statement of Work</strong>: Initiate → Plan (SOW) → Execute (Agile) → Deliver (QA testing) → Close. If a big feature (e.g. mobile view) isn't in the SOW, you can't roll it back in — either raise a change request or write a separate SOW.</li>
+          <li>On a defect: ask whether it meets the acceptance criteria; if it does, it's an <em>enhancement</em>, not a defect.</li>
+          <li><strong>Hypercare</strong> = the follow-up plan after promoting to production (run ATF, then CI/CD; if something fails, fix forward). Close projects with a session on budget, time, feedback, and next-sprint/future vision.</li>
+          <li>Methodologies: <strong>StartNow</strong> (originally SN-projects-only), <strong>SIM</strong> (partner engagements led by ServiceNow), <strong>NowCreate</strong> (available to all). Work under &gt;Projects for VTBs so SCRUM can be followed.</li>
+        </ul>
+
+        <h2 id="ldap">LDAP, Import Sets &amp; Transforms</h2>
+        <ul>
+          <li>LDAP integration uses standard import sets and transform maps. To populate the LDAP server field on user records, create a field map with a source script: <code>return source.sys_import_set.data_source.ldap_target.server;</code></li>
+          <li>Creating an LDAP server requires a MID Server attached to it (and the MID must be <em>validated</em>). Reference links let you test the connection and browse/restrict returned nodes.</li>
+          <li>Excel ↔ table mapping: Import Sets &gt; Load Data → Create Transform Map; then LDAP OU Definitions &gt; Data Sources &gt; Transforms &gt; Table Transform Maps &gt; <em>Mapping Assist</em>.</li>
+          <li><strong>RTE</strong> (Robust Import Set Transformers) load data into one or more tables. In transform scripts you can also declare CI relationships directly: <code>return "Depends on::Used By";</code></li>
+          <li><strong>MID Server:</strong> the bridge between the instance and the internal network — WMI for Windows, SSH for Unix, SNMP for switches/printers.</li>
+        </ul>
+
+        <h2 id="scripting">Scripting Conventions</h2>
+        <ul>
+          <li>Business Rule: <code>(function executeRule(current, previous) { … })</code></li>
+          <li>UI Action: <code>(function executeAction(current, action) { … })</code></li>
+          <li>Transform Map: <code>(function transformRow(source, target, map, log, isUpdate) { … })</code></li>
+          <li>UI/Data Policy example — normalize a phone field: <code>var phone = g_form.getValue('phone').replace(/\D/g, ''); g_form.setValue('phone', phone);</code></li>
+          <li>Catalog client scripts: <code>onChange</code> and <code>onLoad</code> are void; <code>onSubmit</code> must return a boolean.</li>
+          <li>In classic forms <code>g_form.getControl('FN')</code> returns the actual DOM element; in Service Portal / Catalog items it returns a wrapper object, not the DOM.</li>
+          <li>A record producer can be created straight from table data → Related Links: <em>Add to Service Catalog</em>.</li>
+          <li>From the Tim Woodruff book: ServiceNow runs JS on Mozilla Rhino and executes as ES5 (even where ES6 syntax appears). Prefer the OOTB <code>getValue</code>/<code>setValue</code> over <code>grInc.field_name</code> (which touches the GlideElement object directly) — except for journal fields, catalog variables (append <code>toString()</code>), and dot-walking, where direct access applies. Never dot-walk more than three layers.</li>
+        </ul>
+
+        <h2 id="performance">Performance Practices</h2>
+        <ul>
+          <li><strong>Avoid Flow Designer for hot paths.</strong> Its underlying architecture creates complex context records in heavy tables, updated on every I/O action — a script is always faster than a flow. When you do use flows, put the logic in Script Actions (bonus: flows currently have no version history).</li>
+          <li>Use <code>gs.debug</code>, not <code>gs.log</code> — every log line is a record in a very heavy table. Errors and warnings: yes, log those.</li>
+          <li>For nested queries, approach it like an API application (headless design).</li>
+          <li>M2M tables: cascade-delete the references so no orphan data survives.</li>
+          <li>Deleted records: <code>sys_audit_delete</code>, filter sys_id by Document Key. Node status: SN-utils <code>/stats.do</code>.</li>
+        </ul>
+
+        <h2 id="misc">Platform Miscellany</h2>
+        <ul>
+          <li><strong>VTB:</strong> Blocking = a dependency task precedes this one; Stage = ready for deployment; Backlog = queued. <em>Background</em> = a cmd/bash-like console directly on the instance.</li>
+          <li><strong>Workflows:</strong> to find which workflow executed on a record — its XML view's <code>&lt;context&gt;</code> tag, or Related Links.</li>
+          <li><strong>ITSM vs ITIL:</strong> ITSM is the process behind the form flows (justification, implementation plan, risk/impact, backout, test plan) — the business layer for submitting/approving changes, handling incidents, documenting rollback. ITIL is the vocabulary (standard/normal/emergency change).</li>
+          <li><strong>KPI:</strong> a measurable value used to judge performance — same meaning everywhere; the subject changes per module (see the <a href="ServiceNow%20CMDB%20and%20CSDM.html">CMDB &amp; CSDM notes</a>).</li>
+          <li><strong>Enterprise Architecture</strong> is built on top of Application Portfolio Management / EA data: <code>cmdb_ci_business_app</code>, <code>cmdb_ci_service_auto</code>, <code>cmdb_ci_appl</code>.</li>
+          <li><strong>Now Assist Analytics:</strong> Subscription Management gives a high-level view of users across platforms.</li>
+          <li><strong>Now Support:</strong> access requires the NS Contributor role (different from the University role), managed through Customer User Access Management. Testing lives in the QA instance (not prod): unit, user-acceptance, integration, regression, penetration.</li>
+          <li><strong>Platform security services:</strong> ServiceNow Vault (encryption — how cloud data is protected, shared, and restricted to authorized users), Code Signing &amp; Circle of Trust (extends to the MID Server with signing and validation), Log Export Service (forwards logs to Hermes/Kafka to feed the customer's log-analytics systems).</li>
+          <li>Benchmarks can be created, but avoid them for on-prem, Express, and federal customers.</li>
+          <li><strong>Foundational table</strong> = core data shared across multiple tables (users, groups, locations). A <strong>Service Catalog item</strong> = pre-defined, bundled goods/services from IT or other departments; a <strong>CI</strong> = something you monitor, manage, measure, track.</li>
+        </ul>
+
+      </div>
+      <p style="text-align: center;">
+        <a class="back-home" href="index.html">&larr; Back to Homepage</a>
+      </p>
+    </div>
+    <script src="assets/site.js" defer></script>
+  </body>
+</html>

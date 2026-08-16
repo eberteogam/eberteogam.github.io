@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Moveworks Agent Studio — Teo Gamarra</title>
+    <meta name="description" content="Working notes on Moveworks Agent Studio: plugins, conversational processes, compound actions, HTTP actions, DSL, slots, resolvers, and knowledge ingestion.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Teo Gamarra</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#research">Research &amp; Notes</a>
+      <a href="index.html#certifications">Certifications</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="wrap">
+      <h1 class="page-title">Moveworks Agent Studio</h1>
+      <p class="page-sub">Working notes on building AI service agents — plugins, conversational processes, compound actions, DSL, and knowledge ingestion.</p>
+      <div class="paper">
+
+        <h2>What Moveworks Is</h2>
+        <p>Employee support automation. Its configuration language is called <strong>DSL</strong> (roughly the equivalent of Laravel's Eloquent in spirit: a compact, declarative layer over the underlying engine). Agents feed from knowledge bases, SharePoint, and the internet.</p>
+
+        <h2>Architecture</h2>
+        <p><strong>Plugin</strong> (natural language trigger) → <strong>Conversational Process</strong> (function calling to the LLM) → <strong>Compound Action</strong> (request orchestrator) → <strong>HTTP Action</strong> (single request). <strong>Data Types</strong> are rich business objects used to manipulate things like Jira/GitHub/VTB issues.</p>
+        <ul>
+          <li><strong>Plugin</strong> — its description is used by the Reasoning Engine to decide when to trigger it. It must be rich in keywords and context, since the description is what differentiates one plugin from another when a user prompts. Natural-language triggers define pass and reject steps; <strong>Launch Rules</strong> scope the audience.</li>
+          <li><strong>Conversational Process</strong> — always starts with <em>activities</em>. Activities (API requests) → <strong>Slots</strong> (temporary data containers) → <strong>Decision Policies</strong> (if-then business logic in DSL, roughly the equivalent of a Switch in a Compound Action). In Input Mapping there is a <code>system_prompt</code> key used to log with your user prompt response. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> validates when the Validate option isn't shown.</li>
+          <li><strong>Compound Action</strong> — always starts with <em>steps</em>; the API orchestrator. Custom scripts are written in <strong>APIthon</strong> (a subset of Python).</li>
+          <li><strong>HTTP Action</strong> — a single request. Reusable HTTP Connectors serve multiple HTTP Actions — the equivalent of ServiceNow's REST API Explorer module.</li>
+          <li><strong>Content Activity</strong> — the user-experience side: return information as Knowledge, a Form, or plain text.</li>
+          <li><strong>Built-in actions</strong> — OOTB methods usable in the Conversational Process, e.g. <code>mw.get_user_by_email</code>, <code>mw_send_plaintext_chat_notification</code>.</li>
+        </ul>
+        <p><strong>Description fields:</strong> for HTTP Actions, Compound Actions, and Conversational Processes the description is primarily internal. Only the <em>plugin</em> description drives the Reasoning Engine's trigger decision.</p>
+
+        <h2>Slots &amp; Resolvers</h2>
+        <ul>
+          <li>A <strong>slot</strong> is a data placeholder — like a declared global variable (not local, not environment). Slot validation has two parts: the <strong>Validation Policy</strong> (the DSL condition on the slot value) and the <strong>Slot Validation Description</strong> (the error description the agent returns).</li>
+          <li><strong>Static resolver</strong> — must be declared in the Input Mapping of the conversational process step.</li>
+          <li><strong>Dynamic resolver</strong> — no Input Mapping declaration needed. Use for multiple applications at once, ambiguous requests, and context analysis.</li>
+          <li><strong>Data Types</strong> — <em>Schema</em>: create a data schema matching your request's JSON response using the "Import JSON" option with one object. <em>Resolver</em>: create a method and map it to an existing HTTP Action.</li>
+          <li><strong>Platform data prefixes</strong> — <code>meta_info.user.email_addr</code> takes the value from the user who triggered the flow; <code>data.user_email</code> takes it from Input Args. Mapping slots use <code>data.&lt;slot_name&gt;</code>.</li>
+        </ul>
+
+        <h2>Memory &amp; Context</h2>
+        <ul>
+          <li>The <code>result</code> JSON from a Compound Action's <em>Test</em> run is what gets passed to the LLM's function calling — Moveworks calls this the LLM's memory (<strong>Semantic Working Memory</strong>). It holds roughly <strong>~7,000 tokens</strong> of active conversation context.</li>
+          <li>That context persists as long as the user stays in the same chat session asking relevant follow-ups. Changing topic entirely or starting a new session clears the working memory for the new topic.</li>
+          <li><strong>Conversation context</strong> (the reasoner's session memory across turns) auto-clears every 24 hours, and is what <em>copilot clearhistory</em> flushes.</li>
+          <li>The <strong>Data Bank</strong> is different: a per-execution scratch space created and destroyed within a single plugin run — it lives for milliseconds to seconds, nothing to do with the 24 hours.</li>
+        </ul>
+
+        <h2>Moveworks DSL</h2>
+        <ul>
+          <li>String: <code>$LOWERCASE</code>, <code>$TRIM</code>, <code>$REPLACE</code>…</li>
+          <li>Time: <code>$TIME</code>, <code>$PARSE_TIME</code>, <code>$FORMAT_TIME</code>, <code>$ADD_DATE</code> (adds time to a date)…</li>
+          <li>Types: <code>$TEXT</code>, <code>$INTEGER</code>, <code>LENGTH</code>…</li>
+          <li>Collections: <code>$FILTER</code>, and in the Data Mapper: <code>MAP</code>, <code>SORT</code>, <code>COALESCE</code>, <code>FILTER</code>.</li>
+          <li>MWDSL is <strong>strictly typed</strong> — even if an array contains a single element, the system still sees it as a List, not an Object.</li>
+          <li>DSL and mappers execute <strong>faster than APIthon</strong> at the execution level; prefer them where possible.</li>
+          <li>Great debugging tool: the <a href="https://docs.moveworks.com/agent-studio/configuration-languages/dsl-and-mapper-playground">DSL and Mapper Playground</a>.</li>
+        </ul>
+
+        <h2>Development Workflow</h2>
+        <ul>
+          <li><strong>Publish order matters</strong> when working a complete flow, otherwise you get access denied: <strong>HTTP Actions → Compound Action → Conversational Process</strong>.</li>
+          <li><strong>Troubleshooting</strong> — the Logs app. Filter logs by plugin (Root UUID) or by requestor.</li>
+          <li><strong>Marketplace plugin states</strong> — <em>Install</em>: fully packaged agent, deploy immediately. <em>Build</em>: a design template plus integration guide; you create the plugin in Agent Studio yourself. <em>Get Notified</em>: no installable template released yet; register interest.</li>
+          <li>When installing internal plugins you can customize the plugin's workflow to your needs in Agent Studio.</li>
+        </ul>
+
+        <h2>Knowledge Ingestion</h2>
+        <ul>
+          <li><strong>Pipeline 1 — Classic ingestion, internal knowledge:</strong> the connector catalogs each site's pages, then fetches each page and indexes its metadata (JSON-wrapped HTML). The bot can answer page-level questions and hand out links; deeper document crawling is configured separately.</li>
+          <li><strong>Pipeline 2 — Classic ingestion, files:</strong> the same connector family (ms_graph) aimed at document libraries — catalogs the files, extracts docx/PDF/pptx contents, and indexes them. This is the pipeline that answers from inside documents.</li>
+        </ul>
+
+        <h2>Adoption Ideas</h2>
+        <ul>
+          <li>Different welcome messages per department.</li>
+          <li>License-renewal reminders (user answers yes/no, then analytics on the numbers), outage-report reminders, new-hire campaigns.</li>
+          <li><strong>Calendar Campaigns</strong> to visualize all reminders in one place.</li>
+          <li>Channel usage goes through approvals — therefore roles must exist.</li>
+          <li>The key: make it a <strong>daily assistant</strong>. Certification focus: Agent Studio.</li>
+        </ul>
+
+        <h2>Course Walkthrough Index</h2>
+        <ol>
+          <li>Agent Studio — building a plugin: connecting natural language to system APIs; Marketplace = AI Agents Pack and internal plugins.</li>
+          <li>Plugins: triggers, launch rules, processes — essentially function calling in an LLM (Agentic Reasoning Engine).</li>
+          <li>Task automation with Conversational Processes: activities → slots → decision policies.</li>
+          <li>AI Agent Marketplace and agent installation, with workflow customization.</li>
+          <li>Reusable HTTP Connectors for multiple HTTP Actions.</li>
+          <li>Built-in actions.</li>
+          <li>Customizing with scripts (APIthon) and Compound Actions.</li>
+          <li>Slots as data placeholders; validation policy and description.</li>
+          <li>Static vs. dynamic resolvers.</li>
+          <li>Data Types: schema and resolver.</li>
+          <li>Platform data prefixes.</li>
+          <li>Action and Content Activities.</li>
+          <li>Decision Policies.</li>
+          <li>Natural-language triggers: pass and reject steps.</li>
+          <li>Launch Rules: audience scoping.</li>
+          <li>DSL &amp; Render basics: Data Mapper = DSL with filters (list/string manipulation).</li>
+          <li>Troubleshooting with the Logs app.</li>
+          <li>End-to-end purchase-request submission agent.</li>
+        </ol>
+
+      </div>
+      <p style="text-align: center;">
+        <a class="back-home" href="index.html">&larr; Back to Homepage</a>
+      </p>
+    </div>
+    <script src="assets/site.js" defer></script>
+  </body>
+</html>

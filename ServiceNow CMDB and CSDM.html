@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ServiceNow CMDB &amp; CSDM v5 — Teo Gamarra</title>
+    <meta name="description" content="Implementation notes on ServiceNow CMDB and CSDM v5: the Ingest → Govern → Insight pipeline, IRE identification and reconciliation, CMDB Health, and the CSDM domain and table model.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>">
+    <link rel="stylesheet" href="assets/site.css">
+  </head>
+  <body>
+    <nav class="site-nav">
+      <a class="brand" href="index.html">Teo Gamarra</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#research">Research &amp; Notes</a>
+      <a href="index.html#certifications">Certifications</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="wrap">
+      <h1 class="page-title">ServiceNow CMDB &amp; CSDM v5</h1>
+      <p class="page-sub">Implementation notes — the Ingest → Govern → Insight pipeline, IRE rules, CMDB Health, and the CSDM domain model.</p>
+      <div class="paper">
+
+        <h2>CMDB in One Paragraph</h2>
+        <p>The CMDB is a data repository following <strong>Ingest → Govern (Lifecycle) → Insight</strong>. If I could summarize it in two things: control the budget department through <strong>Normalization</strong>, and automate as much of the data flow into the CMDB as possible. It underpins Service Management, Asset Management, Operations Management, Cloud Operations, Compliance, and Application Portfolio Management. Ultimately you want to make business decisions — and you cannot make good business decisions on bad data.</p>
+
+        <h2>Core Concepts</h2>
+        <ul>
+          <li><strong>Asset</strong> — part of the <em>financial</em> lifecycle; has financial value. Created during procurement, or when Discovery first inserts a CI into the CMDB (its asset record gets created). It can have two different CIs during lifecycle management.</li>
+          <li><strong>Configuration Item (CI)</strong> — part of <em>technical operations</em>; tracked for service delivery. Created during procurement or through a discovery tool. Tangible (hardware) or intangible (software). A CI is something you want to monitor, manage, measure, and track.</li>
+          <li><strong>Attributes</strong> — info that further describes the CI: serial number, OS, etc. Prefer the base system attributes given in each class — don't create custom attributes.</li>
+          <li><strong>CI Class</strong> — a table describing a specific type or group of CIs with common attributes. Hierarchy sample: Hardware &gt; Computer &gt; Server &gt; Nginx. If a base system class exists, <em>extend</em> it instead of copying it. The "CMDB CI Class Models" plugin enables a range of additional classes.</li>
+          <li><strong>CI Reclassification</strong> — migrating a CI from one cmdb table to another due to upgrade / downgrade / switch.</li>
+          <li><strong>Non-discoverable attributes</strong> — Support group, approval group, managed-by group. <em>Managed By Group</em> = the specific group responsible for an entire CI class (unless configured to be managed by a contractor).</li>
+          <li><strong>Foundational tables</strong> — core data shared across multiple tables (users, groups, locations).</li>
+          <li><strong>Snapshots</strong> are available on the CMDB to track a CI record. To prevent inserts from an unwanted data source, create an IRE Data Source Rule (<code>cmdb_ire_data_source_rule</code>).</li>
+          <li><strong>Non-CMDB tables usable with IRE</strong> (per <code>glide.identification_engine.non_cmdb_tables</code>): Location <code>cmn_location</code>, Department <code>cmn_department</code>, Cost Center <code>cmn_cost_center</code>, Building <code>cmn_building</code>, User <code>sys_user</code>, Group <code>sys_user_group</code>. These six are the only ones — and their identification rules are set directly on their table list view, not through CI Class Manager.</li>
+          <li><strong>Housekeeping:</strong> archive CIs at 90 days and delete at 3 years to reduce cost and keep organized.</li>
+        </ul>
+
+        <h2>CMDB Table Conventions</h2>
+        <ul>
+          <li>Business Service data — <code>cmdb_ci_service_business</code></li>
+          <li>Service data — lifecycle management <code>cmdb_ci_service</code> &amp; technology offering <code>service_offering</code></li>
+          <li>Router data — <code>cmdb_ci_router</code> · Servers — <code>cmdb_ci_server</code> · CI relationships — <code>cmdb_rel_ci</code></li>
+          <li>App scope &amp; host — <code>cmdb_ci_business_app</code>, <code>cmdb_ci_appl</code>, <code>cmdb_ci_service_discovered</code>, via ITOM (Service Mapping and Discovery)</li>
+        </ul>
+
+        <h2>The CMDB Pipeline</h2>
+        <details open>
+          <summary><strong>1. Data Source</strong> (Discovery, Service Graph Connector, Import Set, …)</summary>
+          <p>If running Discovery on a Linux instance, make sure the SSH user on that host has the right file permissions.</p>
+        </details>
+        <details open>
+          <summary><strong>2. ETL</strong> — non-Discovery / external sources (optional)</summary>
+          <p>System Import Sets → Robust Import Set Transformers (RTE), or Transform Maps. External-to-internal field mapping itself is done in Transform Maps, Service Graph ETL, or integration mappings.</p>
+        </details>
+        <details open>
+          <summary><strong>3. IRE</strong> — Identification &amp; Reconciliation Engine (two steps)</summary>
+          <p><strong>Identification runs first, then reconciliation.</strong> Identification is about inserting/updating a CI; reconciliation is about which source may update it. To test rules, use background scripts.</p>
+          <ul>
+            <li><strong>Identification rules</strong> (declared in CI Class Manager) — decide if a payload matches an existing CI or creates a new one, using criteria that identify unique CIs. Match found → existing CI updated; no match → new CI record. This is the duplicate-prevention layer. Good practice: identify an application by its installation directory or configuration file path, which stays unique per instance even on the same host. <code>glide.identification_engine.enable_identifier_optional_condition</code> = true adds an advanced optional filter on identifier entries.</li>
+            <li><strong>Reconciliation rules</strong> — decide which source can overwrite which attributes.
+              <ul>
+                <li><em>Static — Data Refresh Rules:</em> how and when data refreshes; if a higher-priority source hasn't updated within the interval, lower-priority sources are allowed to update.</li>
+                <li><em>Dynamic:</em> optional, only with Multisource CMDB enabled; focused on multisource across Discovery sources. Rules on a specific class take precedence over parent-class rules, and dynamic rules take precedence over static ones when both exist for the same attribute.</li>
+                <li><em>Data source precedence</em> completes the picture.</li>
+              </ul>
+            </li>
+          </ul>
+        </details>
+        <details open>
+          <summary><strong>4. CMDB tables</strong></summary>
+          <p>Where the (still messy) CIs land.</p>
+        </details>
+        <details open>
+          <summary><strong>5. Normalization</strong></summary>
+          <p>Standardizes software and hardware, consumed by SAM and HAM — enables compliance and audits. Normalization in CMDB is different from ETL: it's the concept of consolidating all available versions. Mapping flow for hardware: CMDB → Discovery → HAM → SAM.</p>
+        </details>
+
+        <h2>Ingestion Methods</h2>
+        <ul>
+          <li><strong>ServiceNow Discovery</strong> (horizontal / agentless): Router → Switch → DB → App. Schedule-based, so <em>not</em> real-time.</li>
+          <li><strong>Service Mapping</strong> (top-down / tag-based / ML-powered): maps services to their IT component relationships (e.g. Order_API → Tomcat → RabbitMQ → Oracle). Focus on CI hierarchy — it pays off in outage reports.</li>
+          <li><strong>Agent Client Collector</strong> (ACC, agent-based): an agent per host; collects CPU, memory, software versions, usage, OS settings, patch level, real-time performance, processes. Use this for true real-time discovery.</li>
+          <li><strong>Import Sets + Transform Maps:</strong> do <em>not</em> bypass the IRE — that produces duplicate CIs. First set identifier/reconciliation for the table in <code>cmdb_identifier</code>; then add an <code>onBefore</code> script in the transform map that calls the <code>CMDBTransformUtil</code> API so imported data goes through the IRE.</li>
+          <li><strong>IntegrationHub ETL:</strong> OOTB guided UX that already runs IRE within the ETL.</li>
+          <li><strong>Service Graph Connectors:</strong> detailed ingestion from multi-resource filters; unique SGC records should be identified during coalesce or IRE.</li>
+          <li><strong>Patterns plugin:</strong> Discovery and Service Mapping Patterns — an OOTB library to populate CIs and relationships.</li>
+          <li><strong>Multisource CMDB:</strong> requires the ITOM Discovery plugin and <code>glide.identification_engine.multisource_enabled</code> = true.</li>
+          <li>Limiting discovery at the beginning (e.g. by IP ranges) helps create a solid base and prevents data overload.</li>
+        </ul>
+
+        <h2>Non-Discoverable Group Data</h2>
+        <p>For Managed-by Group, Support Group, and Change Group there are two options; both synchronize group attributes across all CIs of the class. Audit periodically with Data Manager afterwards. Group information is critical when incidents are raised against CIs.</p>
+        <details>
+          <summary><strong>Option 1 — CI Class Manager</strong></summary>
+          <p>Set the group attributes at the class level.</p>
+        </details>
+        <details>
+          <summary><strong>Option 2 — Technology Management Offering</strong> (takes precedence over Option 1 if both are set)</summary>
+          <p><em>Using forms:</em></p>
+          <ol>
+            <li>Create a CMDB Group — Configuration &gt; CMDB Groups (<code>cmdb_group</code>)</li>
+            <li>Create a Dynamic CI Group — automates CI inclusion by criteria (<code>cmdb_ci_query_based_service</code>)</li>
+            <li>Create a Technology Management Service (<code>cmdb_ci_service_technical</code>)</li>
+            <li>Create a Technology Management Offering (<code>service_offering</code>) — defines the conditions and the responsible groups</li>
+            <li>Associate the Dynamic CI Group to the offering as a relationship</li>
+            <li>Set the group attribute</li>
+            <li>Verify the sync business rule: "CSDM - Sync Group Attributes" (check <code>support_group</code>, <code>assignment_group</code>, <code>managed_by_group</code> in the script)</li>
+            <li>View CIs with the synced group attribute</li>
+          </ol>
+          <p><em>Using Service Builder:</em> the same flow as a guided, step-by-step wizard — define the technical service, its offering, responsible groups, associate the Dynamic CI Group, review and submit.</p>
+        </details>
+
+        <h2>Governance</h2>
+        <details>
+          <summary><strong>Multisource ingestion tracking</strong></summary>
+          <ul>
+            <li><code>cmdb_multisource_data</code> tracks all CI records and attribute history, including data sources. Common attributes live in columns; all attributes live in a JSON blob.</li>
+            <li>Part of the ITOM Discovery license; accessible from a CI record's Related Links or from CI Class Manager's Reconciliation Rule tab.</li>
+          </ul>
+        </details>
+        <details>
+          <summary><strong>CMDB Health Dashboard — the three C's</strong></summary>
+          <p>A scoreboard covering Completeness, Compliance, and Correctness, populated by scheduled jobs; points at non-compliant CIs. First define <em>inclusion rules</em>: which CI classes fall under which metric — focus only on the classes your organization actually handles ("is a" maps an entire hierarchy).</p>
+          <ul>
+            <li><strong>Completeness</strong> — is non-discoverable data populated? Start with Recommended fields (Assigned To, Location, Support Group, Change Group, Managed By, Serial Number, Name); Required examples: Serial Number, Name, MAC. Activate in three spots: class attributes (column label + mandatory), the class Health → Completeness filter, and the Health Dashboard scheduled jobs.</li>
+            <li><strong>Compliance</strong> — does CI data pass audits? Activate via the Certification Filter, Certification Template, and Audit tabs, plus the Compliance scheduled job.</li>
+            <li><strong>Correctness</strong> — is the data legit? <em>Duplicate</em> (more than one entry for one real CI), <em>Orphan</em> (condition-based CIs with no server relationship — only one orphan rule per class), <em>Stale</em> (forgotten/outdated; you set the timestamp threshold).</li>
+            <li><strong>CMDB Group Health Dashboard</strong> — CI collections scored on the same metrics, shown in the CMDB Workspace.</li>
+          </ul>
+        </details>
+        <details>
+          <summary><strong>Duplicate remediation</strong></summary>
+          <ol>
+            <li><strong>Duplicate CI Remediation Wizard</strong> — friendly UI ("Remediate" button) to merge duplicates into one. OOTB.</li>
+            <li><strong>De-Duplication Templates</strong> — bulk resolution, pre-configured rules and criteria, schedulable.</li>
+          </ol>
+          <p>Two properties worth setting when defining IRE: <code>glide.identification_engine.skip_duplicates</code> and <code>…skip_duplicates.threshold</code>.</p>
+        </details>
+        <details>
+          <summary><strong>Reclassification</strong></summary>
+          <ul>
+            <li>Happens automatically during Discovery, or manually. Controlled by <code>glide.class.upgrade.enabled</code> (e.g. Server → Windows Server), <code>glide.class.downgrade.enabled</code> (Windows Server → Server), and <code>glide.class.switch.enabled</code> (Linux Server → Windows Server). In these flows the CI record itself isn't changed — a CI reclassification <em>task</em> is created.</li>
+            <li><strong>Reclassification Restriction Rules</strong> — a more granular, newer mechanism that takes precedence over the legacy <code>glide.class.*.enabled</code> properties: the IRE applies attribute updates from the incoming payload but skips the class change entirely; no reclassification task is created. The CI keeps its <code>sys_class_name</code>, everything else in the payload lands.</li>
+          </ul>
+        </details>
+        <details>
+          <summary><strong>Data Manager (CMDB Workspace)</strong></summary>
+          <p>A policy-driven framework for bulk CI management: Retire, Archive, Delete, Delete CMDB Related Entry (end-of-life policies), Attestation (similar to certification campaigns in IGA tools), and Certification.</p>
+        </details>
+
+        <h2>CSDM v5</h2>
+        <p>On the CSDM diagram: a <strong>solid line</strong> is a relationship record (<code>cmdb_rel_ci</code>); a <strong>dashed line</strong> is a reference field (a column on one record pointing to another). There's no single way to implement CSDM — the path depends on your focus:</p>
+        <ul>
+          <li><strong>Step-wise:</strong> Foundation → Crawl → …</li>
+          <li><strong>Domain-centric:</strong> one domain at a time (left-to-right, right-to-left, or middle-out)</li>
+          <li><strong>Outcome-centric:</strong> start from the burning problem and work backwards</li>
+        </ul>
+
+        <details>
+          <summary><strong>Domains and their tables</strong></summary>
+          <ul>
+            <li><strong>Foundation</strong> — referential data on a CI. Product/Model (<code>cmdb_model</code> and its many child model tables: application, software, hardware, service, contract, facility, consumable, firmware, AI system/content…), Product Feature (<code>sn_dpr_model_product_feature</code>), SBOM (<code>sn_sbom_doc</code>), Business Process (<code>cmdb_ci_business_process</code>), Contract (<code>ast_contract</code>), Location (<code>cmn_location</code>), CMDB Group (<code>cmdb_group</code>), Group/Team/User (<code>sys_user_group</code>, <code>sys_user</code>), Life Cycle (<code>life_cycle_stage</code>, <code>life_cycle_stage_status</code>), Company/BU/Department (<code>core_company</code>, <code>business_unit</code>, <code>cmn_department</code>), Knowledge (<code>kb_knowledge</code>). Lifecycle = stage + stage status together, for both the operational side of a CI and the physical asset until end-of-life.</li>
+            <li><strong>Ideation &amp; Strategy</strong> (outside the CMDB) — Product Idea (<code>sn_align_core_product_idea</code>), Planning Item (<code>sn_align_core_planning_item</code>). Where the idea starts; enough ideas to take business decisions. Foundation object living here: <code>cmn_value_stream</code>.</li>
+            <li><strong>Design &amp; Planning</strong> — Business Capability (<code>cmdb_ci_business_capability</code>, <em>what your company does</em>), Business Application (<code>cmdb_ci_business_app</code>, the wrapper for all hardware and software of an app — the highest application record), Information Object (<code>cmdb_ci_information_object</code>, <em>what type of information lives inside each app</em> — customer data ⇒ PII audits, credit-card data ⇒ PCI audits).</li>
+            <li><strong>Build &amp; Integration</strong> (optional) — SDLC Component (<code>cmdb_ci_sdlc_component</code>); the DevOps Change Data Model is a data model/app spanning multiple <code>sn_devops_*</code> tables. Think microservices and CI/CD — the things you deploy.</li>
+            <li><strong>Service Delivery</strong> — Technology Management Service (<code>cmdb_ci_service_technical</code>), Technology Management Offering (<code>service_offering</code>), Service Instance (<code>cmdb_ci_service_auto</code>, the application service per environment, with child tables <code>cmdb_ci_service_discovered</code>, <code>…_by_tags</code>, <code>…_calculated</code>, <code>cmdb_ci_query_based_service</code>), Dynamic CI Group (<code>cmdb_ci_query_based_service</code>), Application (<code>cmdb_ci_appl</code> — Nginx, MySQL, Tomcat). The operational piece: which people/groups deliver the technical steps.</li>
+            <li><strong>Service Consumption</strong> — Business Service (<code>cmdb_ci_service_business</code>), Business Offering (<code>service_offering</code>), and the catalogs (not CMDB CI tables): Service Catalog (<code>sc_catalog</code>, <code>sc_category</code>, <code>sc_cat_item</code>, <code>sc_request</code>, <code>sc_req_item</code>, <code>sc_task</code>), Product Catalog (<code>pc_product_cat_item</code> ↔ <code>cmdb_model</code>), Sales Catalog (an <code>sc_catalog</code> record). Identify the business consumers; impacts from Service Delivery populate here.</li>
+            <li><strong>Portfolios</strong> — Enterprise/Service (DPM), Personal (DPM), Application (EA), Project (SPM), Technology (EA). SPM portfolio lenses: Value Stream, Product, Organization, Goals, Project Portfolio/Program, Strategic Investments.</li>
+          </ul>
+        </details>
+
+        <details>
+          <summary><strong>Terminology that trips people up</strong> (IPC = Incident, Problem, Change)</summary>
+          <ul>
+            <li><strong>Application</strong> (<code>cmdb_ci_appl</code>) — operational CI, used in IPC. DB servers, Java, Tomcat, httpd.</li>
+            <li><strong>Business Application</strong> (<code>cmdb_ci_business_app</code>) — <em>not</em> operational, <em>not</em> used in IPC, <em>not</em> version-specific. A listing of apps for EA/portfolio purposes: knowing what exists in the organization.</li>
+            <li><strong>Application Service</strong> (<code>cmdb_ci_service_auto</code>) — operational, used in IPC. Uniquely identifies each environment and who uses it.</li>
+            <li><strong>Business Service</strong> (<code>cmdb_ci_service</code>) — operational, used in IPC. The consumers and what's impacted: internal (accounting, HR capabilities) or external (what money is made from).</li>
+            <li><strong>Technology Management Service</strong> (<code>cmdb_ci_service_technical</code>) — operational, used in IPC. Who is <em>responsible</em> for the technology, very granular (app layer, DB layer, server layer) — the Support Group.</li>
+          </ul>
+        </details>
+
+        <details>
+          <summary><strong>Foundational-data lab walkthrough</strong> (CD-* convention)</summary>
+          <ol>
+            <li>Analyze the CSDM Data Foundations Dashboard (plugin: <code>com.snc.cmdb.csdm.activation</code>).</li>
+            <li>Create foundational data — groups (CD-Support Group, CD-Change Group) and locations (CD-Parent/Child Location).</li>
+            <li>Business Application (CD-Business Application: define app, architecture type, owner) — remember it's not an operational CI and is never used in INC/PRB/CHG, and it's not version-specific.</li>
+            <li>Business Capability (CD-Capability, related to the Business Application via Provided By::Provides) and Information Object (CD-Information Object, Uses::Used by).</li>
+            <li>Business Service + Offering via Service Portfolio Management &gt; Service Builder — a business service is made of one or more offerings; set lifecycle Phase: Catalog / Status: Operational, with Support and Change groups on the <em>offering</em>.</li>
+            <li>Technology Management Service + Offering — same lifecycle pattern, groups on the offering.</li>
+            <li>Create a Service Instance and configure the relationships between services, offerings, and business applications.</li>
+          </ol>
+        </details>
+
+        <h2>Insights</h2>
+        <ul>
+          <li><strong>Query Builder</strong> — filter and drag/drop CIs on a UI map.</li>
+          <li><strong>Unified Map</strong> — hierarchical relationship map for CIs.</li>
+          <li><strong>Intelligent Search</strong> — filter using natural language.</li>
+          <li><strong>DPM</strong> — the visibility piece for CSDM: how it all comes together.</li>
+        </ul>
+
+        <h2>KPIs in the CMDB Context</h2>
+        <p>A KPI is a measurable value used to judge performance — the meaning is constant, the <em>subject</em> changes per module. In CMDB Health, KPIs measure data quality (the three C's). In SLA/OLA they measure service performance against time or responsibility commitments (SLA breached/met, time to respond/resolve, % resolved within target). Related vocabulary: <strong>SLA</strong> = customer-facing; <strong>OLA</strong> = internal between teams; <strong>SLI</strong> = the metric you measure; <strong>SLO</strong> = the target for an SLI over time.</p>
+
+      </div>
+      <p style="text-align: center;">
+        <a class="back-home" href="index.html">&larr; Back to Homepage</a>
+      </p>
+    </div>
+    <script src="assets/site.js" defer></script>
+  </body>
+</html>
