@@ -120,7 +120,7 @@
       var log = document.getElementById("log");
       var input = document.getElementById("input");
       var sendBtn = document.getElementById("send");
-      var history = [];
+      var chatHistory = [];
       var busy = false;
 
       function addMsg(role, text, extraClass) {
@@ -146,20 +146,20 @@
         sendBtn.disabled = true;
         input.value = "";
         addMsg("user", text);
-        history.push({ role: "user", content: text });
+        chatHistory.push({ role: "user", content: text });
         var pending = addMsg("bot", "Thinking…", "thinking");
 
         fetch(AGENT_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: history.slice(-20) })
+          body: JSON.stringify({ messages: chatHistory.slice(-20) })
         })
           .then(function (r) { return r.json(); })
           .then(function (data) {
             pending.remove();
             var reply = data.reply || data.error || "Sorry, something went wrong — please try again.";
             addMsg("bot", reply);
-            if (data.reply) history.push({ role: "assistant", content: data.reply });
+            if (data.reply) chatHistory.push({ role: "assistant", content: data.reply });
           })
           .catch(function () {
             pending.remove();
