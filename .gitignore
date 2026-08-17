@@ -1,2 +1,11 @@
 ﻿sys_remote_update_set_*.xml
 DockingForm/node_modules/
+agent/node_modules/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
+/_gc.ps1
