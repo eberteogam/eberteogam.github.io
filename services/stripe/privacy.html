@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy policy — Writeback</title>
+<meta name="description" content="How Writeback for Stripe Workflows collects, uses, and deletes data — early-access draft.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--suppress CssNoGenericFontName -->
+<style>
+  :root{
+    --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A1F36; --muted:#5B6478;
+    --line:#E3E7F0; --blurple:#635BFF; --blurple-soft:#EDEBFF;
+    --maxw:820px;
+    --display:'Sora',system-ui,sans-serif;
+    --body:'Inter',-apple-system,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  a:focus-visible{outline:2px solid var(--blurple);outline-offset:3px}
+  header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(247,248,252,.92);backdrop-filter:blur(10px);z-index:50}
+  .site-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1120px;margin:0 auto}
+  .wordmark{font-family:var(--display);font-weight:800;font-size:17px;text-decoration:none}
+  .wordmark span{color:var(--muted);font-family:var(--mono);font-weight:400;font-size:11.5px;margin-left:10px}
+  nav.top{display:flex;gap:22px;align-items:center}
+  nav.top a{font-size:14px;text-decoration:none;color:var(--muted)}
+  nav.top a:hover,nav.top a[aria-current]{color:var(--ink)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  main{padding:56px 0 72px}
+  .kicker{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--blurple);background:var(--blurple-soft);border-radius:999px;padding:6px 12px;margin-bottom:16px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,44px);line-height:1.1;letter-spacing:-.02em}
+  .meta{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin:12px 0 28px}
+  .draft{border:1px solid #F3C96B;background:#FFF8E6;color:#6B4E00;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:32px}
+  .draft b{color:#4A3600}
+  h2{font-family:var(--display);font-weight:700;font-size:21px;margin:36px 0 10px;letter-spacing:-.01em}
+  h3{font-family:var(--display);font-weight:700;font-size:16.5px;margin:22px 0 6px}
+  p{margin:0 0 14px;max-width:70ch}
+  ul,ol{padding-left:22px;margin:0 0 14px;max-width:70ch}
+  li{margin-bottom:6px}
+  .fill{background:#FFF8E6;border-bottom:2px dotted #F3C96B;padding:0 3px}
+  code{font-family:var(--mono);font-size:.9em;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+  pre{font-family:var(--mono);font-size:13.5px;line-height:1.55;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;margin:0 0 16px}
+  pre code{border:none;background:none;padding:0;font-size:inherit}
+  table{border-collapse:collapse;width:100%;margin:0 0 18px;font-size:14.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .tbl{overflow-x:auto}
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:28px}
+  .toc a{font-size:14.5px;display:block;padding:3px 0;text-decoration:none;color:var(--muted)}
+  .toc a:hover{color:var(--blurple)}
+  footer.site{border-top:1px solid var(--line);padding:26px 0 44px;background:#fff}
+  .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline;max-width:1120px;margin:0 auto;padding:0 24px}
+  .foot-inner p,.foot-inner a{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .legal{font-size:12px;color:var(--muted);margin:14px auto 0;max-width:1120px;padding:0 24px}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="wordmark" href="./">Writeback<span>for Stripe Workflows</span></a>
+    <nav class="top">
+      <a href="docs.html">Docs</a>
+      <a href="privacy.html" aria-current="page">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="index.html#access">Get early access</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <span class="kicker">Legal</span>
+    <h1>Privacy policy</h1>
+    <p class="meta">Last updated: 2026-08-26 · Applies to Writeback for Stripe Workflows and this website</p>
+    <div class="draft"><b>Draft.</b> This policy was scaffolded for early access and has not been reviewed by a lawyer. Highlighted <span class="fill">[items]</span> are decisions still to be made. Replace this notice with an effective date before the Marketplace listing goes live.</div>
+
+    <div class="toc">
+      <a href="#who">1. Who we are</a>
+      <a href="#collect">2. What we collect</a>
+      <a href="#not">3. What we never collect</a>
+      <a href="#use">4. How we use it</a>
+      <a href="#share">5. Who we share it with</a>
+      <a href="#retain">6. How long we keep it</a>
+      <a href="#security">7. Security</a>
+      <a href="#rights">8. Your rights</a>
+      <a href="#uninstall">9. Uninstalling</a>
+      <a href="#changes">10. Changes &amp; contact</a>
+    </div>
+
+    <h2 id="who">1. Who we are</h2>
+    <p>Writeback is built and operated by <b>Cali Live Play LLC</b> ("we", "us"). We are an independent developer on the Stripe Apps platform and are not affiliated with Stripe, Inc. Questions about this policy go to <a href="mailto:eberteogam@gmail.com">eberteogam@gmail.com</a>.</p>
+
+    <h2 id="collect">2. What we collect</h2>
+    <h3>On this website</h3>
+    <p>When you submit the early-access form we receive the <b>name, work email, and use-case description</b> you type in. The form is delivered to our inbox by FormSubmit (formsubmit.co), a third-party form relay; FormSubmit processes the submission only to deliver it. This site sets no cookies and runs no analytics.</p>
+    <h3>When Writeback is installed on your Stripe account</h3>
+    <ul>
+      <li><b>Stripe account identifiers</b> — your Stripe account ID and the app installation ID, so we know which configuration belongs to which account.</li>
+      <li><b>Event data for the triggers you configure</b> — for each Workflow run, the fields you mapped: typically payment or refund status, amount and currency, the Stripe object ID (e.g. a PaymentIntent or Charge ID), the receipt URL, and any reference/metadata field you chose. If you map a customer email or name into a destination field, that value passes through Writeback as well.</li>
+      <li><b>Connector credentials</b> — the API key, token, or endpoint URL for the system Writeback writes into (JotForm, ServiceNow, or your own REST endpoint). These are stored encrypted at rest.</li>
+      <li><b>Run logs</b> — timestamps, trigger type, destination, success/failure, and error messages, used for support and debugging.</li>
+    </ul>
+
+    <h2 id="not">3. What we never collect</h2>
+    <ul>
+      <li><b>Card numbers or bank details.</b> Stripe never exposes full payment credentials to apps, and Writeback does not request them.</li>
+      <li><b>Your Stripe secret API keys.</b> Writeback runs under the permissions Stripe grants the app at install time; your keys stay in Stripe.</li>
+      <li>Anything from Stripe objects you did not map into a connector.</li>
+    </ul>
+
+    <h2 id="use">4. How we use it</h2>
+    <p>Only to do what you configured and keep it working: run the action you set up, deliver the mapped fields to your chosen destination, diagnose failures, respond to support requests, and send service notices (for example, a connector credential that stopped working). We do not sell personal data, use it for advertising, or use it to train models.</p>
+
+    <h2 id="share">5. Who we share it with</h2>
+    <ul>
+      <li><b>The destination you configured</b> — JotForm, ServiceNow, or the REST endpoint you provided. Their handling of that data is governed by their own policies.</li>
+      <li><b>Stripe</b> — as the platform the app runs on; Stripe's own privacy policy governs your Stripe account.</li>
+      <li><b>Infrastructure providers</b> — <span class="fill">[hosting provider(s) used for the connector runtime, e.g. Cloudflare Workers]</span>, who host the service and process data only on our behalf.</li>
+      <li><b>FormSubmit</b> — for the early-access form on this site only.</li>
+      <li>Law enforcement or regulators, if legally required.</li>
+    </ul>
+
+    <h2 id="retain">6. How long we keep it</h2>
+    <div class="tbl"><table>
+      <tr><th>Data</th><th>Kept for</th></tr>
+      <tr><td>Early-access form submissions</td><td>Until you ask us to delete them, or <span class="fill">[12 months]</span> after our last contact</td></tr>
+      <tr><td>Connector credentials</td><td>Until you remove the connector or uninstall the app, then deleted within <span class="fill">[30 days]</span></td></tr>
+      <tr><td>Run logs and event payloads</td><td><span class="fill">[30 days]</span> rolling</td></tr>
+      <tr><td>Account identifiers &amp; configuration</td><td>Until uninstall, then deleted within <span class="fill">[30 days]</span></td></tr>
+    </table></div>
+
+    <h2 id="security">7. Security</h2>
+    <p>Connector credentials are encrypted at rest and only decrypted at run time. All traffic between Stripe, Writeback, and your destination uses TLS. Access to production data is limited to the people who operate the service. If we become aware of a breach affecting your data we will notify you at the email on your Stripe account without undue delay.</p>
+
+    <h2 id="rights">8. Your rights</h2>
+    <p>Wherever you are, you can ask us to show you, correct, export, or delete the data we hold about you or your installation. Email <a href="mailto:eberteogam@gmail.com">eberteogam@gmail.com</a> from the address associated with your Stripe account; we respond within <span class="fill">[30 days]</span>. If you are in the EU/UK you may also complain to your local data-protection authority.</p>
+
+    <h2 id="uninstall">9. Uninstalling</h2>
+    <p>Uninstalling Writeback from your Stripe Dashboard (or asking us to remove a private install) immediately stops all processing. Stored credentials and configuration are deleted on the schedule in section 6; you can request immediate deletion by email.</p>
+
+    <h2 id="changes">10. Changes &amp; contact</h2>
+    <p>We will post any material change here and update the date at the top. For installed customers, a material change is also emailed to the address on your Stripe account before it takes effect.</p>
+    <p>Cali Live Play LLC · <span class="fill">[mailing address]</span> · <a href="mailto:eberteogam@gmail.com">eberteogam@gmail.com</a></p>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="foot-inner">
+    <p>© 2026 Cali Live Play LLC · Support: eberteogam@gmail.com</p>
+    <p><a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms</a> · <a href="docs.html">Docs</a></p>
+  </div>
+  <p class="legal">Writeback is an independent product built on the Stripe Apps platform. Stripe and Stripe Workflows are trademarks of Stripe, Inc. This product is not affiliated with, endorsed by, or sponsored by Stripe, Inc.</p>
+</footer>
+
+</body>
+</html>

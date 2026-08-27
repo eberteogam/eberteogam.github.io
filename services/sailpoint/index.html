@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SailPoint IdentityIQ · CI/CD · Docker — CLP Engineering</title>
+<meta name="description" content="SailPoint IdentityIQ engineering, CI/CD pipelines with automated API testing, and Docker containerization. Fixed quotes, scope in writing.">
+<link rel="canonical" href="https://eberteogam.github.io/services/sailpoint/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--suppress CssNoGenericFontName, CssUnusedSymbol -->
+<style>
+  :root{
+    --bg:#051C3E; --surface:rgba(255,255,255,.05); --surface2:rgba(255,255,255,.08);
+    --line:rgba(255,255,255,.12); --line2:rgba(255,255,255,.22);
+    --text:#F3F7FD; --muted:#9FB2CF; --dim:#CBD8EC;
+    --blue:#0071CE; --blue2:#3D9BFF; --magenta:#CC27B0; --magenta2:#E17FD2;
+    --grad:linear-gradient(90deg,#0071CE,#CC27B0);
+    --maxw:1060px;
+    --display:'Manrope',system-ui,sans-serif;
+    --body:'Inter',-apple-system,Segoe UI,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative}
+  /* sail-curve backdrop */
+  .sails{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+  .sails svg{position:absolute;top:-120px;right:-180px;width:960px;height:auto;opacity:.5}
+  .sails .low{top:auto;bottom:-260px;left:-260px;right:auto;width:820px;opacity:.32;transform:rotate(180deg)}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--blue2);outline-offset:3px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(5,28,62,.82);backdrop-filter:blur(12px);z-index:50}
+  .site-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--maxw);margin:0 auto}
+  .wordmark{font-family:var(--display);font-weight:800;font-size:16px;text-decoration:none;letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .wordmark .sailmark{width:20px;height:20px;flex:0 0 auto}
+  .wordmark span{color:var(--muted);font-family:var(--mono);font-weight:400;font-size:11.5px}
+  nav.top{display:flex;gap:22px;align-items:center}
+  nav.top a{font-size:14px;text-decoration:none;color:var(--muted)}
+  nav.top a:hover{color:var(--text)}
+  .btn{display:inline-block;font-family:var(--display);font-weight:800;font-size:15px;background:var(--blue);color:#fff;padding:13px 24px;border:none;border-radius:10px;text-decoration:none;cursor:pointer;transition:background .15s,transform .15s,box-shadow .2s;box-shadow:0 8px 26px rgba(0,113,206,.32)}
+  .btn:hover{background:#1683E2}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--line2);box-shadow:none}
+  .btn.ghost:hover{border-color:var(--magenta2)}
+  nav.top .btn{padding:9px 16px;font-size:14px}
+  @media(max-width:700px){nav.top a.navlink{display:none}}
+
+  .hero{padding:82px 0 62px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--blue2);text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;margin-bottom:20px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.04)}
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--magenta);box-shadow:0 0 10px var(--magenta)}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-.02em}
+  .hero-sub{margin:20px 0 28px;font-size:17.5px;color:var(--muted);max-width:48ch}
+  .hero-sub b{color:var(--text)}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+
+  /* identity panel (hero card) */
+  .idpanel{background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.03)) padding-box,linear-gradient(135deg,rgba(0,113,206,.6),rgba(204,39,176,.6)) border-box;border:1px solid transparent;border-radius:18px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.45);backdrop-filter:blur(8px)}
+  .idpanel .cap{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:16px}
+  .idpanel .cap i{font-style:normal;color:var(--magenta2)}
+  .idrow{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.03);margin-bottom:10px}
+  .idrow .l{font-size:14px;color:var(--dim)}
+  .idrow .l small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;margin-top:2px}
+  .pill{font-family:var(--mono);font-size:11px;letter-spacing:.05em;border-radius:999px;padding:4px 11px;white-space:nowrap}
+  .pill.ok{background:rgba(61,155,255,.14);color:var(--blue2);border:1px solid rgba(61,155,255,.35)}
+  .pill.mg{background:rgba(204,39,176,.14);color:var(--magenta2);border:1px solid rgba(204,39,176,.35)}
+  .idpanel .foot{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px}
+
+  section.doc{padding:66px 0;border-top:1px solid var(--line)}
+  .kicker{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin-bottom:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--magenta2)}
+  h2{font-family:var(--display);font-weight:800;font-size:clamp(25px,3.2vw,34px);letter-spacing:-.015em}
+  .sec-intro{color:var(--muted);font-size:15.5px;margin:10px 0 34px;max-width:60ch}
+  .sec-intro b{color:var(--text)}
+
+  .services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .svc{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 24px;display:flex;flex-direction:column;transition:transform .16s,border-color .16s,background .16s,box-shadow .16s}
+  .svc:hover{transform:translateY(-3px);border-color:var(--line2);background:var(--surface2);box-shadow:0 16px 44px rgba(0,0,0,.4)}
+  .svc .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:10px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .svc h3{font-family:var(--display);font-weight:800;font-size:19px;margin-bottom:10px}
+  .svc p{font-size:14.5px;color:var(--dim);margin-bottom:14px}
+  .svc ul{list-style:none;flex:1}
+  .svc li{font-size:14px;color:var(--muted);padding:4px 0 4px 22px;position:relative}
+  .svc li::before{content:"→";position:absolute;left:0;color:var(--blue2);font-weight:700}
+  .svc .btn{margin-top:18px;text-align:center}
+  @media(max-width:880px){.services{grid-template-columns:1fr}}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
+  .step .idx{font-family:var(--mono);font-size:11px;letter-spacing:.1em;display:block;margin-bottom:10px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .step h3{font-family:var(--display);font-weight:800;font-size:17px;margin-bottom:6px}
+  .step p{font-size:14px;color:var(--muted)}
+  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+
+  .proof-row{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .proof-row:first-of-type{border-top:1px solid var(--line)}
+  .proof-row .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+  .proof-row .v{font-size:15px;color:var(--dim)}
+  .proof-row .v a{color:var(--blue2)}
+  @media(max-width:640px){.proof-row{grid-template-columns:1fr;gap:4px}}
+
+  details{border-bottom:1px solid var(--line);padding:2px 0}
+  details:first-of-type{border-top:1px solid var(--line)}
+  summary{cursor:pointer;font-family:var(--display);font-weight:800;font-size:16.5px;padding:15px 0;list-style:none;display:flex;justify-content:space-between;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-family:var(--mono);font-size:19px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  details[open] summary::after{content:"–"}
+  details p{padding:0 0 16px;color:var(--muted);max-width:64ch;font-size:15px}
+
+  .final{padding:80px 0;border-top:1px solid var(--line)}
+  .final h2{max-width:24ch;margin-bottom:14px}
+  .final p{color:var(--muted);font-size:15.5px;margin-bottom:26px;max-width:48ch}
+  footer.site{border-top:1px solid var(--line);padding:24px 0 42px}
+  .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
+  .foot-inner p,.foot-inner a{font-family:var(--mono);font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="sails" aria-hidden="true">
+  <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#0071CE" stop-opacity=".55"/>
+        <stop offset="1" stop-color="#CC27B0" stop-opacity=".45"/>
+      </linearGradient>
+      <linearGradient id="sg2" x1="1" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#CC27B0" stop-opacity=".35"/>
+        <stop offset="1" stop-color="#0071CE" stop-opacity=".25"/>
+      </linearGradient>
+    </defs>
+    <path d="M80 520 C 180 240, 320 120, 560 60 C 430 220, 350 380, 320 540 Z" fill="url(#sg)"/>
+    <path d="M40 560 C 150 340, 260 240, 470 170 C 370 320, 300 440, 270 570 Z" fill="url(#sg2)"/>
+  </svg>
+  <svg class="low" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M80 520 C 180 240, 320 120, 560 60 C 430 220, 350 380, 320 540 Z" fill="url(#sg)"/>
+  </svg>
+</div>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="wordmark" href="#top">
+      <svg class="sailmark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20 C 7 10, 12 5, 21 3 C 16 9, 13 14, 12 20 Z" fill="url(#wm)"/><defs><linearGradient id="wm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0071CE"/><stop offset="1" stop-color="#CC27B0"/></linearGradient></defs></svg>
+      CLP<span>identity · pipelines · containers</span>
+    </a>
+    <nav class="top">
+      <a class="navlink" href="#services">Services</a>
+      <a class="navlink" href="#process">Process</a>
+      <a class="navlink" href="#proof">Proof</a>
+      <a class="btn" href="https://calendly.com/eberteo/new-meeting">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span>Identity · CI/CD · Docker</span>
+        <h1>Access, governed. <span class="grad-text">Releases, tested. Deploys, repeatable.</span></h1>
+        <p class="hero-sub"><b>SailPoint IdentityIQ</b> wired to your systems, <b>pipelines</b> that test every release automatically, and <b>containers</b> that run the same on every machine. Fixed quotes. Scope in writing before work starts.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="https://calendly.com/eberteo/new-meeting">Book a 30-minute call</a>
+          <a class="btn ghost" href="#services">See services</a>
+        </div>
+      </div>
+      <div class="idpanel">
+        <span class="cap">Identity lifecycle · live <i>● governed</i></span>
+        <div class="idrow"><span class="l">New hire detected<small>HR source · aggregation</small></span><span class="pill mg">Joiner</span></div>
+        <div class="idrow"><span class="l">Active Directory account<small>provisioned · birthright roles</small></span><span class="pill ok">✓ done</span></div>
+        <div class="idrow"><span class="l">Finance app access<small>role-based · approved</small></span><span class="pill ok">✓ done</span></div>
+        <div class="idrow"><span class="l">Access review campaign<small>quarterly certification</small></span><span class="pill mg">scheduled</span></div>
+        <p class="foot">joiner → mover → leaver · automated end to end</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="services">
+    <div class="wrap">
+      <span class="kicker">§01 · Services</span>
+      <h2>Three things, done properly</h2>
+      <p class="sec-intro">Engineering engagements, scoped on a call and <b>quoted fixed</b> — no open-ended hourly billing.</p>
+      <div class="services">
+        <div class="svc">
+          <span class="k">SailPoint IdentityIQ</span>
+          <h3>Identity governance, wired up</h3>
+          <p>Connect your HR and business systems to SailPoint, automate access when people join, move, or leave, and stand up the access-review campaigns your auditors ask for.</p>
+          <ul>
+            <li>App onboarding — files, databases, LDAP / Active Directory</li>
+            <li>Joiner / mover / leaver automation</li>
+            <li>Access certifications + policy violations</li>
+            <li>Custom rules (Beanshell) where the out-of-box stops</li>
+          </ul>
+          <a class="btn ghost" href="https://calendly.com/eberteo/new-meeting">Scope it on a call</a>
+        </div>
+        <div class="svc">
+          <span class="k">CI/CD &amp; API testing</span>
+          <h3>Releases that stop breaking things</h3>
+          <p>Pipelines that automatically test your API integrations on every change — so a vendor tweaking a field doesn't take your workflows down in production.</p>
+          <ul>
+            <li>GitHub Actions pipelines, built and documented</li>
+            <li>Automated API contract tests (request/response replay)</li>
+            <li>Separate test vs. production environments, secrets isolated</li>
+            <li>Works for ServiceNow, Moveworks, and plain REST integrations</li>
+          </ul>
+          <a class="btn ghost" href="https://calendly.com/eberteo/new-meeting">Scope it on a call</a>
+        </div>
+        <div class="svc">
+          <span class="k">Docker &amp; deployment</span>
+          <h3>Runs the same on every machine</h3>
+          <p>Package your applications into containers with a deployment setup your team can actually operate — documented, repeatable, no snowflake servers.</p>
+          <ul>
+            <li>Containerize existing apps (Docker)</li>
+            <li>Deployment architecture, designed and documented</li>
+            <li>Load-balanced multi-service setups</li>
+            <li>Dev environments that match production (WSL2 / Linux)</li>
+          </ul>
+          <a class="btn ghost" href="https://calendly.com/eberteo/new-meeting">Scope it on a call</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="process">
+    <div class="wrap">
+      <span class="kicker">§02 · Process</span>
+      <h2>How engagements run</h2>
+      <div class="steps" style="margin-top:30px">
+        <div class="step"><span class="idx">STEP 1</span><h3>Call</h3><p>30 minutes, free. You describe the problem; we define the scope together.</p></div>
+        <div class="step"><span class="idx">STEP 2</span><h3>Fixed quote</h3><p>Scope, fee, and timeline written into a Statement of Work. Signed online.</p></div>
+        <div class="step"><span class="idx">STEP 3</span><h3>Build + handover</h3><p>We build, document, and hand it over so your team can run it without us.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="proof">
+    <div class="wrap">
+      <span class="kicker">§03 · Proof</span>
+      <h2>Built, not read about</h2>
+      <div class="proof-row" style="margin-top:26px"><span class="k">SailPoint IIQ</span><span class="v"><a href="https://eberteogam.github.io/SailPoint%20IdentityIQ%20Journal.html">Public multi-month engineering log</a> — installs, connectors, aggregation &amp; correlation, policies, certifications, roles, Beanshell rules</span></div>
+      <div class="proof-row"><span class="k">Identity Security Cloud</span><span class="v"><a href="https://eberteogam.github.io/SailPoint/index.html">ISC notes</a> — access requests, RBAC, and the ServiceNow ↔ SailPoint integration</span></div>
+      <div class="proof-row"><span class="k">Containers</span><span class="v"><a href="https://documenter.getpostman.com/view/12028505/2sAYHzFhes">Shipped: Docker microservices with round-robin load balancing</a> — full public API documentation</span></div>
+      <div class="proof-row"><span class="k">Deployment design</span><span class="v"><a href="https://www.figma.com/board/sLEJf6iOlu4VjCmvluQvMa/Rupeos-Back-end-Structure?node-id=0-1&t=7L0vDura54sqZlQD-1">Automatic deployment architecture</a> — microservices back-end, documented end to end</span></div>
+      <div class="proof-row"><span class="k">DevOps notes</span><span class="v"><a href="https://eberteogam.github.io/DevOps%20Environments.html">Docker, WSL2 &amp; Git</a> — container internals, Podman, team Git workflow</span></div>
+    </div>
+  </section>
+
+  <section class="doc" id="faq">
+    <div class="wrap">
+      <span class="kicker">§04 · Questions</span>
+      <h2>Straight answers</h2>
+      <details style="margin-top:22px"><summary>Are quotes really fixed?</summary><p>Yes. Scope, fee, timeline, and exclusions go into a Statement of Work before work starts. If the scope changes, the quote changes — in writing, before the work.</p></details>
+      <details><summary>Do you hand everything over?</summary><p>Yes — documentation and a walkthrough are part of every engagement. The goal is that your team operates it without us. Ongoing support is available separately if you want it.</p></details>
+      <details><summary>What stacks do you work in?</summary><p>SailPoint IdentityIQ and Identity Security Cloud, GitHub Actions, Docker, Linux/WSL2, and REST integrations across ServiceNow, Moveworks, and standard APIs.</p></details>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Describe the problem. <span class="grad-text">Leave with a fixed quote.</span></h2>
+      <p>Thirty minutes, free. If it's not a fit, you'll hear that too.</p>
+      <a class="btn" href="https://calendly.com/eberteo/new-meeting">Book the call</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap foot-inner">
+    <p>© 2026 Cali Live Play LLC · eberteogam@gmail.com</p>
+    <p><a href="https://www.linkedin.com/in/eberteo/">LinkedIn</a> · <a href="https://eberteogam.github.io">Engineering notes</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
+

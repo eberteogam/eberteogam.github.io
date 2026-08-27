@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentation — Writeback</title>
+<meta name="description" content="Install, configure, and troubleshoot Writeback — the custom write-back action for Stripe Workflows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--suppress CssNoGenericFontName -->
+<style>
+  :root{
+    --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A1F36; --muted:#5B6478;
+    --line:#E3E7F0; --blurple:#635BFF; --blurple-soft:#EDEBFF;
+    --maxw:820px;
+    --display:'Sora',system-ui,sans-serif;
+    --body:'Inter',-apple-system,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  a:focus-visible{outline:2px solid var(--blurple);outline-offset:3px}
+  header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(247,248,252,.92);backdrop-filter:blur(10px);z-index:50}
+  .site-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1120px;margin:0 auto}
+  .wordmark{font-family:var(--display);font-weight:800;font-size:17px;text-decoration:none}
+  .wordmark span{color:var(--muted);font-family:var(--mono);font-weight:400;font-size:11.5px;margin-left:10px}
+  nav.top{display:flex;gap:22px;align-items:center}
+  nav.top a{font-size:14px;text-decoration:none;color:var(--muted)}
+  nav.top a:hover,nav.top a[aria-current]{color:var(--ink)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  main{padding:56px 0 72px}
+  .kicker{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--blurple);background:var(--blurple-soft);border-radius:999px;padding:6px 12px;margin-bottom:16px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,44px);line-height:1.1;letter-spacing:-.02em}
+  .meta{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin:12px 0 28px}
+  h2{font-family:var(--display);font-weight:700;font-size:21px;margin:36px 0 10px;letter-spacing:-.01em}
+  h3{font-family:var(--display);font-weight:700;font-size:16.5px;margin:22px 0 6px}
+  p{margin:0 0 14px;max-width:70ch}
+  ul,ol{padding-left:22px;margin:0 0 14px;max-width:70ch}
+  li{margin-bottom:6px}
+  code{font-family:var(--mono);font-size:.9em;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+  pre{font-family:var(--mono);font-size:13.5px;line-height:1.55;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;margin:0 0 16px}
+  pre code{border:none;background:none;padding:0;font-size:inherit}
+  table{border-collapse:collapse;width:100%;margin:0 0 18px;font-size:14.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .tbl{overflow-x:auto}
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:28px}
+  .toc a{font-size:14.5px;display:block;padding:3px 0;text-decoration:none;color:var(--muted)}
+  .toc a:hover{color:var(--blurple)}
+  .tag{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 8px;margin-left:8px;vertical-align:middle;font-weight:400}
+  .tag.now{color:#0A8A5F;border-color:#BFE8D6;background:#EAF8F1}
+  footer.site{border-top:1px solid var(--line);padding:26px 0 44px;background:#fff}
+  .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline;max-width:1120px;margin:0 auto;padding:0 24px}
+  .foot-inner p,.foot-inner a{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .legal{font-size:12px;color:var(--muted);margin:14px auto 0;max-width:1120px;padding:0 24px}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="wordmark" href="./">Writeback<span>for Stripe Workflows</span></a>
+    <nav class="top">
+      <a href="docs.html" aria-current="page">Docs</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="index.html#access">Get early access</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <span class="kicker">Documentation</span>
+    <h1>Writeback docs</h1>
+    <p class="meta">Early access · Updated 2026-08-26 · Details marked <span class="tag">preview</span> may change before Marketplace launch</p>
+
+    <div class="toc">
+      <a href="#overview">Overview</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#install">Install</a>
+      <a href="#configure">Configure the action</a>
+      <a href="#fields">Available fields</a>
+      <a href="#connectors">Connectors</a>
+      <a href="#troubleshooting">Troubleshooting</a>
+      <a href="#support">Support</a>
+    </div>
+
+    <h2 id="overview">Overview</h2>
+    <p>Stripe Workflows lets you react to payment events with built-in actions. Writeback adds one more: <b>write the result into a system outside Stripe</b>. You pick the trigger, add the Writeback step, map a handful of fields once, and every matching payment updates your form submission, ticket, or endpoint automatically.</p>
+    <pre><code>Stripe event  →  Workflow runs  →  Writeback step  →  your record updated
+(payment succeeded)                  (maps fields)      (JotForm / ServiceNow / REST)</code></pre>
+
+    <h2 id="requirements">Requirements</h2>
+    <ul>
+      <li>A Stripe account with access to <b>Stripe Workflows</b> in the Dashboard.</li>
+      <li>For a private install: a team member on your Stripe account with permission to install apps, and the <a href="https://docs.stripe.com/stripe-cli">Stripe CLI</a> if you prefer to run the upload yourself.</li>
+      <li>Credentials for the destination: a JotForm API key, a ServiceNow integration user, or the URL of an endpoint that accepts HTTPS POST.</li>
+    </ul>
+
+    <h2 id="install">Install</h2>
+    <h3>Private install <span class="tag now">available now</span></h3>
+    <ol>
+      <li><a href="index.html#access">Request early access</a> with a one-line description of what should update when a payment lands.</li>
+      <li>We schedule one short call to confirm the trigger, the destination, and the field mapping.</li>
+      <li>The app is uploaded to <b>your</b> Stripe account with <code>stripe apps upload</code> — either by us as a developer on your account, or by you from the bundle we send. Nothing is shared with other accounts.</li>
+      <li>Writeback appears as an action in your Workflow builder the same day.</li>
+    </ol>
+    <h3>Stripe App Marketplace <span class="tag">coming</span></h3>
+    <p>Once Stripe's review completes, Writeback will be a one-click install from the Marketplace with connectors configured in the app's settings page. Early-access installs migrate free.</p>
+
+    <h2 id="configure">Configure the action</h2>
+    <ol>
+      <li>In the Stripe Dashboard, open <b>Workflows</b> and create or edit a workflow.</li>
+      <li>Choose the trigger — for example <em>Payment succeeded</em>, <em>Payment failed</em>, <em>Refund created</em>, or <em>Dispute opened</em>.</li>
+      <li>Add a step and pick <b>Writeback</b>.</li>
+      <li>Select the connector and the record to update. For JotForm this is the submission matched by a reference field; for ServiceNow it is the record matched by number or correlation ID; for REST it is whatever your endpoint decides.</li>
+      <li>Map Stripe fields to destination fields (see the table below). Mapping is saved with the workflow, so it only has to be done once.</li>
+      <li>Run a test payment in test mode and confirm the destination record changed.</li>
+    </ol>
+
+    <h2 id="fields">Available fields <span class="tag">preview</span></h2>
+    <div class="tbl"><table>
+      <tr><th>Field</th><th>Source in Stripe</th><th>Typical use</th></tr>
+      <tr><td><code>status</code></td><td>PaymentIntent / Charge / Refund status</td><td>Mark a form or ticket as paid, failed, or refunded</td></tr>
+      <tr><td><code>amount</code>, <code>currency</code></td><td>Charge amount (minor units) and currency</td><td>Show what was actually collected</td></tr>
+      <tr><td><code>receipt_url</code></td><td>Charge receipt URL</td><td>Attach the Stripe-hosted receipt to the record</td></tr>
+      <tr><td><code>reference</code></td><td>PaymentIntent ID, or a metadata key you choose</td><td>Match the payment to the right record</td></tr>
+      <tr><td><code>customer_email</code>, <code>customer_name</code></td><td>Customer / billing details</td><td>Optional — only mapped if you choose to</td></tr>
+      <tr><td><code>occurred_at</code></td><td>Event timestamp</td><td>Audit trail</td></tr>
+    </table></div>
+
+    <h2 id="connectors">Connectors</h2>
+    <h3>JotForm <span class="tag now">available first</span></h3>
+    <p>Updates an existing submission. Writeback locates it by the reference you mapped (typically a submission ID carried in Stripe metadata, or an order number field) and writes the mapped values into the fields you choose. Requires a JotForm API key with write access to the form.</p>
+    <h3>ServiceNow <span class="tag">next</span></h3>
+    <p>Updates a record in a table you specify (for example a request, case, or custom billing table) via the Table API. Matched by record number or a correlation-ID field. Requires an integration user with write access to that table.</p>
+    <h3>Any REST endpoint — webhook mode <span class="tag now">available</span></h3>
+    <p>Writeback sends an HTTPS <code>POST</code> with a JSON body to the URL you provide. Your endpoint decides what to do with it. Illustrative payload — the final schema is published at Marketplace launch:</p>
+    <pre><code>POST https://your-endpoint.example.com/writeback
+Content-Type: application/json
+
+{
+  "event":          "payment.succeeded",
+  "status":         "succeeded",
+  "amount":         12900,
+  "currency":       "usd",
+  "receipt_url":    "https://pay.stripe.com/receipts/…",
+  "reference":      "pi_3Nxxxxxxxxxxxxx",
+  "occurred_at":    "2026-08-26T14:03:11Z",
+  "stripe_account": "acct_1xxxxxxxxxxxxx"
+}</code></pre>
+    <p>Respond with any 2xx status to acknowledge. Non-2xx responses are recorded as failures in the run log and retried <span class="tag">preview</span>.</p>
+
+    <h2 id="troubleshooting">Troubleshooting</h2>
+    <ul>
+      <li><b>The step ran but nothing changed in my destination.</b> Check the reference mapping first — if the reference value on the payment doesn't match any record, there is nothing to update. Confirm the value is present on the Stripe object (e.g. in metadata) for the test payment.</li>
+      <li><b>Credential error.</b> The API key or integration user was rotated or lost write permission. Update it in the connector settings; runs that failed in between are not replayed automatically during early access.</li>
+      <li><b>The action doesn't appear in the Workflow builder.</b> Private installs are per Stripe account and per mode (test / live). Make sure you are in the account and mode the app was uploaded to.</li>
+      <li><b>I need a field that isn't listed.</b> Email us — additional Stripe fields can usually be added to the mapping the same day.</li>
+    </ul>
+
+    <h2 id="support">Support</h2>
+    <p>Email <a href="mailto:eberteogam@gmail.com">eberteogam@gmail.com</a> with your Stripe account ID (starts with <code>acct_</code>) and the approximate time of the run. We reply within one business day.</p>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="foot-inner">
+    <p>© 2026 Cali Live Play LLC · Support: eberteogam@gmail.com</p>
+    <p><a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms</a> · <a href="docs.html">Docs</a></p>
+  </div>
+  <p class="legal">Writeback is an independent product built on the Stripe Apps platform. Stripe and Stripe Workflows are trademarks of Stripe, Inc. This product is not affiliated with, endorsed by, or sponsored by Stripe, Inc.</p>
+</footer>
+
+</body>
+</html>

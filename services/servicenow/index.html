@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moveworks → ServiceNow Migration Assessments — CLP</title>
+<meta name="description" content="Migrate or stay — decide with numbers. Fixed-fee Moveworks → ServiceNow assessments: every plugin rated, both paths priced before your renewal.">
+<link rel="canonical" href="https://eberteogam.github.io/services/servicenow/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--suppress CssNoGenericFontName, CssUnusedSymbol -->
+<style>
+  :root{
+    --bg:#0C1416; --surface:rgba(255,255,255,.045); --surface2:rgba(255,255,255,.07);
+    --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.18);
+    --text:#F2F6F2; --muted:#94A89D; --dim:#C3D3C8;
+    --mw:#3D5AFE; --sn:#62D84E;
+    --grad:linear-gradient(90deg,#3D5AFE,#62D84E);
+    --maxw:1120px;
+    --display:'Archivo',system-ui,sans-serif;
+    --body:'Instrument Sans',-apple-system,Segoe UI,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative}
+  .aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+  .aurora span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+  .aurora .a1{width:640px;height:640px;background:#2F49E0;top:-260px;left:-140px;animation:drift1 26s ease-in-out infinite alternate}
+  .aurora .a2{width:560px;height:560px;background:#2F8F3C;top:-220px;right:-160px;animation:drift2 30s ease-in-out infinite alternate}
+  .aurora .a3{width:520px;height:520px;background:#1C3A33;bottom:-280px;left:34%;opacity:.55;animation:drift1 34s ease-in-out infinite alternate-reverse}
+  @keyframes drift1{from{transform:translate(0,0)}to{transform:translate(70px,50px)}}
+  @keyframes drift2{from{transform:translate(0,0)}to{transform:translate(-60px,60px)}}
+  body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:52px 52px;
+    -webkit-mask-image:radial-gradient(720px 460px at 50% 0%,black,transparent 78%);
+    mask-image:radial-gradient(720px 460px at 50% 0%,black,transparent 78%);}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--sn);outline-offset:3px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+
+  header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(12,20,22,.72);backdrop-filter:blur(16px);z-index:50}
+  .site-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--maxw);margin:0 auto}
+  .wordmark{font-family:var(--display);font-weight:800;font-size:17px;text-decoration:none;letter-spacing:.02em}
+  .wordmark em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .wm-star{color:var(--sn);font-size:11px;vertical-align:super;margin-left:3px}
+  nav.top{display:flex;gap:24px;align-items:center}
+  nav.top a{font-size:14px;text-decoration:none;color:var(--muted)}
+  nav.top a:hover{color:var(--text)}
+  .btn{display:inline-block;font-family:var(--display);font-weight:700;font-size:15px;background:var(--grad);color:#0C1A0F;padding:13px 26px;border:none;border-radius:12px;text-decoration:none;cursor:pointer;transition:filter .15s,transform .15s,box-shadow .2s;box-shadow:0 8px 28px rgba(98,216,78,.18)}
+  .btn:hover{filter:brightness(1.12);box-shadow:0 10px 34px rgba(61,90,254,.28)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--line2);box-shadow:none}
+  .btn.ghost:hover{border-color:var(--sn);filter:none;background:rgba(255,255,255,.08)}
+  nav.top .btn{padding:9px 18px;font-size:14px}
+  @media(max-width:760px){nav.top a.navlink{display:none}}
+
+  .hero{padding:86px 0 64px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+  .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.04)}
+  .eyebrow .dotmw{width:8px;height:8px;border-radius:50%;background:var(--mw);box-shadow:0 0 10px var(--mw)}
+  .eyebrow .dotsn{width:8px;height:8px;border-radius:50%;background:var(--sn);box-shadow:0 0 10px var(--sn)}
+  h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,5.6vw,64px);line-height:1.03;letter-spacing:-.025em}
+  .hero-sub{margin:22px 0 0;font-size:19px;color:var(--muted);max-width:50ch}
+  .hero-sub b{color:var(--text);font-weight:700}
+  .flowcard{background:linear-gradient(rgba(255,255,255,.055),rgba(255,255,255,.03)) padding-box,linear-gradient(135deg,rgba(61,90,254,.55),rgba(98,216,78,.55)) border-box;border:1px solid transparent;border-radius:20px;padding:26px 26px 22px;backdrop-filter:blur(8px);box-shadow:0 24px 70px rgba(0,0,0,.45)}
+  .flowcard .cap{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:16px}
+  .flow{display:flex;align-items:center;gap:0}
+  .node{flex:0 0 auto;font-family:var(--display);font-weight:700;font-size:15px;padding:12px 18px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.05)}
+  .node.mw{color:#C9D4FF;border-color:rgba(61,90,254,.5);box-shadow:0 0 24px rgba(61,90,254,.16)}
+  .node.sn{color:#D6F5C9;border-color:rgba(98,216,78,.5);box-shadow:0 0 24px rgba(98,216,78,.16)}
+  .pipewrap{flex:1;position:relative;display:flex;align-items:center;margin:0 6px}
+  .plabel{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-style:normal;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sn)}
+  .pipe{flex:1;height:2px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.55) 0 8px,transparent 8px 16px);background-size:32px 2px;animation:dashflow 1.2s linear infinite;border-radius:2px;opacity:.85;position:relative}
+  .pipe::after{content:"";position:absolute;right:-1px;top:50%;transform:translateY(-50%);border-left:9px solid #62D84E;border-top:5px solid transparent;border-bottom:5px solid transparent;filter:drop-shadow(0 0 6px rgba(98,216,78,.7))}
+  .flow2{display:flex;align-items:center;gap:12px;margin-top:14px}
+  .flow2 .loop{width:34px;height:34px;flex:0 0 auto;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.03)) padding-box,linear-gradient(135deg,rgba(61,90,254,.6),rgba(98,216,78,.4)) border-box;border:1px solid transparent}
+  .flow2 .loop svg{width:17px;height:17px;stroke:url(#wfg);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .flow2 span:last-child{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.03em}
+  @keyframes dashflow{to{background-position:32px 0}}
+
+  section.doc{padding:76px 0}
+  h2{font-family:var(--display);font-weight:900;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em}
+  h2 .thin{font-weight:600;color:var(--muted);font-size:.55em;display:block;letter-spacing:0;margin-top:6px;font-family:var(--body)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease}
+  .card:hover{transform:translateY(-3px);border-color:var(--line2);background:var(--surface2);box-shadow:0 16px 46px rgba(0,0,0,.4)}
+
+  /* ---- PRICING SLIDER ---- */
+  .slider-shell{margin-top:40px}
+  .slider-row{display:flex;align-items:center;gap:18px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:8px;border-radius:99px;background:linear-gradient(90deg,#3D5AFE 0%,#62D84E 30%,rgba(255,255,255,.12) 30%);outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--sn);box-shadow:0 0 0 6px rgba(98,216,78,.18),0 6px 18px rgba(0,0,0,.5);cursor:grab}
+  input[type=range]::-webkit-slider-thumb:active{cursor:grabbing}
+  input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--sn);box-shadow:0 0 0 6px rgba(98,216,78,.18);cursor:grab}
+  input[type=range]::-moz-range-track{height:8px;border-radius:99px;background:rgba(255,255,255,.12)}
+  .drag-hint{text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:10px;letter-spacing:.08em}
+  .pkg-live{margin-top:26px;padding:30px 30px 28px;display:grid;grid-template-columns:auto 1fr auto;gap:30px;align-items:center;background:linear-gradient(rgba(17,28,24,.92),rgba(17,28,24,.92)) padding-box,var(--grad) border-box;border:1px solid transparent}
+  .pl-count{text-align:center}
+  .pl-count .n{font-family:var(--display);font-weight:900;font-size:64px;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .pl-count .l{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+  .pl-mid .name{font-family:var(--display);font-weight:800;font-size:22px}
+  .pl-mid .scope{font-family:var(--mono);font-size:12px;color:var(--muted);display:block;margin:2px 0 12px}
+  .pl-mid ul{list-style:none;columns:2;column-gap:26px}
+  .pl-mid li{font-size:14px;color:var(--dim);padding:4px 0 4px 22px;position:relative;break-inside:avoid}
+  .pl-mid li::before{content:"→";position:absolute;left:0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+  .pl-cta{text-align:center}
+  .pl-cta .price{font-family:var(--display);font-weight:900;font-size:34px;letter-spacing:-.02em;margin-bottom:4px}
+  .pl-cta .bd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;letter-spacing:.02em}
+  @media(max-width:900px){.pkg-live{grid-template-columns:1fr;gap:20px;text-align:center}.pl-mid ul{columns:1;text-align:left;max-width:340px;margin:0 auto}}
+  .pricing-note{font-size:14px;color:var(--muted);margin-top:20px}
+  .addon{margin-top:26px;padding:24px 26px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;border-radius:18px;border:1px solid transparent;background:linear-gradient(rgba(17,28,24,.94),rgba(17,28,24,.94)) padding-box,var(--grad) border-box;box-shadow:0 12px 44px rgba(61,90,254,.12),0 12px 44px rgba(98,216,78,.10)}
+  .addon-ico{width:56px;height:56px;flex:0 0 auto;border-radius:16px;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(255,255,255,.07),rgba(255,255,255,.03)) padding-box,var(--grad) border-box;border:1px solid transparent}
+  .addon-ico svg{width:26px;height:26px;stroke:url(#wfg);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .addon-txt{flex:1;min-width:260px}
+  .addon .tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--sn);text-transform:uppercase;display:block;margin-bottom:4px}
+  .addon h3{font-family:var(--display);font-weight:800;font-size:19px;margin:0 0 6px}
+  .addon p{font-size:14.5px;color:var(--dim);max-width:60ch}
+  .addon b{color:var(--text)}
+
+  /* ---- WORKFLOW ---- */
+  .wf{display:flex;align-items:stretch;gap:0;margin-top:42px;flex-wrap:nowrap}
+  .wf-item{flex:1;padding:24px 16px;text-align:center}
+  .wf-ico{width:52px;height:52px;margin:0 auto 14px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.03)) padding-box,var(--grad) border-box;border:1px solid transparent}
+  .wf-ico svg{width:24px;height:24px;stroke:url(#wfg);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .wf-item h3{font-family:var(--display);font-weight:800;font-size:16px;margin-bottom:4px}
+  .wf-item p{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.03em}
+  .wf-arrow{display:flex;align-items:center;flex:0 0 34px;justify-content:center}
+  .wf-arrow svg{width:26px;height:26px}
+  @media(max-width:900px){.wf{flex-direction:column}.wf-arrow{transform:rotate(90deg);flex:0 0 30px;margin:-6px 0}}
+
+  /* ---- HUB / DELIVERABLE ---- */
+  .hub{display:grid;grid-template-columns:1fr auto 1fr;gap:0 0;align-items:center;margin-top:48px}
+  .spokes{display:grid;gap:26px}
+  .spoke-row{display:flex;align-items:center}
+  .spokes.left .spoke-row{justify-content:flex-end}
+  .spoke{width:168px;height:168px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.03)) padding-box,linear-gradient(135deg,rgba(61,90,254,.5),rgba(98,216,78,.5)) border-box;border:1px solid transparent;flex:0 0 auto}
+  .spoke h3{font-family:var(--display);font-weight:800;font-size:14.5px;line-height:1.25;margin-bottom:4px}
+  .spoke p{font-family:var(--mono);font-size:10.5px;color:var(--muted);line-height:1.5}
+  .link{height:2px;width:62px;background:var(--grad);opacity:.65;flex:0 0 auto}
+  .spokes.left .r1 .link{transform:rotate(14deg);transform-origin:right center}
+  .spokes.left .r3 .link{transform:rotate(-14deg);transform-origin:right center}
+  .spokes.right .r1 .link{transform:rotate(-14deg);transform-origin:left center}
+  .spokes.right .r3 .link{transform:rotate(14deg);transform-origin:left center}
+  .hub-core{width:210px;height:210px;border-radius:50%;margin:0 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:linear-gradient(rgba(20,32,26,.95),rgba(20,32,26,.95)) padding-box,var(--grad) border-box;border:2px solid transparent;box-shadow:0 0 60px rgba(98,216,78,.16),0 0 60px rgba(61,90,254,.12)}
+  .hub-core .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+  .hub-core h3{font-family:var(--display);font-weight:900;font-size:19px;line-height:1.2}
+  .hub-core p{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:6px}
+  @media(max-width:980px){
+    .hub{grid-template-columns:1fr;gap:26px;justify-items:center}
+    .link{display:none}
+    .spokes{grid-template-columns:repeat(2,1fr);gap:18px;width:100%;justify-items:center}
+    .hub-core{order:-1}
+  }
+
+  /* ---- FREE ASSESSMENT ---- */
+  .sample{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:start;margin-top:10px}
+  .sample-copy p{color:var(--muted);font-size:15.5px;margin-bottom:12px;max-width:50ch}
+  .sample-copy b{color:var(--text)}
+  .doc-card{padding:28px}
+  .doc-card .tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:14px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+  .field input{width:100%;padding:12px;font-family:var(--body);font-size:15.5px;border:1px solid var(--line2);border-radius:10px;background:rgba(0,0,0,.3);color:var(--text)}
+  .field input:focus{border-color:var(--sn);box-shadow:0 0 0 3px rgba(98,216,78,.15)}
+  .form-note{font-size:13px;color:var(--muted);margin-top:12px}
+  .form-status{font-family:var(--mono);font-size:13px;margin-top:14px;display:none}
+  .form-status.ok{display:block;color:var(--sn)}
+  .form-status.err{display:block;color:#FF8A7A}
+  @media(max-width:860px){.sample{grid-template-columns:1fr;gap:32px}}
+
+  .proof-row{display:grid;grid-template-columns:230px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .proof-row:first-of-type{border-top:1px solid var(--line)}
+  .proof-row .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+  .proof-row .v{font-size:15px;color:var(--dim)}
+  .proof-row .v a{color:var(--sn)}
+  @media(max-width:640px){.proof-row{grid-template-columns:1fr;gap:4px}}
+
+  details{border-bottom:1px solid var(--line);padding:4px 0}
+  details:first-of-type{border-top:1px solid var(--line)}
+  summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:17px;padding:16px 0;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-family:var(--mono);font-size:20px;flex-shrink:0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  details[open] summary::after{content:"–"}
+  details p{padding:0 0 18px;color:var(--muted);max-width:66ch;font-size:15px}
+
+  footer.site{border-top:1px solid var(--line);padding:26px 0 44px;margin-top:40px}
+  .foot-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:baseline}
+  .foot-inner p,.foot-inner a{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="wfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3D5AFE"/><stop offset="1" stop-color="#62D84E"/></linearGradient></defs></svg>
+
+<div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="wordmark" href="#top"><em>CLP</em><span class="wm-star">★</span></a>
+    <nav class="top">
+      <a class="navlink" href="#pricing">Pricing</a>
+      <a class="navlink" href="#workflow">Our workflow</a>
+      <a class="navlink" href="#assessment">Free assessment</a>
+      <a class="btn" href="mailto:eberteogam@gmail.com?subject=Book%20a%20call">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dotmw"></span>Moveworks → ServiceNow<span class="dotsn"></span></span>
+        <h1>Migrate or keep building. <span class="grad-text">Decide with numbers.</span></h1>
+        <p class="hero-sub">Every plugin can be rebuilt — migrate to ServiceNow, or stay in your Moveworks tenant and let's create more plugins together. <b>Your decision.</b></p>
+      </div>
+      <div class="flowcard reveal">
+        <span class="cap">What we do, in one picture</span>
+        <div class="flow">
+          <span class="node mw">Moveworks</span>
+          <span class="pipewrap" aria-hidden="true"><i class="plabel">migrate</i><i class="pipe"></i></span>
+          <span class="node sn">ServiceNow</span>
+        </div>
+        <div class="flow2">
+          <span class="loop"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6"/><path d="M20 5v6h-6"/></svg></span>
+          <span>or keep building — new plugins in your tenant, together</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="doc" id="pricing">
+    <div class="wrap">
+      <div class="reveal"><h2>Pricing<span class="thin">Drag to your plugin count — the exact fee appears below. The per-plugin rate drops as your estate grows.</span></h2></div>
+
+      <div class="slider-shell reveal">
+        <div class="slider-row">
+          <span>1</span>
+          <input type="range" id="pslider" min="1" max="60" value="18" step="1" aria-label="Number of Moveworks plugins">
+          <span>60+</span>
+        </div>
+        <p class="drag-hint">◄ drag ►</p>
+
+        <div class="pkg-live card" aria-live="polite">
+          <div class="pl-count"><div class="n" id="pl-n">18</div><div class="l">plugins</div></div>
+          <div class="pl-mid">
+            <div class="name" id="pl-name">Standard estate</div>
+            <span class="scope" id="pl-scope">Up to 25 plugins · one tenant</span>
+            <ul id="pl-list"></ul>
+          </div>
+          <div class="pl-cta">
+            <div class="price" id="pl-price">$12,400</div>
+            <div class="bd" id="pl-breakdown">base $6,000 · 10 × $400 · 8 × $300</div>
+            <a class="btn" href="mailto:eberteogam@gmail.com?subject=Book%20a%20call">Book the call</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="pricing-note">The slider fee is the fixed fee we write into your Statement of Work — single tenant. Don't know your plugin count? It's a two-minute read from Agent Studio — we do it together on the call. Proceed to the rebuild with us and the assessment fee is credited toward it.</p>
+
+      <div class="addon reveal">
+        <div class="addon-ico"><svg viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="12" width="4" height="7" rx="2"/><rect x="17" y="12" width="4" height="7" rx="2"/><path d="M19 19a3 3 0 0 1-3 3h-2"/></svg></div>
+        <div class="addon-txt">
+          <span class="tag">Add-on · sold separately</span>
+          <h3>Voice into Service Operations Workspace</h3>
+          <p>Phone calls (Cisco Webex Contact Center) and chats handled by your agents in <b>one workspace</b>. Works with or without a migration.</p>
+        </div>
+        <a class="btn" style="flex:0 0 auto" href="mailto:eberteogam@gmail.com?subject=Voice%20into%20Service%20Operations%20Workspace">Ask about voice</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR WORKFLOW -->
+  <section class="doc" id="workflow">
+    <div class="wrap">
+      <div class="reveal"><h2>Our workflow</h2></div>
+      <div class="wf reveal">
+        <div class="wf-item">
+          <div class="wf-ico"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div>
+          <h3>Call</h3><p>30 min · free</p>
+        </div>
+        <div class="wf-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#wfg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="wf-item">
+          <div class="wf-ico"><svg viewBox="0 0 24 24"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2.4"/><circle cx="7" cy="16" r="2.4"/></svg></div>
+          <h3>Pricing</h3><p>slide to your count</p>
+        </div>
+        <div class="wf-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#wfg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="wf-item">
+          <div class="wf-ico"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 15.5l2 2 4-5"/></svg></div>
+          <h3>Statement of Work</h3><p>signed online</p>
+        </div>
+        <div class="wf-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#wfg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="wf-item">
+          <div class="wf-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+          <h3>Fieldwork</h3><p>read-only access</p>
+        </div>
+        <div class="wf-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#wfg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="wf-item">
+          <div class="wf-ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></div>
+          <h3>Readout</h3><p>both paths, priced</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT LANDS ON YOUR ENVIRONMENT -->
+  <section class="doc" id="deliverable">
+    <div class="wrap">
+      <div class="reveal"><h2>What lands on your environment</h2></div>
+      <div class="hub reveal">
+        <div class="spokes left">
+          <div class="spoke-row r1"><div class="spoke"><h3>Plugin inventory</h3><p>easy · medium · hard</p></div><div class="link"></div></div>
+          <div class="spoke-row r2"><div class="spoke"><h3>Retire vs rebuild</h3><p>cut dead weight first</p></div><div class="link"></div></div>
+          <div class="spoke-row r3"><div class="spoke"><h3>What changes</h3><p>memory · triggers · search</p></div><div class="link"></div></div>
+        </div>
+        <div class="hub-core">
+          <span class="k">Your report</span>
+          <h3>Both paths, priced</h3>
+          <p>migrate · stay · negotiate</p>
+        </div>
+        <div class="spokes right">
+          <div class="spoke-row r1"><div class="link"></div><div class="spoke"><h3>Human handoff</h3><p>right build · your licenses</p></div></div>
+          <div class="spoke-row r2"><div class="link"></div><div class="spoke"><h3>Systems + licenses</h3><p>credentials · gaps flagged</p></div></div>
+          <div class="spoke-row r3"><div class="link"></div><div class="spoke"><h3>Rebuild cost</h3><p>hours per plugin</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREE ASSESSMENT -->
+  <section class="doc" id="assessment">
+    <div class="wrap">
+      <div class="reveal"><h2>Free assessment</h2></div>
+      <div class="sample">
+        <div class="sample-copy reveal">
+          <p>Read a <b>complete assessment</b> built with the same methodology we run in production — plugin development, live-agent handoff (both builds), knowledge ingestion, and voice into Service Operations Workspace, proven in real work for the <b>City of Santa Monica</b>.</p>
+          <p>The document itself uses an <b>anonymized composite environment</b> — because your environment stays confidential too.</p>
+          <p>In your inbox within <b>one business day</b>.</p>
+        </div>
+        <div class="doc-card card reveal">
+          <span class="tag">Request · Free assessment</span>
+          <form id="sample-form" method="POST" action="https://formsubmit.co/ajax/eberteogam@gmail.com">
+            <input type="hidden" name="_subject" value="Free assessment request — Moveworks → ServiceNow">
+            <input type="text" name="_honey" aria-label="Leave this field empty" style="display:none" tabindex="-1" autocomplete="off">
+            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" type="text" autocomplete="organization" required></div>
+            <button class="btn" type="submit" style="width:100%">Send me the free assessment</button>
+            <p class="form-note">No mailing list. The document + one follow-up, max.</p>
+            <p class="form-status" id="form-status" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUESTIONS -->
+  <section class="doc" id="faq">
+    <div class="wrap">
+      <div class="reveal"><h2>What buyers ask</h2></div>
+      <details><summary>Do we have to leave Moveworks?</summary><p>No — and we won't tell you otherwise. ServiceNow states Moveworks continues as a standalone product, existing contracts are honored, and Agent Studio keeps shipping features. What has changed: support now runs through ServiceNow's Now Support, and the roadmap and pricing are ServiceNow-driven. The report prices both futures — staying and migrating — so your renewal is a decision, not a default. And if you stay, we build with you — new plugins in Agent Studio are part of the practice, not just migrations.</p></details>
+      <details><summary>How long does it take?</summary><p>Typically three to five weeks depending on estate size — and the exact window is written into your Statement of Work before you sign. The clock starts when access is granted, so provisioning speed on your side is the only thing that moves the date.</p></details>
+      <details><summary>What access do you need?</summary><p>Read-only access to your Moveworks tenant (or its exports), read-only access to your ServiceNow instance, your license summary, your renewal date, and two short interviews. We change nothing — that's a written exclusion in the Statement of Work.</p></details>
+      <details><summary>Do you do the rebuild too?</summary><p>Yes, optionally, under a second Statement of Work priced straight from the build plan in your report. The report is also written so your own team can execute it — you're not buying a hostage document.</p></details>
+      <details><summary>Is the fee really fixed?</summary><p>Yes. Scope, fee, timeline, and exclusions are all fixed in writing before work starts.</p></details>
+      <details><summary>Do you quote ServiceNow license prices?</summary><p>No. We identify which entitlements each path requires and which ones you're missing — dollar figures for ServiceNow licenses come from your ServiceNow account team. We price our work: the assessment and the rebuild, not another vendor's software.</p></details>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="doc" id="who">
+    <div class="wrap">
+      <div class="reveal"><h2>Why us</h2></div>
+      <div class="proof-row"><span class="k">Speaking · Oct 2026</span><span class="v">ServiceNow Nexus for Service Operations, Santa Clara — "AI-to-Human Handoff: Chat and Voice into Service Operations Workspace"</span></div>
+      <div class="proof-row"><span class="k">Speaking · Oct 2026</span><span class="v">nullEDGE 2026 — virtual session</span></div>
+      <div class="proof-row"><span class="k">Proven end to end</span><span class="v">Both bot-to-human handoff builds — the link-out path and the stay-in-Teams path — running against real ServiceNow instances</span></div>
+      <div class="proof-row"><span class="k">Public knowledge base</span><span class="v"><a href="https://eberteogam.github.io/#research">Engineering notes</a> — Moveworks Agent Studio internals, ServiceNow platform practice, integrations</span></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap foot-inner">
+    <p>© 2026 Cali Live Play LLC · eberteogam@gmail.com</p>
+    <p><a href="https://www.linkedin.com/in/eberteo/">LinkedIn</a> · <a href="https://eberteogam.github.io">Engineering notes</a></p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var io=null;
+    if('IntersectionObserver' in window){
+      io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+      },{threshold:.12});
+    }
+    document.querySelectorAll('.reveal').forEach(function(el){
+      if(io){io.observe(el)}else{el.classList.add('in')}
+    });
+  })();
+
+  // Pricing slider — base $6,000 + $400/plugin (1–10) + $300 (11–25) + $250 (26+); 60+/multi-tenant = custom
+  (function(){
+    var s=document.getElementById('pslider');
+    var n=document.getElementById('pl-n'),name=document.getElementById('pl-name'),
+        scope=document.getElementById('pl-scope'),price=document.getElementById('pl-price'),
+        list=document.getElementById('pl-list'),bd=document.getElementById('pl-breakdown');
+    var FULL=['Every plugin rated easy / medium / hard','Retire-vs-rebuild list','What changes on ServiceNow','Bot-to-human handoff — the right build for your licenses','Systems + credentials map · ServiceNow license gaps flagged','Build plan with hours = your quote','We present the findings to your CEO / CIO, live'];
+    function calc(v){
+      var p=6000,parts=['base $6,000'];
+      var t1=Math.min(v,10);p+=t1*400;parts.push(t1+' × $400');
+      if(v>10){var t2=Math.min(v,25)-10;p+=t2*300;parts.push(t2+' × $300');}
+      if(v>25){var t3=v-25;p+=t3*250;parts.push(t3+' × $250');}
+      return {p:p,parts:parts};
+    }
+    function fmt(x){return '$'+x.toLocaleString('en-US')}
+    function render(){
+      var v=parseInt(s.value,10);
+      var custom=(v>=60);
+      n.textContent=custom?'60+':v;
+      var items=FULL.slice();
+      if(custom){
+        name.textContent='Multi-tenant · 60+';
+        scope.textContent='Scope + fee defined together on the call';
+        price.textContent='Custom';
+        bd.textContent='everything below, sized to your estate';
+        items=['Everything in the full report','Multiple tenants + instances covered','Fixed fee set on the call'];
+      }else{
+        var c=calc(v);
+        price.textContent=fmt(c.p);
+        bd.textContent=c.parts.join(' · ');
+        if(v<=10){name.textContent='Small estate';scope.textContent='$400 per plugin · full report included';}
+        else if(v<=25){name.textContent='Standard estate';scope.textContent='$300 per plugin after the first 10';}
+        else{name.textContent='Large estate';scope.textContent='$250 per plugin after 25';}
+      }
+      list.innerHTML='';
+      items.forEach(function(t){var li=document.createElement('li');li.textContent=t;list.appendChild(li)});
+      var pct=((v-1)/59)*100;
+      s.style.background='linear-gradient(90deg,#3D5AFE 0%,#62D84E '+pct+'%,rgba(255,255,255,.12) '+pct+'%)';
+    }
+    s.addEventListener('input',render);
+    render();
+  })();
+
+  // Free assessment form
+  (function(){
+    var form=document.getElementById('sample-form');
+    var status=document.getElementById('form-status');
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var action=form.getAttribute('action');
+      var data=new FormData(form);
+      if(!action||action.indexOf('[[')===0){
+        var body=encodeURIComponent('Please send the free assessment.\nName: '+data.get('name')+'\nEmail: '+data.get('email')+'\nCompany: '+data.get('company'));
+        window.location.href='mailto:eberteogam@gmail.com?subject='+encodeURIComponent('Free assessment request')+'&body='+body;
+        return;
+      }
+      status.className='form-status';
+      fetch(action,{method:'POST',body:data,headers:{'Accept':'application/json'}})
+        .then(function(r){if(r.ok){form.reset();status.textContent='Request received — inbox within one business day.';status.className='form-status ok';}else{throw new Error('bad')}})
+        .catch(function(){status.textContent='That did not send. Email eberteogam@gmail.com directly — same document, same day.';status.className='form-status err';});
+    });
+  })();
+</script>
+
+</body>
+</html>

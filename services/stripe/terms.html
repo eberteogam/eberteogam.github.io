@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of service — Writeback</title>
+<meta name="description" content="Early-access terms of service for Writeback, a custom action for Stripe Workflows by Cali Live Play LLC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--suppress CssNoGenericFontName -->
+<style>
+  :root{
+    --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A1F36; --muted:#5B6478;
+    --line:#E3E7F0; --blurple:#635BFF; --blurple-soft:#EDEBFF;
+    --maxw:820px;
+    --display:'Sora',system-ui,sans-serif;
+    --body:'Inter',-apple-system,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  a:focus-visible{outline:2px solid var(--blurple);outline-offset:3px}
+  header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(247,248,252,.92);backdrop-filter:blur(10px);z-index:50}
+  .site-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1120px;margin:0 auto}
+  .wordmark{font-family:var(--display);font-weight:800;font-size:17px;text-decoration:none}
+  .wordmark span{color:var(--muted);font-family:var(--mono);font-weight:400;font-size:11.5px;margin-left:10px}
+  nav.top{display:flex;gap:22px;align-items:center}
+  nav.top a{font-size:14px;text-decoration:none;color:var(--muted)}
+  nav.top a:hover,nav.top a[aria-current]{color:var(--ink)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  main{padding:56px 0 72px}
+  .kicker{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--blurple);background:var(--blurple-soft);border-radius:999px;padding:6px 12px;margin-bottom:16px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,44px);line-height:1.1;letter-spacing:-.02em}
+  .meta{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin:12px 0 28px}
+  .draft{border:1px solid #F3C96B;background:#FFF8E6;color:#6B4E00;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:32px}
+  .draft b{color:#4A3600}
+  h2{font-family:var(--display);font-weight:700;font-size:21px;margin:36px 0 10px;letter-spacing:-.01em}
+  h3{font-family:var(--display);font-weight:700;font-size:16.5px;margin:22px 0 6px}
+  p{margin:0 0 14px;max-width:70ch}
+  ul,ol{padding-left:22px;margin:0 0 14px;max-width:70ch}
+  li{margin-bottom:6px}
+  .fill{background:#FFF8E6;border-bottom:2px dotted #F3C96B;padding:0 3px}
+  code{font-family:var(--mono);font-size:.9em;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+  pre{font-family:var(--mono);font-size:13.5px;line-height:1.55;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;margin:0 0 16px}
+  pre code{border:none;background:none;padding:0;font-size:inherit}
+  table{border-collapse:collapse;width:100%;margin:0 0 18px;font-size:14.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:28px}
+  .toc a{font-size:14.5px;display:block;padding:3px 0;text-decoration:none;color:var(--muted)}
+  .toc a:hover{color:var(--blurple)}
+  footer.site{border-top:1px solid var(--line);padding:26px 0 44px;background:#fff}
+  .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline;max-width:1120px;margin:0 auto;padding:0 24px}
+  .foot-inner p,.foot-inner a{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .legal{font-size:12px;color:var(--muted);margin:14px auto 0;max-width:1120px;padding:0 24px}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="wordmark" href="./">Writeback<span>for Stripe Workflows</span></a>
+    <nav class="top">
+      <a href="docs.html">Docs</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html" aria-current="page">Terms</a>
+      <a href="index.html#access">Get early access</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <span class="kicker">Legal</span>
+    <h1>Terms of service</h1>
+    <p class="meta">Last updated: 2026-08-26 · Early-access terms</p>
+    <div class="draft"><b>Draft.</b> These terms were scaffolded for early access and have not been reviewed by a lawyer. Highlighted <span class="fill">[items]</span> are decisions still to be made. Replace this notice with an effective date before the Marketplace listing goes live.</div>
+
+    <div class="toc">
+      <a href="#agreement">1. The agreement</a>
+      <a href="#service">2. What Writeback is</a>
+      <a href="#early">3. Early access</a>
+      <a href="#you">4. Your responsibilities</a>
+      <a href="#stripe">5. Stripe</a>
+      <a href="#data">6. Your data</a>
+      <a href="#fees">7. Fees</a>
+      <a href="#ip">8. Ownership</a>
+      <a href="#warranty">9. No warranty</a>
+      <a href="#liability">10. Limitation of liability</a>
+      <a href="#termination">11. Termination</a>
+      <a href="#law">12. Governing law &amp; contact</a>
+    </div>
+
+    <h2 id="agreement">1. The agreement</h2>
+    <p>These terms are between you (the business installing or requesting Writeback) and <b>Cali Live Play LLC</b> ("we", "us"). By requesting a private install, installing the app, or using it, you agree to them. If you are accepting on behalf of a company, you confirm you are authorised to do so.</p>
+
+    <h2 id="service">2. What Writeback is</h2>
+    <p>Writeback is a Stripe App that adds a custom action to Stripe Workflows. When a payment event you choose occurs, it writes mapped fields (such as payment status, receipt URL, and a reference ID) into a destination system you configure — currently JotForm, ServiceNow, or any REST endpoint. Full behaviour is described in the <a href="docs.html">documentation</a>.</p>
+
+    <h2 id="early">3. Early access</h2>
+    <p>Writeback is in a preview period. During early access:</p>
+    <ul>
+      <li>Features, connectors, and the payload format may change, and we may need to reinstall or reconfigure the action with you.</li>
+      <li>We may pause or discontinue the preview. We will give at least <span class="fill">[14 days]</span> notice by email except where a security issue requires immediate action.</li>
+      <li>Private installs are set up jointly on a call; you are responsible for reviewing the field mapping we configure before it goes live.</li>
+    </ul>
+
+    <h2 id="you">4. Your responsibilities</h2>
+    <ul>
+      <li>Keep a valid Stripe account in good standing and comply with Stripe's terms.</li>
+      <li>Only connect destination systems (JotForm, ServiceNow, endpoints) that you are authorised to write to, and only map data you are permitted to send there.</li>
+      <li>Keep connector credentials current and revoke them on your side if you stop using Writeback.</li>
+      <li>Do not use Writeback to send unlawful, misleading, or infringing content, to overload a destination system, or to attempt to access other customers' data.</li>
+    </ul>
+
+    <h2 id="stripe">5. Stripe</h2>
+    <p>Writeback runs on the Stripe Apps platform and depends on it. Stripe, Inc. is not a party to these terms, does not endorse Writeback, and is not responsible for it. Your Stripe account, payments, and Stripe Workflows are governed solely by your agreement with Stripe. If Stripe changes or withdraws the platform features Writeback relies on, we may have to change or withdraw Writeback.</p>
+
+    <h2 id="data">6. Your data</h2>
+    <p>How we collect, use, and delete data is set out in the <a href="privacy.html">privacy policy</a>, which forms part of these terms. You remain the controller of the data you route through Writeback; we process it only to perform the action you configured.</p>
+
+    <h2 id="fees">7. Fees</h2>
+    <p>Writeback is free during early access, including private installs. Paid plans will be announced at Marketplace launch with at least <span class="fill">[30 days]</span> notice; early-access customers keep preferred pricing as described at the time of launch. Nothing becomes billable without your explicit agreement to a paid plan.</p>
+
+    <h2 id="ip">8. Ownership</h2>
+    <p>We own Writeback, its code, and its documentation. You own your data and your destination systems. You may not copy, reverse-engineer, resell, or build a competing service from the app beyond what applicable law permits. Feedback you give us may be used to improve the product without obligation to you.</p>
+
+    <h2 id="warranty">9. No warranty</h2>
+    <p>Writeback is provided <b>"as is" and "as available"</b> during early access. We do not promise it will be uninterrupted, error-free, or that every event will be written to your destination. You should keep your own record of payments in Stripe and not treat Writeback's output as the system of record.</p>
+
+    <h2 id="liability">10. Limitation of liability</h2>
+    <p>To the fullest extent permitted by law, we are not liable for indirect, incidental, special, or consequential losses, lost profits, or lost data arising from Writeback. Our total liability for all claims relating to Writeback is limited to the greater of the fees you paid us in the 12 months before the claim or <span class="fill">[USD 100]</span>. Nothing here limits liability that cannot be limited by law.</p>
+
+    <h2 id="termination">11. Termination</h2>
+    <p>You may stop at any time by uninstalling the app or asking us to remove a private install. We may suspend or terminate access if you breach these terms, if required by Stripe or by law, or when the preview ends. On termination we delete your configuration and credentials as described in the privacy policy.</p>
+
+    <h2 id="law">12. Governing law &amp; contact</h2>
+    <p>These terms are governed by the laws of <span class="fill">[State, USA]</span>, and disputes will be resolved in the courts of <span class="fill">[County, State]</span>, unless the law where you are located gives you additional protections. We may update these terms; material changes are emailed to installed customers before they take effect.</p>
+    <p>Cali Live Play LLC · <span class="fill">[mailing address]</span> · <a href="mailto:eberteogam@gmail.com">eberteogam@gmail.com</a></p>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="foot-inner">
+    <p>© 2026 Cali Live Play LLC · Support: eberteogam@gmail.com</p>
+    <p><a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms</a> · <a href="docs.html">Docs</a></p>
+  </div>
+  <p class="legal">Writeback is an independent product built on the Stripe Apps platform. Stripe and Stripe Workflows are trademarks of Stripe, Inc. This product is not affiliated with, endorsed by, or sponsored by Stripe, Inc.</p>
+</footer>
+
+</body>
+</html>

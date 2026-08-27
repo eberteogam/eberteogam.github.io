@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writeback — Custom actions for Stripe Workflows</title>
+<meta name="description" content="Writeback adds custom actions to Stripe Workflows: when a payment succeeds, fails, or refunds, your forms and ticketing systems update automatically.">
+<link rel="canonical" href="https://eberteogam.github.io/services/stripe/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--suppress CssNoGenericFontName, CssUnusedSymbol -->
+<style>
+  :root{
+    --bg:#F7F8FC; --card:#FFFFFF; --ink:#1A1F36; --muted:#5B6478;
+    --line:#E3E7F0; --blurple:#635BFF; --blurple-soft:#EDEBFF; --cyan:#00D4FF;
+    --grad:linear-gradient(90deg,#635BFF,#00D4FF);
+    --maxw:1020px;
+    --display:'Sora',system-ui,sans-serif;
+    --body:'Inter',-apple-system,Segoe UI,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--blurple);outline-offset:3px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(247,248,252,.92);backdrop-filter:blur(10px);z-index:50}
+  .site-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--maxw);margin:0 auto}
+  .wordmark{font-family:var(--display);font-weight:800;font-size:17px;text-decoration:none}
+  .wordmark span{color:var(--muted);font-family:var(--mono);font-weight:400;font-size:11.5px;margin-left:10px}
+  nav.top{display:flex;gap:22px;align-items:center}
+  nav.top a{font-size:14px;text-decoration:none;color:var(--muted)}
+  nav.top a:hover{color:var(--ink)}
+  .btn{display:inline-block;font-family:var(--display);font-weight:700;font-size:15px;background:var(--blurple);color:#fff;padding:13px 24px;border:none;border-radius:10px;text-decoration:none;cursor:pointer;transition:background .15s,transform .15s,box-shadow .2s;box-shadow:0 6px 20px rgba(99,91,255,.28)}
+  .btn:hover{background:#5148E8}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+  .btn.ghost:hover{border-color:var(--blurple);background:#fff}
+  nav.top .btn{padding:9px 16px;font-size:14px}
+  @media(max-width:700px){nav.top a.navlink{display:none}}
+
+  .hero{padding:80px 0 56px;text-align:center;background:
+    radial-gradient(560px 280px at 50% -8%, rgba(99,91,255,.14), transparent 70%)}
+  .chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--blurple);background:var(--blurple-soft);border-radius:999px;padding:7px 14px;margin-bottom:22px}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,56px);line-height:1.06;letter-spacing:-.02em;max-width:22ch;margin:0 auto}
+  .hero-sub{margin:20px auto 30px;font-size:18px;color:var(--muted);max-width:52ch}
+  .hero-sub b{color:var(--ink)}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:44px}
+
+  /* flow strip */
+  .flowline{display:flex;align-items:center;justify-content:center;gap:0;max-width:760px;margin:0 auto;flex-wrap:wrap}
+  .fnode{font-family:var(--display);font-weight:700;font-size:14.5px;padding:12px 18px;border-radius:12px;background:#fff;border:1px solid var(--line);box-shadow:0 4px 14px rgba(26,31,54,.06)}
+  .fnode.pay{color:var(--blurple);border-color:rgba(99,91,255,.4)}
+  .fpipe{width:56px;height:2px;background:repeating-linear-gradient(90deg,#B9B3FF 0 7px,transparent 7px 14px);background-size:28px 2px;animation:flow 1.1s linear infinite;margin:0 4px}
+  @keyframes flow{to{background-position:28px 0}}
+  @media(max-width:640px){.fpipe{width:26px}}
+
+  section.doc{padding:66px 0;border-top:1px solid var(--line)}
+  .kicker{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--blurple);margin-bottom:12px}
+  h2{font-family:var(--display);font-weight:700;font-size:clamp(25px,3.2vw,34px);letter-spacing:-.015em}
+  .sec-intro{color:var(--muted);font-size:15.5px;margin:10px 0 34px;max-width:60ch}
+
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 22px;box-shadow:0 6px 22px rgba(26,31,54,.05);transition:transform .16s,box-shadow .16s}
+  .tile:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(26,31,54,.10)}
+  .tile .n{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--blurple);display:block;margin-bottom:10px}
+  .tile h3{font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:8px}
+  .tile p{font-size:14.5px;color:var(--muted)}
+  @media(max-width:840px){.grid3{grid-template-columns:1fr}}
+
+  /* install paths */
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .path{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;box-shadow:0 6px 22px rgba(26,31,54,.05);display:flex;flex-direction:column}
+  .path.live{background:linear-gradient(#fff,#fff) padding-box,var(--grad) border-box;border:2px solid transparent}
+  .badge{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;border-radius:999px;padding:5px 12px;margin-bottom:14px;width:fit-content}
+  .badge.now{background:#E6FBF2;color:#0A8A5F}
+  .badge.soon{background:var(--blurple-soft);color:var(--blurple)}
+  .path h3{font-family:var(--display);font-weight:800;font-size:21px;margin-bottom:10px}
+  .path p{font-size:15px;color:var(--muted);margin-bottom:14px}
+  .path code{font-family:var(--mono);font-size:13px;background:#F1F2F8;border:1px solid var(--line);border-radius:8px;padding:3px 8px;color:var(--ink)}
+  .path ul{list-style:none;flex:1;margin-bottom:16px}
+  .path li{font-size:14.5px;color:var(--muted);padding:5px 0 5px 22px;position:relative}
+  .path li::before{content:"→";position:absolute;left:0;color:var(--blurple);font-weight:700}
+  .path .btn{width:100%;text-align:center}
+  @media(max-width:800px){.paths{grid-template-columns:1fr}}
+
+  /* connectors */
+  .conns{display:flex;gap:12px;flex-wrap:wrap}
+  .conn{font-family:var(--display);font-weight:700;font-size:14.5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 18px;box-shadow:0 3px 10px rgba(26,31,54,.05)}
+  .conn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted);letter-spacing:.05em}
+
+  /* pricing + form */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+  @media(max-width:800px){.duo{grid-template-columns:1fr}}
+  .pricebox{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;box-shadow:0 6px 22px rgba(26,31,54,.05)}
+  .pricebox .big{font-family:var(--display);font-weight:800;font-size:34px;margin:8px 0 6px}
+  .pricebox p{font-size:14.5px;color:var(--muted)}
+  .field{margin-bottom:13px}
+  .field label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+  .field input{width:100%;padding:12px;font-family:var(--body);font-size:15.5px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  .field input:focus{border-color:var(--blurple);box-shadow:0 0 0 3px rgba(99,91,255,.14)}
+  .form-note{font-size:13px;color:var(--muted);margin-top:10px}
+  .form-status{font-family:var(--mono);font-size:13px;margin-top:12px;display:none}
+  .form-status.ok{display:block;color:#0A8A5F}
+  .form-status.err{display:block;color:#C43A2B}
+
+  details{border-bottom:1px solid var(--line);padding:2px 0}
+  details:first-of-type{border-top:1px solid var(--line)}
+  summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:16.5px;padding:15px 0;list-style:none;display:flex;justify-content:space-between;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-family:var(--mono);color:var(--blurple);font-size:19px}
+  details[open] summary::after{content:"–"}
+  details p{padding:0 0 16px;color:var(--muted);max-width:64ch;font-size:15px}
+
+  footer.site{border-top:1px solid var(--line);padding:26px 0 44px;background:#fff}
+  .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
+  .foot-inner p,.foot-inner a{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .legal{font-size:12px;color:var(--muted);margin-top:14px;max-width:70ch}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="wordmark" href="#top">Writeback<span>for Stripe Workflows</span></a>
+    <nav class="top">
+      <a class="navlink" href="#how">How it works</a>
+      <a class="navlink" href="#install">Install</a>
+      <a class="navlink" href="#pricing">Pricing</a>
+      <a class="btn" href="#access">Get early access</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="chip">⚡ Custom action · Stripe Workflows</span>
+      <h1>Your payment happened. <span class="grad-text">Now your systems know it too.</span></h1>
+      <p class="hero-sub">Writeback adds actions to <b>Stripe Workflows</b>: when a payment succeeds, fails, or refunds, your forms and ticketing records update <b>automatically</b> — status, receipt link, reference ID. No copy-paste, no missed payments.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="#access">Get early access</a>
+        <a class="btn ghost" href="#how">How it works</a>
+      </div>
+      <div class="flowline" aria-label="Payment flow">
+        <span class="fnode pay">Stripe payment</span>
+        <span class="fpipe" aria-hidden="true"></span>
+        <span class="fnode">Workflow runs</span>
+        <span class="fpipe" aria-hidden="true"></span>
+        <span class="fnode">Your record updated</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="how">
+    <div class="wrap">
+      <span class="kicker">How it works</span>
+      <h2>Three steps, zero manual work</h2>
+      <p class="sec-intro">You already use Stripe Workflows to react to payment events. Writeback gives those workflows a new action: write the result into the system your team actually looks at.</p>
+      <div class="grid3">
+        <div class="tile"><span class="n">01 · Trigger</span><h3>Pick the payment event</h3><p>Payment succeeded, failed, refunded, or disputed — any Workflows trigger works.</p></div>
+        <div class="tile"><span class="n">02 · Action</span><h3>Add Writeback as a step</h3><p>It shows up in your Workflow builder like any built-in action. Map the fields once.</p></div>
+        <div class="tile"><span class="n">03 · Write-back</span><h3>Your record updates itself</h3><p>Paid status, receipt URL, and reference ID land in your form or ticket — seconds after the charge.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="connectors">
+    <div class="wrap">
+      <span class="kicker">Where it writes</span>
+      <h2>Connectors</h2>
+      <p class="sec-intro">Built first for the systems we run in production. More on request.</p>
+      <div class="conns">
+        <span class="conn">JotForm<small>available first</small></span>
+        <span class="conn">ServiceNow<small>next</small></span>
+        <span class="conn">Any REST endpoint<small>webhook mode</small></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="install">
+    <div class="wrap">
+      <span class="kicker">Install</span>
+      <h2>Two ways to run it</h2>
+      <div class="paths">
+        <div class="path live">
+          <span class="badge now">Available now</span>
+          <h3>Private install — your Stripe account</h3>
+          <p>We tailor the action to your workflow and install it directly to your Stripe account with the Stripe CLI (<code>stripe apps upload</code>). It appears in your Workflow builder same-day.</p>
+          <ul>
+            <li>Field mapping done for you</li>
+            <li>Your account only — nothing shared</li>
+            <li>White-glove setup on one call</li>
+          </ul>
+          <a class="btn" href="#access">Request a private install</a>
+        </div>
+        <div class="path">
+          <span class="badge soon">Coming</span>
+          <h3>Stripe App Marketplace</h3>
+          <p>One-click install from the official Stripe App Marketplace once review completes. Same action, self-serve.</p>
+          <ul>
+            <li>Install in minutes from your Stripe Dashboard</li>
+            <li>Configure connectors in the app's settings</li>
+            <li>Early-access users migrate free</li>
+          </ul>
+          <a class="btn ghost" href="#access">Get notified at launch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="pricing">
+    <div class="wrap duo">
+      <div>
+        <span class="kicker">Pricing</span>
+        <h2>Free while in early access</h2>
+        <div class="pricebox" style="margin-top:22px">
+          <span class="kicker" style="margin:0">Early access</span>
+          <div class="big">$0</div>
+          <p>Free during the preview period, including private installs. Paid plans announced at Marketplace launch — early-access users keep preferred pricing.</p>
+        </div>
+      </div>
+      <div class="pricebox" id="access">
+        <span class="kicker">Get early access</span>
+        <form id="access-form" method="POST" action="https://formsubmit.co/ajax/eberteogam@gmail.com">
+          <input type="hidden" name="_subject" value="Early access request — Stripe">
+          <input type="text" name="_honey" aria-label="Leave this field empty" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="field"><label for="a-name">Name</label><input id="a-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="a-email">Work email</label><input id="a-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="a-usecase">What should update when a payment lands?</label><input id="a-usecase" name="usecase" type="text" placeholder="e.g. JotForm submission → mark paid" required></div>
+          <button class="btn" type="submit" style="width:100%">Request access</button>
+          <p class="form-note">We reply within one business day.</p>
+          <p class="form-status" id="access-status" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="faq">
+    <div class="wrap">
+      <span class="kicker">Questions</span>
+      <h2>Straight answers</h2>
+      <details><summary>Is this made by Stripe?</summary><p>No. Writeback is built by Cali Live Play LLC on Stripe's app platform. Stripe is a trademark of Stripe, Inc. We're an independent developer — not affiliated with or endorsed by Stripe.</p></details>
+      <details><summary>Where does it run?</summary><p>Depending on the connector, the action runs either on Stripe's app runtime or on our infrastructure. Either way, your Stripe secrets never leave Stripe, and connector credentials are stored encrypted.</p></details>
+      <details><summary>What do you need for a private install?</summary><p>One short call: which payment event triggers it, which system gets updated, and which fields map where. Install happens the same day via the Stripe CLI.</p></details>
+      <details><summary>Can you build a connector we need?</summary><p>Yes — the REST/webhook mode covers most systems today, and purpose-built connectors are added by request.</p></details>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-inner">
+      <p>© 2026 Cali Live Play LLC · Support: eberteogam@gmail.com</p>
+      <p><a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms</a> · <a href="docs.html">Docs</a></p>
+    </div>
+    <p class="legal">Writeback is an independent product built on the Stripe Apps platform. Stripe and Stripe Workflows are trademarks of Stripe, Inc. This product is not affiliated with, endorsed by, or sponsored by Stripe, Inc.</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var form=document.getElementById('access-form');
+    var status=document.getElementById('access-status');
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var action=form.getAttribute('action');
+      var data=new FormData(form);
+      if(!action||action.indexOf('[[')===0){
+        var body=encodeURIComponent('Early access request.\nName: '+data.get('name')+'\nUse case: '+data.get('usecase'));
+        window.location.href='mailto:eberteogam@gmail.com?subject='+encodeURIComponent('Writeback early access')+'&body='+body;
+        return;
+      }
+      status.className='form-status';
+      fetch(action,{method:'POST',body:data,headers:{'Accept':'application/json'}})
+        .then(function(r){if(r.ok){form.reset();status.textContent='Request received — reply within one business day.';status.className='form-status ok';}else{throw new Error('bad')}})
+        .catch(function(){status.textContent='Did not send. Email eberteogam@gmail.com directly.';status.className='form-status err';});
+    });
+  })();
+</script>
+
+</body>
+</html>
