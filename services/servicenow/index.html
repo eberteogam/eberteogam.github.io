@@ -44,7 +44,7 @@
   .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
   .reveal.in{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal,.page{opacity:1}}
 
   header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(12,20,22,.72);backdrop-filter:blur(16px);z-index:50}
   .site-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--maxw);margin:0 auto}
@@ -63,14 +63,35 @@
   @media(max-width:760px){nav.top a.navlink{display:none}}
 
   .hero{padding:86px 0 64px}
-  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
-  @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+  .hero-copy{max-width:900px}
+  .hero-visual{margin:76px 0 0}
+  @media(max-width:940px){.hero-visual{margin-top:52px}}
   .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.04)}
   .eyebrow .dotmw{width:8px;height:8px;border-radius:50%;background:var(--mw);box-shadow:0 0 10px var(--mw)}
   .eyebrow .dotsn{width:8px;height:8px;border-radius:50%;background:var(--sn);box-shadow:0 0 10px var(--sn)}
   h1{font-family:var(--display);font-weight:900;font-size:clamp(40px,5.6vw,64px);line-height:1.03;letter-spacing:-.025em}
-  .hero-sub{margin:22px 0 0;font-size:19px;color:var(--muted);max-width:50ch}
-  .hero-sub b{color:var(--text);font-weight:700}
+  /* hero picture — full-width variant */
+  .hero-visual .flowcard{padding:50px 40px 40px;background:linear-gradient(rgba(14,24,22,.94),rgba(14,24,22,.94)) padding-box,var(--grad) border-box;border:1px solid transparent;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px rgba(61,90,254,.10),0 0 60px rgba(98,216,78,.10)}
+  .hero-visual .node{font-size:clamp(18px,2.1vw,26px);padding:16px 26px;border-radius:16px}
+  .hero-visual .pipewrap{margin:0 16px;min-width:120px}
+  .hero-visual .plabel{font-size:clamp(12px,1.1vw,14px);top:-30px;letter-spacing:.2em;font-weight:500}
+  .hero-visual .pipe{height:4px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.7) 0 10px,transparent 10px 20px);background-size:40px 4px;animation:dashflow40 1s linear infinite;opacity:1}
+  .hero-visual .pipe::after{border-left-width:16px;border-top-width:9px;border-bottom-width:9px;right:-2px}
+  @media(max-width:600px){.hero-visual .flowcard{padding:40px 18px 26px}.hero-visual .node{font-size:17px;padding:14px 16px}.hero-visual .pipewrap{margin:0 8px}.hero-visual .plabel{font-size:11px;top:-26px;letter-spacing:.16em}.flow-or{margin:24px 0 36px;font-size:12px}}
+  /* hero picture — both lanes feed CI/CD */
+  .flowgrid{display:grid;grid-template-columns:minmax(0,1fr) 44px auto;align-items:center}
+  .lanes{min-width:0}
+  .flow.lane1,.flow.lane2,.flow-or{position:relative}
+  .lane1::after,.lane2::after,.flow-or .vseg{content:"";position:absolute;right:0;width:2px;background:var(--grad);opacity:.75;z-index:1}
+  .lane1::after{top:50%;bottom:-40px}
+  .lane2::after{top:-40px;bottom:50%}
+  .flow-or .vseg{top:0;bottom:0}
+  .tap{flex:0 0 40px;height:2px;background:var(--grad);opacity:.75}
+  .cstub{height:2px;background:var(--grad);opacity:.75}
+  .cinode{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .node.ci{display:inline-flex;align-items:center;gap:.4em;color:var(--text);border-color:transparent;background:linear-gradient(rgba(22,34,30,1),rgba(16,26,24,1)) padding-box,var(--grad) border-box;border:1px solid transparent;box-shadow:0 0 0 8px rgba(14,24,22,.94),0 0 40px rgba(98,216,78,.22),0 0 40px rgba(61,90,254,.18)}
+  .node.ci svg{width:.95em;height:.95em;stroke:url(#wfg);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  @media(max-width:760px){.flowgrid{grid-template-columns:1fr}.lane1::after,.lane2::after,.flow-or .vseg,.tap,.cstub{display:none}.cinode{margin-top:26px}}
   .flowcard{background:linear-gradient(rgba(255,255,255,.055),rgba(255,255,255,.03)) padding-box,linear-gradient(135deg,rgba(61,90,254,.55),rgba(98,216,78,.55)) border-box;border:1px solid transparent;border-radius:20px;padding:26px 26px 22px;backdrop-filter:blur(8px);box-shadow:0 24px 70px rgba(0,0,0,.45)}
   .flowcard .cap{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:16px}
   .flow{display:flex;align-items:center;gap:0}
@@ -78,14 +99,15 @@
   .node.mw{color:#C9D4FF;border-color:rgba(61,90,254,.5);box-shadow:0 0 24px rgba(61,90,254,.16)}
   .node.sn{color:#D6F5C9;border-color:rgba(98,216,78,.5);box-shadow:0 0 24px rgba(98,216,78,.16)}
   .pipewrap{flex:1;position:relative;display:flex;align-items:center;margin:0 6px}
-  .plabel{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-style:normal;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sn)}
+  .plabel{position:absolute;top:-18px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--mono);font-style:normal;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sn)}
   .pipe{flex:1;height:2px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.55) 0 8px,transparent 8px 16px);background-size:32px 2px;animation:dashflow 1.2s linear infinite;border-radius:2px;opacity:.85;position:relative}
   .pipe::after{content:"";position:absolute;right:-1px;top:50%;transform:translateY(-50%);border-left:9px solid #62D84E;border-top:5px solid transparent;border-bottom:5px solid transparent;filter:drop-shadow(0 0 6px rgba(98,216,78,.7))}
-  .flow2{display:flex;align-items:center;gap:12px;margin-top:14px}
-  .flow2 .loop{width:34px;height:34px;flex:0 0 auto;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.03)) padding-box,linear-gradient(135deg,rgba(61,90,254,.6),rgba(98,216,78,.4)) border-box;border:1px solid transparent}
-  .flow2 .loop svg{width:17px;height:17px;stroke:url(#wfg);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .flow2 span:last-child{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.03em}
+  .flow-or{display:flex;align-items:center;gap:18px;margin:40px 0;color:var(--dim);font-family:var(--mono);font-size:15px;letter-spacing:.26em;text-transform:uppercase}
+  .flow-or::before,.flow-or::after{content:"";flex:1;border-top:1px dashed var(--line2)}
+  .flow.stay .plabel{color:#A3B4FF}
+  .flow.stay .pipe::after{border-left-color:var(--mw);filter:drop-shadow(0 0 6px rgba(61,90,254,.7))}
   @keyframes dashflow{to{background-position:32px 0}}
+  @keyframes dashflow40{to{background-position:40px 0}}
 
   section.doc{padding:76px 0}
   h2{font-family:var(--display);font-weight:900;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em}
@@ -93,72 +115,171 @@
   .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease}
   .card:hover{transform:translateY(-3px);border-color:var(--line2);background:var(--surface2);box-shadow:0 16px 46px rgba(0,0,0,.4)}
 
-  /* ---- PRICING SLIDER ---- */
-  .slider-shell{margin-top:40px}
-  .slider-row{display:flex;align-items:center;gap:18px;font-family:var(--mono);font-size:12px;color:var(--muted)}
-  input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:8px;border-radius:99px;background:linear-gradient(90deg,#3D5AFE 0%,#62D84E 30%,rgba(255,255,255,.12) 30%);outline:none;cursor:pointer}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;border:3px solid var(--sn);box-shadow:0 0 0 6px rgba(98,216,78,.18),0 6px 18px rgba(0,0,0,.5);cursor:grab}
+  /* ---- PRICING · MAP YOUR PATH ---- */
+  .mapgrid{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:18px;align-items:start;margin-top:34px}
+  .mapper{display:grid;gap:10px;min-width:0}
+  .q{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:16px 18px 15px;transition:border-color .2s ease}
+  .q:hover{border-color:var(--line2)}
+  .q-main,.q-sub{display:grid;grid-template-columns:38px minmax(0,1fr);gap:4px 14px;align-items:start}
+  .q-sub{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line2)}
+  .qn{width:31px;height:31px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12.5px;color:var(--sn);border:1px solid rgba(98,216,78,.35);background:rgba(98,216,78,.08);margin-top:1px}
+  .qn.sub{width:26px;height:26px;font-size:10.5px;border-radius:8px;opacity:.9}
+  .ql{font-family:var(--display);font-weight:700;font-size:16.5px;line-height:1.3;align-self:center}
+  .ql small{display:block;font-family:var(--mono);font-weight:400;font-size:11px;color:var(--muted);letter-spacing:.03em;margin-top:3px}
+  .qc{grid-column:2;margin-top:6px}
+  .slider-row{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;color:var(--muted);width:100%}
+  .qcount{font-family:var(--display);font-weight:900;font-size:21px;min-width:44px;text-align:right;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:8px;border-radius:99px;background:linear-gradient(90deg,#3D5AFE 0%,#62D84E 30%,rgba(255,255,255,.12) 30%);outline:none;cursor:pointer;min-width:0}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--sn);box-shadow:0 0 0 5px rgba(98,216,78,.18),0 6px 18px rgba(0,0,0,.5);cursor:grab}
   input[type=range]::-webkit-slider-thumb:active{cursor:grabbing}
-  input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid var(--sn);box-shadow:0 0 0 6px rgba(98,216,78,.18);cursor:grab}
-  input[type=range]::-moz-range-track{height:8px;border-radius:99px;background:rgba(255,255,255,.12)}
-  .drag-hint{text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:10px;letter-spacing:.08em}
-  .pkg-live{margin-top:26px;padding:30px 30px 28px;display:grid;grid-template-columns:auto 1fr auto;gap:30px;align-items:center;background:linear-gradient(rgba(17,28,24,.92),rgba(17,28,24,.92)) padding-box,var(--grad) border-box;border:1px solid transparent}
-  .pl-count{text-align:center}
-  .pl-count .n{font-family:var(--display);font-weight:900;font-size:64px;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .pl-count .l{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
-  .pl-mid .name{font-family:var(--display);font-weight:800;font-size:22px}
-  .pl-mid .scope{font-family:var(--mono);font-size:12px;color:var(--muted);display:block;margin:2px 0 12px}
-  .pl-mid ul{list-style:none;columns:2;column-gap:26px}
-  .pl-mid li{font-size:14px;color:var(--dim);padding:4px 0 4px 22px;position:relative;break-inside:avoid}
-  .pl-mid li::before{content:"→";position:absolute;left:0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
-  .pl-cta{text-align:center}
-  .pl-cta .price{font-family:var(--display);font-weight:900;font-size:34px;letter-spacing:-.02em;margin-bottom:4px}
-  .pl-cta .bd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;letter-spacing:.02em}
-  @media(max-width:900px){.pkg-live{grid-template-columns:1fr;gap:20px;text-align:center}.pl-mid ul{columns:1;text-align:left;max-width:340px;margin:0 auto}}
-  .pricing-note{font-size:14px;color:var(--muted);margin-top:20px}
-  .addon{margin-top:26px;padding:24px 26px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;border-radius:18px;border:1px solid transparent;background:linear-gradient(rgba(17,28,24,.94),rgba(17,28,24,.94)) padding-box,var(--grad) border-box;box-shadow:0 12px 44px rgba(61,90,254,.12),0 12px 44px rgba(98,216,78,.10)}
-  .addon-ico{width:56px;height:56px;flex:0 0 auto;border-radius:16px;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(255,255,255,.07),rgba(255,255,255,.03)) padding-box,var(--grad) border-box;border:1px solid transparent}
-  .addon-ico svg{width:26px;height:26px;stroke:url(#wfg);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .addon-txt{flex:1;min-width:260px}
-  .addon .tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--sn);text-transform:uppercase;display:block;margin-bottom:4px}
-  .addon h3{font-family:var(--display);font-weight:800;font-size:19px;margin:0 0 6px}
-  .addon p{font-size:14.5px;color:var(--dim);max-width:60ch}
-  .addon b{color:var(--text)}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--sn);box-shadow:0 0 0 5px rgba(98,216,78,.18);cursor:grab}
+  input[type=range]::-moz-range-track{height:8px;border-radius:99px;background:transparent}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);background:rgba(255,255,255,.04);border:1px solid var(--line2);border-radius:999px;padding:8px 13px;cursor:pointer;transition:border-color .15s,color .15s,background .15s,box-shadow .15s}
+  .seg button:hover{border-color:var(--sn);color:var(--text)}
+  .seg button.on{background:var(--grad);color:#0C1A0F;border-color:transparent;font-weight:600;box-shadow:0 6px 20px rgba(98,216,78,.22)}
+  .seg button .ft{font-style:normal;font-size:8.5px;letter-spacing:.14em;margin-left:7px;padding:2px 6px;border-radius:999px;border:1px solid rgba(98,216,78,.5);color:var(--sn);vertical-align:1px}
+  .seg button.on .ft{border-color:rgba(12,26,15,.4);color:#0C1A0F}
+  .seg button.esc{background:transparent;border-style:dashed;color:var(--muted)}
+  .seg button.esc:hover{color:var(--dim)}
+  .seg button.esc.on{background:var(--grad);border-style:solid;color:#0C1A0F}
+  .qdiv{display:flex;align-items:center;gap:14px;margin:8px 0 0;color:var(--sn);font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase}
+  .qdiv::before,.qdiv::after{content:"";flex:1;border-top:1px dashed var(--line2)}
+  .path{position:sticky;top:84px;padding:22px 22px 20px;border-radius:20px;border:1px solid transparent;background:linear-gradient(rgba(14,24,22,.95),rgba(14,24,22,.95)) padding-box,var(--grad) border-box;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 60px rgba(61,90,254,.08),0 0 60px rgba(98,216,78,.08)}
+  .path-head{display:flex;align-items:center;gap:18px;padding-bottom:14px;border-bottom:1px dashed var(--line2)}
+  .pl-count{text-align:center;flex:0 0 auto}
+  .pl-count .n{font-family:var(--display);font-weight:900;font-size:44px;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .pl-count .l{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+  .path-fee{min-width:0}
+  .path-fee .k{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--sn)}
+  .path-fee .fee{font-family:var(--display);font-weight:900;font-size:30px;letter-spacing:-.02em;line-height:1.1;margin-top:3px}
+  .path-fee .bd{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:3px}
+  .path-list{list-style:none;margin:0;padding:2px 0 0}
+  .path-list li{animation:rowin .3s ease}
+  @keyframes rowin{from{opacity:0;transform:translateY(5px)}}
+  .path-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line)}
+  .pk{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:999px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap;margin-right:8px;vertical-align:2px}
+  .pk.build{color:#A3B4FF;border-color:rgba(61,90,254,.5)}
+  .pk.sub{color:var(--sn);border-color:rgba(98,216,78,.45)}
+  .pk.free{color:var(--text)}
+  .pn{font-family:var(--display);font-weight:700;font-size:14px;line-height:1.3}
+  .pnote{grid-column:1/-1;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted);letter-spacing:.02em;line-height:1.5}
+  .pv{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;white-space:nowrap;justify-self:end}
+  .pv.money{font-family:var(--display);font-weight:900;font-size:17px;color:var(--text)}
+  .pv.free{color:var(--sn)}
+  .pv.soon{color:var(--sn);border:1px solid rgba(98,216,78,.35);border-radius:999px;padding:3px 8px;background:rgba(98,216,78,.08);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase}
+  .path-foot{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+  .path-foot .sum{font-family:var(--mono);font-size:11.5px;color:var(--dim);line-height:1.6}
+  .path-foot .btn{text-align:center}
+  @media(max-width:1020px){
+    .mapgrid{grid-template-columns:1fr}
+    .path{position:static}
+  }
+  @media(max-width:520px){
+    .q{padding:14px 14px 13px}
+    .q-main,.q-sub{grid-template-columns:30px minmax(0,1fr);gap:4px 10px}
+    .qn{width:26px;height:26px;font-size:11px}
+    .qn.sub{width:23px;height:23px;font-size:9.5px}
+    .ql{font-size:15px}
+  }
 
   /* ---- WORKFLOW ---- */
-  .wf{display:flex;align-items:stretch;gap:0;margin-top:42px;flex-wrap:nowrap}
-  .wf-item{flex:1;padding:24px 16px;text-align:center}
-  .wf-ico{width:52px;height:52px;margin:0 auto 14px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.03)) padding-box,var(--grad) border-box;border:1px solid transparent}
-  .wf-ico svg{width:24px;height:24px;stroke:url(#wfg);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .wf-item h3{font-family:var(--display);font-weight:800;font-size:16px;margin-bottom:4px}
-  .wf-item p{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.03em}
-  .wf-arrow{display:flex;align-items:center;flex:0 0 34px;justify-content:center}
-  .wf-arrow svg{width:26px;height:26px}
-  @media(max-width:900px){.wf{flex-direction:column}.wf-arrow{transform:rotate(90deg);flex:0 0 30px;margin:-6px 0}}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);margin-top:44px;padding:44px 12px 40px;border-radius:24px;border:1px solid transparent;background:linear-gradient(rgba(14,24,22,.94),rgba(14,24,22,.94)) padding-box,var(--grad) border-box;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 60px rgba(61,90,254,.08),0 0 60px rgba(98,216,78,.08)}
+  .step{text-align:center;padding:0 10px;position:relative}
+  .step-rail{position:relative;display:flex;justify-content:center;margin-bottom:18px}
+  .step-rail::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:var(--grad);opacity:.55;transform:translateY(-50%)}
+  .step:first-child .step-rail::before{left:50%}
+  .step:last-child .step-rail::before{right:50%}
+  .step-ico{position:relative;width:76px;height:76px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(22,34,30,1),rgba(16,26,24,1)) padding-box,var(--grad) border-box;border:1px solid transparent;box-shadow:0 0 0 8px rgba(14,24,22,.94),0 0 32px rgba(98,216,78,.14),0 0 32px rgba(61,90,254,.12);transition:transform .2s ease,box-shadow .2s ease}
+  .step:hover .step-ico{transform:translateY(-4px);box-shadow:0 0 0 8px rgba(14,24,22,.94),0 0 44px rgba(98,216,78,.28),0 0 44px rgba(61,90,254,.22)}
+  .step-ico svg{width:34px;height:34px;stroke:url(#wfg);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .step h3{font-family:var(--display);font-weight:800;font-size:clamp(17px,1.6vw,21px);letter-spacing:-.01em}
+  @media(max-width:900px){.steps{grid-template-columns:repeat(2,1fr);row-gap:36px;padding:36px 16px}.step-rail::before{display:none}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr;row-gap:32px}}
 
-  /* ---- HUB / DELIVERABLE ---- */
-  .hub{display:grid;grid-template-columns:1fr auto 1fr;gap:0 0;align-items:center;margin-top:48px}
-  .spokes{display:grid;gap:26px}
-  .spoke-row{display:flex;align-items:center}
-  .spokes.left .spoke-row{justify-content:flex-end}
-  .spoke{width:168px;height:168px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.03)) padding-box,linear-gradient(135deg,rgba(61,90,254,.5),rgba(98,216,78,.5)) border-box;border:1px solid transparent;flex:0 0 auto}
-  .spoke h3{font-family:var(--display);font-weight:800;font-size:14.5px;line-height:1.25;margin-bottom:4px}
-  .spoke p{font-family:var(--mono);font-size:10.5px;color:var(--muted);line-height:1.5}
-  .link{height:2px;width:62px;background:var(--grad);opacity:.65;flex:0 0 auto}
-  .spokes.left .r1 .link{transform:rotate(14deg);transform-origin:right center}
-  .spokes.left .r3 .link{transform:rotate(-14deg);transform-origin:right center}
-  .spokes.right .r1 .link{transform:rotate(-14deg);transform-origin:left center}
-  .spokes.right .r3 .link{transform:rotate(14deg);transform-origin:left center}
-  .hub-core{width:210px;height:210px;border-radius:50%;margin:0 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:linear-gradient(rgba(20,32,26,.95),rgba(20,32,26,.95)) padding-box,var(--grad) border-box;border:2px solid transparent;box-shadow:0 0 60px rgba(98,216,78,.16),0 0 60px rgba(61,90,254,.12)}
-  .hub-core .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
-  .hub-core h3{font-family:var(--display);font-weight:900;font-size:19px;line-height:1.2}
-  .hub-core p{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:6px}
-  @media(max-width:980px){
-    .hub{grid-template-columns:1fr;gap:26px;justify-items:center}
-    .link{display:none}
-    .spokes{grid-template-columns:repeat(2,1fr);gap:18px;width:100%;justify-items:center}
-    .hub-core{order:-1}
+  /* ---- DELIVERABLE · THE REPORT DECK ---- */
+  .deck{position:relative;height:400px;margin-top:30px;display:flex;justify-content:center;align-items:center}
+  .page{position:absolute;width:225px;height:295px;padding:20px 18px;border-radius:10px;background:#F4F6F2;box-shadow:0 18px 50px rgba(0,0,0,.55),0 2px 0 rgba(255,255,255,.06) inset;transform:translate(0,20px) rotate(0deg);opacity:0;transition:transform .7s cubic-bezier(.2,.7,.2,1),opacity .5s ease,box-shadow .25s ease;display:flex;flex-direction:column}
+  .reveal.in .page{opacity:1}
+  .reveal.in .p1{transform:translate(-250px,16px) rotate(-8deg);transition-delay:.05s;z-index:1}
+  .reveal.in .p2{transform:translate(-125px,4px) rotate(-4deg);transition-delay:.15s;z-index:2}
+  .reveal.in .p3{transform:translate(0,0) rotate(0);transition-delay:.25s;z-index:3}
+  .reveal.in .p4{transform:translate(125px,4px) rotate(4deg);transition-delay:.35s;z-index:2}
+  .reveal.in .p5{transform:translate(250px,16px) rotate(8deg);transition-delay:.45s;z-index:1}
+  .reveal.in .page:hover{transform:translate(var(--hx,0),-18px) rotate(0) scale(1.05);z-index:9;box-shadow:0 30px 70px rgba(0,0,0,.65)}
+  .reveal.in .p1:hover{--hx:-250px}
+  .reveal.in .p2:hover{--hx:-125px}
+  .reveal.in .p3:hover{--hx:0px}
+  .reveal.in .p4:hover{--hx:125px}
+  .reveal.in .p5:hover{--hx:250px}
+  .pmark{font-family:var(--display);font-weight:800;font-size:13px;color:#111A14;margin-bottom:26px}
+  .pmark em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .pt{font-family:var(--display);font-weight:900;font-size:21px;line-height:1.15;letter-spacing:-.01em;color:#141C16;margin-bottom:16px}
+  .ph{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#5B6455;margin-bottom:14px}
+  .ln{display:block;height:6px;border-radius:3px;background:#DDE2DA;margin:7px 0}
+  .ln.w40{width:40%}.ln.w50{width:50%}.ln.w55{width:55%}.ln.w60{width:60%}.ln.w70{width:70%}.ln.w80{width:80%}
+  .trow{height:15px;border-radius:4px;background:#E7EBE4;margin:8px 0;position:relative}
+  .trow .tc{position:absolute;right:6px;top:4px;width:26px;height:7px;border-radius:4px}
+  .tc.g{background:#3FBF4E}.tc.y{background:#E8B93E}.tc.r{background:#E06A5A}
+  .chart{display:flex;align-items:flex-end;gap:9px;height:150px;padding:6px 4px 0;border-bottom:2px solid #C9CFC6;margin-bottom:14px}
+  .chart i{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(180deg,#62D84E,#3D5AFE)}
+  .mflow{display:flex;align-items:center;gap:8px;margin:12px 0}
+  .fb{width:58px;height:24px;border-radius:6px;border:2px solid}
+  .fb.mwb{border-color:#3D5AFE;background:rgba(61,90,254,.08)}
+  .fb.snb{border-color:#3FBF4E;background:rgba(63,191,78,.1)}
+  .fl{flex:1;height:2px;background:repeating-linear-gradient(90deg,#9AA394 0 6px,transparent 6px 12px)}
+  .cols{display:flex;gap:12px;margin-top:6px}
+  .col{flex:1;border-radius:8px;border:2px solid;padding:12px 10px 10px;text-align:left}
+  .col b{font-family:var(--display);font-weight:900;font-size:22px;color:#141C16}
+  .col span{display:block;margin-top:8px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#5B6455}
+  .col.cg{border-color:#3FBF4E;background:rgba(63,191,78,.07)}
+  .col.cb{border-color:#3D5AFE;background:rgba(61,90,254,.06)}
+  .pverdict{margin-top:auto;font-family:var(--display);font-weight:800;font-size:13.5px;color:#141C16;border-top:2px solid #C9CFC6;padding-top:10px}
+  .deck-cap{text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--sn);margin:26px 0 0}
+  @media(max-width:900px){
+    .deck{height:330px}
+    .page{width:170px;height:225px;padding:14px 13px}
+    .reveal.in .p1{transform:translate(-150px,14px) rotate(-8deg)}
+    .reveal.in .p2{transform:translate(-75px,4px) rotate(-4deg)}
+    .reveal.in .p4{transform:translate(75px,4px) rotate(4deg)}
+    .reveal.in .p5{transform:translate(150px,14px) rotate(8deg)}
+    .pt{font-size:15px}
+    .chart{height:100px}
   }
+  @media(max-width:520px){
+    .p1,.p5{display:none}
+    .deck{height:300px}
+    .reveal.in .p2{transform:translate(-60px,8px) rotate(-5deg)}
+    .reveal.in .p4{transform:translate(60px,8px) rotate(5deg)}
+  }
+  .ingest{display:flex;align-items:center;justify-content:center;margin-top:30px;flex-wrap:wrap;gap:10px 0}
+  .inode{font-family:var(--mono);font-size:12.5px;color:var(--dim);border:1px solid var(--line2);border-radius:999px;padding:9px 16px;white-space:nowrap;background:rgba(255,255,255,.03)}
+  .inode.ai{color:#0C1A0F;background:var(--grad);border-color:transparent;font-weight:600;box-shadow:0 6px 24px rgba(98,216,78,.25)}
+  .ipipe{width:56px;height:2px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.55) 0 8px,transparent 8px 16px);background-size:32px 2px;animation:dashflow 1.2s linear infinite;margin:0 10px}
+
+  /* ---- CLP BOT ---- */
+  .clpbot-fab{position:fixed;right:22px;bottom:22px;z-index:90;display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.02em;color:#0C1A0F;background:var(--grad);border:none;border-radius:999px;padding:13px 20px;cursor:pointer;box-shadow:0 10px 34px rgba(98,216,78,.3),0 10px 34px rgba(61,90,254,.2);transition:transform .15s,box-shadow .2s}
+  .clpbot-fab:hover{transform:translateY(-2px)}
+  .clpbot-fab svg{width:18px;height:18px;stroke:#0C1A0F;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .clpbot-panel{position:fixed;right:22px;bottom:84px;z-index:91;width:min(370px,calc(100vw - 32px));height:min(480px,calc(100vh - 120px));display:flex;flex-direction:column;border-radius:18px;border:1px solid transparent;background:linear-gradient(rgba(14,24,22,.98),rgba(14,24,22,.98)) padding-box,var(--grad) border-box;box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden}
+  .clpbot-panel[hidden]{display:none}
+  .clpbot-head{display:flex;align-items:center;gap:10px;padding:13px 16px;font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.04em;border-bottom:1px solid var(--line)}
+  .clpbot-head .dot{width:9px;height:9px;border-radius:50%;background:var(--sn);box-shadow:0 0 10px var(--sn)}
+  .clpbot-x{margin-left:auto;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:2px 6px}
+  .clpbot-x:hover{color:var(--text)}
+  .clpbot-log{flex:1;overflow-y:auto;padding:14px 14px 6px;display:flex;flex-direction:column;gap:10px}
+  .cb-msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.5;color:var(--text)}
+  .cb-msg.bot{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid var(--line);border-bottom-left-radius:4px}
+  .cb-msg.user{align-self:flex-end;background:rgba(61,90,254,.14);border:1px solid rgba(61,90,254,.42);border-bottom-right-radius:4px}
+  .cb-msg.thinking{color:var(--muted);font-family:var(--mono);font-size:12.5px}
+  .clpbot-chips{display:flex;gap:6px;flex-wrap:wrap;padding:8px 14px}
+  .clpbot-chips button{font-family:var(--mono);font-size:11px;color:var(--dim);background:rgba(255,255,255,.04);border:1px solid var(--line2);border-radius:999px;padding:6px 11px;cursor:pointer}
+  .clpbot-chips button:hover{border-color:var(--sn);color:var(--text)}
+  .clpbot-row{display:flex;gap:8px;padding:10px 14px 14px;border-top:1px solid var(--line)}
+  .clpbot-row input{flex:1;padding:10px 12px;font-family:var(--body);font-size:14px;border:1px solid var(--line2);border-radius:10px;background:rgba(0,0,0,.3);color:var(--text)}
+  .clpbot-row input:focus{border-color:var(--sn);outline:none}
+  .clpbot-row button{font-family:var(--display);font-weight:700;font-size:13px;background:var(--grad);color:#0C1A0F;border:none;border-radius:10px;padding:10px 16px;cursor:pointer}
+  .clpbot-row button:disabled{opacity:.6;cursor:default}
 
   /* ---- FREE ASSESSMENT ---- */
   .sample{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:start;margin-top:10px}
@@ -170,26 +291,12 @@
   .field label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
   .field input{width:100%;padding:12px;font-family:var(--body);font-size:15.5px;border:1px solid var(--line2);border-radius:10px;background:rgba(0,0,0,.3);color:var(--text)}
   .field input:focus{border-color:var(--sn);box-shadow:0 0 0 3px rgba(98,216,78,.15)}
-  .form-note{font-size:13px;color:var(--muted);margin-top:12px}
   .form-status{font-family:var(--mono);font-size:13px;margin-top:14px;display:none}
   .form-status.ok{display:block;color:var(--sn)}
   .form-status.err{display:block;color:#FF8A7A}
   @media(max-width:860px){.sample{grid-template-columns:1fr;gap:32px}}
 
-  .proof-row{display:grid;grid-template-columns:230px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
-  .proof-row:first-of-type{border-top:1px solid var(--line)}
-  .proof-row .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
-  .proof-row .v{font-size:15px;color:var(--dim)}
-  .proof-row .v a{color:var(--sn)}
-  @media(max-width:640px){.proof-row{grid-template-columns:1fr;gap:4px}}
 
-  details{border-bottom:1px solid var(--line);padding:4px 0}
-  details:first-of-type{border-top:1px solid var(--line)}
-  summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:17px;padding:16px 0;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px}
-  summary::-webkit-details-marker{display:none}
-  summary::after{content:"+";font-family:var(--mono);font-size:20px;flex-shrink:0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  details[open] summary::after{content:"–"}
-  details p{padding:0 0 18px;color:var(--muted);max-width:66ch;font-size:15px}
 
   footer.site{border-top:1px solid var(--line);padding:26px 0 44px;margin-top:40px}
   .foot-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:baseline}
@@ -218,97 +325,34 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow"><span class="dotmw"></span>Moveworks → ServiceNow<span class="dotsn"></span></span>
-        <h1>Migrate or keep building. <span class="grad-text">Decide with numbers.</span></h1>
-        <p class="hero-sub">Every plugin can be rebuilt — migrate to ServiceNow, or stay in your Moveworks tenant and let's create more plugins together. <b>Your decision.</b></p>
-      </div>
-      <div class="flowcard reveal">
-        <span class="cap">What we do, in one picture</span>
-        <div class="flow">
-          <span class="node mw">Moveworks</span>
-          <span class="pipewrap" aria-hidden="true"><i class="plabel">migrate</i><i class="pipe"></i></span>
-          <span class="node sn">ServiceNow</span>
-        </div>
-        <div class="flow2">
-          <span class="loop"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6"/><path d="M20 5v6h-6"/></svg></span>
-          <span>or keep building — new plugins in your tenant, together</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section class="doc" id="pricing">
     <div class="wrap">
-      <div class="reveal"><h2>Pricing<span class="thin">Drag to your plugin count — the exact fee appears below. The per-plugin rate drops as your estate grows.</span></h2></div>
-
-      <div class="slider-shell reveal">
-        <div class="slider-row">
-          <span>1</span>
-          <input type="range" id="pslider" min="1" max="60" value="18" step="1" aria-label="Number of Moveworks plugins">
-          <span>60+</span>
-        </div>
-        <p class="drag-hint">◄ drag ►</p>
-
-        <div class="pkg-live card" aria-live="polite">
-          <div class="pl-count"><div class="n" id="pl-n">18</div><div class="l">plugins</div></div>
-          <div class="pl-mid">
-            <div class="name" id="pl-name">Standard estate</div>
-            <span class="scope" id="pl-scope">Up to 25 plugins · one tenant</span>
-            <ul id="pl-list"></ul>
-          </div>
-          <div class="pl-cta">
-            <div class="price" id="pl-price">$12,400</div>
-            <div class="bd" id="pl-breakdown">base $6,000 · 10 × $400 · 8 × $300</div>
-            <a class="btn" href="mailto:eberteogam@gmail.com?subject=Book%20a%20call">Book the call</a>
-          </div>
-        </div>
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dotmw"></span>Moveworks : ServiceNow<span class="dotsn"></span></span>
+        <h1>Migrate or keep building your plugins. <span class="grad-text">You decide.</span></h1>
       </div>
-
-      <p class="pricing-note">The slider fee is the fixed fee we write into your Statement of Work — single tenant. Don't know your plugin count? It's a two-minute read from Agent Studio — we do it together on the call. Proceed to the rebuild with us and the assessment fee is credited toward it.</p>
-
-      <div class="addon reveal">
-        <div class="addon-ico"><svg viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="12" width="4" height="7" rx="2"/><rect x="17" y="12" width="4" height="7" rx="2"/><path d="M19 19a3 3 0 0 1-3 3h-2"/></svg></div>
-        <div class="addon-txt">
-          <span class="tag">Add-on · sold separately</span>
-          <h3>Voice into Service Operations Workspace</h3>
-          <p>Phone calls (Cisco Webex Contact Center) and chats handled by your agents in <b>one workspace</b>. Works with or without a migration.</p>
-        </div>
-        <a class="btn" style="flex:0 0 auto" href="mailto:eberteogam@gmail.com?subject=Voice%20into%20Service%20Operations%20Workspace">Ask about voice</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- OUR WORKFLOW -->
-  <section class="doc" id="workflow">
-    <div class="wrap">
-      <div class="reveal"><h2>Our workflow</h2></div>
-      <div class="wf reveal">
-        <div class="wf-item">
-          <div class="wf-ico"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div>
-          <h3>Call</h3><p>30 min · free</p>
-        </div>
-        <div class="wf-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#wfg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <div class="wf-item">
-          <div class="wf-ico"><svg viewBox="0 0 24 24"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2.4"/><circle cx="7" cy="16" r="2.4"/></svg></div>
-          <h3>Pricing</h3><p>slide to your count</p>
-        </div>
-        <div class="wf-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#wfg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <div class="wf-item">
-          <div class="wf-ico"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 15.5l2 2 4-5"/></svg></div>
-          <h3>Statement of Work</h3><p>signed online</p>
-        </div>
-        <div class="wf-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#wfg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <div class="wf-item">
-          <div class="wf-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
-          <h3>Fieldwork</h3><p>read-only access</p>
-        </div>
-        <div class="wf-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="url(#wfg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <div class="wf-item">
-          <div class="wf-ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></div>
-          <h3>Readout</h3><p>both paths, priced</p>
+      <div class="hero-visual">
+        <div class="flowcard reveal">
+          <div class="flowgrid">
+            <div class="lanes">
+              <div class="flow lane1">
+                <span class="node mw">Moveworks Plugins</span>
+                <span class="pipewrap" aria-hidden="true"><i class="plabel">migrate</i><i class="pipe"></i></span>
+                <span class="node sn">ServiceNow</span>
+                <i class="tap" aria-hidden="true"></i>
+              </div>
+              <div class="flow-or" aria-hidden="true"><span>or</span><i class="vseg"></i></div>
+              <div class="flow stay lane2">
+                <span class="node mw">Moveworks</span>
+                <span class="pipewrap" aria-hidden="true"><i class="plabel">keep building</i><i class="pipe"></i></span>
+                <span class="node mw">New Plugins</span>
+                <i class="tap" aria-hidden="true"></i>
+              </div>
+            </div>
+            <i class="cstub" aria-hidden="true"></i>
+            <div class="cinode">
+              <span class="node ci"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>CI/CD</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -318,21 +362,170 @@
   <section class="doc" id="deliverable">
     <div class="wrap">
       <div class="reveal"><h2>What lands on your environment</h2></div>
-      <div class="hub reveal">
-        <div class="spokes left">
-          <div class="spoke-row r1"><div class="spoke"><h3>Plugin inventory</h3><p>easy · medium · hard</p></div><div class="link"></div></div>
-          <div class="spoke-row r2"><div class="spoke"><h3>Retire vs rebuild</h3><p>cut dead weight first</p></div><div class="link"></div></div>
-          <div class="spoke-row r3"><div class="spoke"><h3>What changes</h3><p>memory · triggers · search</p></div><div class="link"></div></div>
+
+      <div class="deck reveal" role="img" aria-label="Fanned preview of the assessment report: cover, plugin inventory, complexity chart, handoff diagram, and the migrate-or-stay verdict page">
+        <div class="page p1">
+          <span class="pmark"><em>CLP</em>★</span>
+          <div class="pt">Migration<br>Readiness<br>Assessment</div>
+          <i class="ln w70"></i><i class="ln w50"></i>
         </div>
-        <div class="hub-core">
-          <span class="k">Your report</span>
-          <h3>Both paths, priced</h3>
-          <p>migrate · stay · negotiate</p>
+        <div class="page p2">
+          <span class="ph">Plugin inventory</span>
+          <div class="trow"><i class="tc g"></i></div>
+          <div class="trow"><i class="tc g"></i></div>
+          <div class="trow"><i class="tc y"></i></div>
+          <div class="trow"><i class="tc g"></i></div>
+          <div class="trow"><i class="tc r"></i></div>
+          <div class="trow"><i class="tc y"></i></div>
+          <div class="trow"><i class="tc g"></i></div>
         </div>
-        <div class="spokes right">
-          <div class="spoke-row r1"><div class="link"></div><div class="spoke"><h3>Human handoff</h3><p>right build · your licenses</p></div></div>
-          <div class="spoke-row r2"><div class="link"></div><div class="spoke"><h3>Systems + licenses</h3><p>credentials · gaps flagged</p></div></div>
-          <div class="spoke-row r3"><div class="link"></div><div class="spoke"><h3>Rebuild cost</h3><p>hours per plugin</p></div></div>
+        <div class="page p3">
+          <span class="ph">Complexity</span>
+          <div class="chart"><i style="height:26%"></i><i style="height:58%"></i><i style="height:38%"></i><i style="height:82%"></i><i style="height:48%"></i><i style="height:66%"></i><i style="height:30%"></i></div>
+          <i class="ln w60"></i><i class="ln w40"></i>
+        </div>
+        <div class="page p4">
+          <span class="ph">Chat → technician</span>
+          <div class="mflow">
+            <i class="fb mwb"></i><i class="fl"></i><i class="fb snb"></i>
+          </div>
+          <div class="mflow">
+            <i class="fb mwb"></i><i class="fl"></i><i class="fb mwb"></i>
+          </div>
+          <i class="ln w70"></i><i class="ln w55"></i><i class="ln w40"></i>
+        </div>
+        <div class="page p5">
+          <span class="ph">Migrate or stay</span>
+          <div class="cols">
+            <div class="col cg"><b>$</b><i class="ln w80"></i><i class="ln w60"></i><span>migrate</span></div>
+            <div class="col cb"><b>$</b><i class="ln w80"></i><i class="ln w60"></i><span>stay</span></div>
+          </div>
+          <div class="pverdict">your call — with numbers</div>
+        </div>
+      </div>
+
+      <p class="deck-cap reveal">presented live · yours to keep</p>
+
+      <div class="ingest reveal" aria-label="The report loads into your knowledge base, where your AI agent reads it">
+        <span class="inode">your report</span>
+        <span class="ipipe" aria-hidden="true"></span>
+        <span class="inode">your knowledge base</span>
+        <span class="ipipe" aria-hidden="true"></span>
+        <span class="inode ai">your AI agent reads it</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING · MAP YOUR PATH -->
+  <section class="doc" id="pricing">
+    <div class="wrap">
+      <div class="reveal"><h2>Pricing<span class="thin">Map your path — or we can go over it together on a free call</span></h2></div>
+
+      <div class="mapgrid reveal">
+        <div class="mapper">
+          <div class="q">
+            <div class="q-main">
+              <span class="qn">1</span>
+              <div class="ql">Are you migrating your Moveworks plugins to ServiceNow?</div>
+              <div class="qc seg" data-q="fork" role="group" aria-label="Migrate or stay">
+                <button type="button" data-v="migrate" aria-pressed="false">Yes — migrating</button>
+                <button type="button" data-v="stay" aria-pressed="false">No — staying on Moveworks</button>
+                <button type="button" data-v="unsure" class="on esc" aria-pressed="true">Let the call decide</button>
+              </div>
+            </div>
+            <div class="q-sub">
+              <span class="qn sub">1b</span>
+              <div class="ql">How many plugins?</div>
+              <div class="qc slider-row"><span>1</span><input type="range" id="pslider" min="1" max="30" value="18" step="1" aria-label="Number of Moveworks plugins"><span>30+</span><b class="qcount" id="q-count">18</b></div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-main">
+              <span class="qn">2</span>
+              <div class="ql">Bot → human handoff?<small>IT technicians work the chat in Service Operations Workspace</small></div>
+              <div class="qc seg" data-q="handoff" role="group" aria-label="Handoff build">
+                <button type="button" data-v="deeplink" class="on" aria-pressed="true">External chat window<em class="ft">free</em></button>
+                <button type="button" data-v="broker" aria-pressed="false">Native chat</button>
+                <button type="button" data-v="none" class="esc" aria-pressed="false">Let the call decide</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="q">
+            <div class="q-main">
+              <span class="qn">3</span>
+              <div class="ql">Do you want to receive calls into Service Operations Workspace?<small>Cisco Webex Contact Center</small></div>
+              <div class="qc seg" data-q="voice" role="group" aria-label="Voice">
+                <button type="button" data-v="yes" aria-pressed="false">Yes</button>
+                <button type="button" data-v="no" class="on" aria-pressed="true">No</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="qdiv" aria-hidden="true"><span>CI/CD · keep your plugins healthy</span></div>
+
+          <div class="q">
+            <div class="q-main">
+              <span class="qn">4</span>
+              <div class="ql">Keep watch on your plugins — how many?<small>a provider update or an internal change can break them silently</small></div>
+              <div class="qc slider-row"><span>0</span><input type="range" id="cislider" min="0" max="30" value="18" step="1" aria-label="Plugins covered by CI/CD"><span id="ci-max">18</span><b class="qcount" id="ci-count">18</b></div>
+            </div>
+            <div class="q-sub">
+              <span class="qn sub">4b</span>
+              <div class="ql">And who runs it after we build it?</div>
+              <div class="qc seg" data-q="monitor" role="group" aria-label="Monitoring">
+                <button type="button" data-v="no" aria-pressed="false">My team supports it</button>
+                <button type="button" data-v="yes" aria-pressed="false">You support it for us</button>
+                <button type="button" data-v="call" class="on esc" aria-pressed="true">Let the call decide</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="path" id="path" aria-live="polite">
+          <div class="path-head">
+            <div class="pl-count"><div class="n" id="pl-n">18</div><div class="l">plugins</div></div>
+            <div class="path-fee">
+              <span class="k">Fieldwork + Assessment · fixed fee</span>
+              <div class="fee" id="path-fee">$12,400</div>
+              <div class="bd" id="path-bd">base $6,000 · 10 × $400 · 8 × $300</div>
+            </div>
+          </div>
+          <ul class="path-list" id="path-list"></ul>
+          <div class="path-foot">
+            <span class="sum" id="path-sum"></span>
+            <a class="btn" id="path-book" href="mailto:eberteogam@gmail.com?subject=Free%20call">Book the free call — bring this path</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR WORKFLOW -->
+  <section class="doc" id="workflow">
+    <div class="wrap">
+      <div class="reveal"><h2>Our workflow<span class="thin">From first call to readout</span></h2></div>
+      <div class="steps reveal">
+        <div class="step">
+          <div class="step-rail"><div class="step-ico"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div></div>
+          <h3>Free Call</h3>
+        </div>
+        <div class="step">
+          <div class="step-rail"><div class="step-ico"><svg viewBox="0 0 24 24"><path d="M4 8h10M18 8h2M4 16h2M10 16h10"/><circle cx="16" cy="8" r="2.4"/><circle cx="7" cy="16" r="2.4"/></svg></div></div>
+          <h3>Pricing</h3>
+        </div>
+        <div class="step">
+          <div class="step-rail"><div class="step-ico"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 15.5l2 2 4-5"/></svg></div></div>
+          <h3>Statement of Work</h3>
+        </div>
+        <div class="step">
+          <div class="step-rail"><div class="step-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div></div>
+          <h3>Fieldwork</h3>
+        </div>
+        <div class="step">
+          <div class="step-rail"><div class="step-ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></div></div>
+          <h3>Assessment</h3>
         </div>
       </div>
     </div>
@@ -357,7 +550,6 @@
             <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
             <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" type="text" autocomplete="organization" required></div>
             <button class="btn" type="submit" style="width:100%">Send me the free assessment</button>
-            <p class="form-note">No mailing list. The document + one follow-up, max.</p>
             <p class="form-status" id="form-status" role="status"></p>
           </form>
         </div>
@@ -365,38 +557,35 @@
     </div>
   </section>
 
-  <!-- QUESTIONS -->
-  <section class="doc" id="faq">
-    <div class="wrap">
-      <div class="reveal"><h2>What buyers ask</h2></div>
-      <details><summary>Do we have to leave Moveworks?</summary><p>No — and we won't tell you otherwise. ServiceNow states Moveworks continues as a standalone product, existing contracts are honored, and Agent Studio keeps shipping features. What has changed: support now runs through ServiceNow's Now Support, and the roadmap and pricing are ServiceNow-driven. The report prices both futures — staying and migrating — so your renewal is a decision, not a default. And if you stay, we build with you — new plugins in Agent Studio are part of the practice, not just migrations.</p></details>
-      <details><summary>How long does it take?</summary><p>Typically three to five weeks depending on estate size — and the exact window is written into your Statement of Work before you sign. The clock starts when access is granted, so provisioning speed on your side is the only thing that moves the date.</p></details>
-      <details><summary>What access do you need?</summary><p>Read-only access to your Moveworks tenant (or its exports), read-only access to your ServiceNow instance, your license summary, your renewal date, and two short interviews. We change nothing — that's a written exclusion in the Statement of Work.</p></details>
-      <details><summary>Do you do the rebuild too?</summary><p>Yes, optionally, under a second Statement of Work priced straight from the build plan in your report. The report is also written so your own team can execute it — you're not buying a hostage document.</p></details>
-      <details><summary>Is the fee really fixed?</summary><p>Yes. Scope, fee, timeline, and exclusions are all fixed in writing before work starts.</p></details>
-      <details><summary>Do you quote ServiceNow license prices?</summary><p>No. We identify which entitlements each path requires and which ones you're missing — dollar figures for ServiceNow licenses come from your ServiceNow account team. We price our work: the assessment and the rebuild, not another vendor's software.</p></details>
-    </div>
-  </section>
-
-  <!-- WHY US -->
-  <section class="doc" id="who">
-    <div class="wrap">
-      <div class="reveal"><h2>Why us</h2></div>
-      <div class="proof-row"><span class="k">Speaking · Oct 2026</span><span class="v">ServiceNow Nexus for Service Operations, Santa Clara — "AI-to-Human Handoff: Chat and Voice into Service Operations Workspace"</span></div>
-      <div class="proof-row"><span class="k">Speaking · Oct 2026</span><span class="v">nullEDGE 2026 — virtual session</span></div>
-      <div class="proof-row"><span class="k">Proven end to end</span><span class="v">Both bot-to-human handoff builds — the link-out path and the stay-in-Teams path — running against real ServiceNow instances</span></div>
-      <div class="proof-row"><span class="k">Public knowledge base</span><span class="v"><a href="https://eberteogam.github.io/#research">Engineering notes</a> — Moveworks Agent Studio internals, ServiceNow platform practice, integrations</span></div>
-    </div>
-  </section>
-
 </main>
 
 <footer class="site">
   <div class="wrap foot-inner">
-    <p>© 2026 Cali Live Play LLC · eberteogam@gmail.com</p>
-    <p><a href="https://www.linkedin.com/in/eberteo/">LinkedIn</a> · <a href="https://eberteogam.github.io">Engineering notes</a></p>
+    <p>© 2026 Cali Live Play LLC</p>
+    <p><a href="https://www.linkedin.com/company/caliliveplay/">LinkedIn</a> · <a href="https://eberteogam.github.io">Engineering notes</a></p>
   </div>
 </footer>
+
+<!-- CLP BOT -->
+<button class="clpbot-fab" id="clpbot-fab" aria-expanded="false" aria-controls="clpbot-panel">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.4 8.4 0 0 1-3.6-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 3 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 9 8.4z"/></svg>
+  CLP BOT
+</button>
+<div class="clpbot-panel" id="clpbot-panel" role="dialog" aria-label="CLP BOT" hidden>
+  <div class="clpbot-head"><span class="dot" aria-hidden="true"></span>CLP BOT<button class="clpbot-x" id="clpbot-x" aria-label="Close chat">×</button></div>
+  <div class="clpbot-log" id="clpbot-log">
+    <div class="cb-msg bot">Hi — ask me anything about the assessment: pricing, timeline, access, licensing, or who's behind it.</div>
+  </div>
+  <div class="clpbot-chips" id="clpbot-chips">
+    <button type="button">Is the fee really fixed?</button>
+    <button type="button">How long does it take?</button>
+    <button type="button">Do we have to leave Moveworks?</button>
+  </div>
+  <div class="clpbot-row">
+    <input id="clpbot-in" type="text" maxlength="1000" placeholder="Type a question…" autocomplete="off" aria-label="Your question">
+    <button id="clpbot-send" type="button">Send</button>
+  </div>
+</div>
 
 <script>
   (function(){
@@ -411,13 +600,20 @@
     });
   })();
 
-  // Pricing slider — base $6,000 + $400/plugin (1–10) + $300 (11–25) + $250 (26+); 60+/multi-tenant = custom
+  // Map your path — Fieldwork + Assessment is fixed (base $6,000 + $400/plugin 1–10, $300 11–25, $250 26+; cap = custom).
+  // CI/CD build is a one-time service priced on covered plugins (base $3,000 + $500 / $400 / $300), delivered into the
+  // client's GitHub — standalone when staying, included in the rebuild when migrating (never billed twice). Coverage 0 = none yet.
+  // After handover: self-run = free (their pipeline, their alerts) · we-run-it = managed subscription (early access).
   (function(){
-    var s=document.getElementById('pslider');
-    var n=document.getElementById('pl-n'),name=document.getElementById('pl-name'),
-        scope=document.getElementById('pl-scope'),price=document.getElementById('pl-price'),
-        list=document.getElementById('pl-list'),bd=document.getElementById('pl-breakdown');
-    var FULL=['Every plugin rated easy / medium / hard','Retire-vs-rebuild list','What changes on ServiceNow','Bot-to-human handoff — the right build for your licenses','Systems + credentials map · ServiceNow license gaps flagged','Build plan with hours = your quote','We present the findings to your CEO / CIO, live'];
+    var s=document.getElementById('pslider'),cs=document.getElementById('cislider');
+    var nEl=document.getElementById('pl-n'),countEl=document.getElementById('q-count'),
+        ciCountEl=document.getElementById('ci-count'),ciMaxEl=document.getElementById('ci-max'),
+        feeEl=document.getElementById('path-fee'),bdEl=document.getElementById('path-bd'),
+        list=document.getElementById('path-list'),sum=document.getElementById('path-sum'),book=document.getElementById('path-book');
+    var state={fork:'unsure',handoff:'deeplink',voice:'no',monitor:'call'};
+    var ciTouched=false;
+    var LABEL={fork:{migrate:'Yes — migrating',stay:'No — staying on Moveworks',unsure:'Let the call decide'},handoff:{deeplink:'External chat window',broker:'Native chat',none:'Let the call decide'},monitor:{yes:'You support it for us',no:'My team supports it',call:'Let the call decide'}};
+    var KIND={build:'Build',sub:'Subscription',free:'Free app',readout:'Readout'};
     function calc(v){
       var p=6000,parts=['base $6,000'];
       var t1=Math.min(v,10);p+=t1*400;parts.push(t1+' × $400');
@@ -425,32 +621,99 @@
       if(v>25){var t3=v-25;p+=t3*250;parts.push(t3+' × $250');}
       return {p:p,parts:parts};
     }
-    function fmt(x){return '$'+x.toLocaleString('en-US')}
-    function render(){
-      var v=parseInt(s.value,10);
-      var custom=(v>=60);
-      n.textContent=custom?'60+':v;
-      var items=FULL.slice();
-      if(custom){
-        name.textContent='Multi-tenant · 60+';
-        scope.textContent='Scope + fee defined together on the call';
-        price.textContent='Custom';
-        bd.textContent='everything below, sized to your estate';
-        items=['Everything in the full report','Multiple tenants + instances covered','Fixed fee set on the call'];
-      }else{
-        var c=calc(v);
-        price.textContent=fmt(c.p);
-        bd.textContent=c.parts.join(' · ');
-        if(v<=10){name.textContent='Small estate';scope.textContent='$400 per plugin · full report included';}
-        else if(v<=25){name.textContent='Standard estate';scope.textContent='$300 per plugin after the first 10';}
-        else{name.textContent='Large estate';scope.textContent='$250 per plugin after 25';}
-      }
-      list.innerHTML='';
-      items.forEach(function(t){var li=document.createElement('li');li.textContent=t;list.appendChild(li)});
-      var pct=((v-1)/59)*100;
-      s.style.background='linear-gradient(90deg,#3D5AFE 0%,#62D84E '+pct+'%,rgba(255,255,255,.12) '+pct+'%)';
+    function ct(v){
+      var p=3000,parts=['base $3,000'];
+      var t1=Math.min(v,10);p+=t1*500;parts.push(t1+' × $500');
+      if(v>10){var t2=Math.min(v,25)-10;p+=t2*400;parts.push(t2+' × $400');}
+      if(v>25){var t3=v-25;p+=t3*300;parts.push(t3+' × $300');}
+      return {p:p,parts:parts};
     }
+    function fmt(x){return '$'+x.toLocaleString('en-US')}
+    function fill(el,v,min,max){
+      var pct=max>min?((v-min)/(max-min))*100:100;
+      el.style.background='linear-gradient(90deg,#3D5AFE 0%,#62D84E '+pct+'%,rgba(255,255,255,.12) '+pct+'%)';
+    }
+    var lastFee=null;
+    function setFee(to){
+      var reduce=typeof matchMedia!=='undefined'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(lastFee===null||reduce||typeof requestAnimationFrame==='undefined'){feeEl.textContent=fmt(to);lastFee=to;return;}
+      var from=lastFee,t0=null;lastFee=to;
+      function step(t){if(t0===null)t0=t;var k=Math.min(1,(t-t0)/300);feeEl.textContent=fmt(Math.round(from+(to-from)*k));if(k<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    }
+    function row(kind,name,note,val,cls){
+      return '<li><span class="pn"><span class="pk '+kind+'">'+KIND[kind]+'</span>'+name+'</span><span class="pv '+(cls||'')+'">'+val+'</span>'+(note?'<small class="pnote">'+note+'</small>':'')+'</li>';
+    }
+    function render(){
+      var v=parseInt(s.value,10),min=parseInt(s.min,10),max=parseInt(s.max,10),custom=(v>=max);
+      var shown=custom?max+'+':String(v);
+      cs.max=v;
+      if(!ciTouched)cs.value=v;
+      if(parseInt(cs.value,10)>v)cs.value=v;
+      var ci=parseInt(cs.value,10);
+      var ciShown=(custom&&ci>=max)?max+'+':String(ci);
+      nEl.textContent=shown;countEl.textContent=shown;
+      ciCountEl.textContent=ciShown;ciMaxEl.textContent=shown;
+      fill(s,v,min,max);fill(cs,ci,0,v);
+      var fixed=0;
+      if(custom){feeEl.textContent='Custom';lastFee=null;bdEl.textContent='multi-tenant · scope + fee set on the call';}
+      else{var c=calc(v);setFee(c.p);bdEl.textContent=c.parts.join(' · ');fixed+=c.p;}
+      var rows=[],quoted=0,early=0;
+      var ciCustom=(custom&&ci>=max);
+      var cip=(ci>0&&!ciCustom)?ct(ci):null;
+      var cover=(ci>0&&ci<v?ciShown+' of '+shown+' plugins · ':'');
+      var covNote=(ci>0?((ci<v?ciShown+' of '+shown:'all '+ciShown)+' plugins covered'):'');
+      if(state.fork==='migrate'){
+        rows.push(row('build','Rebuild in ServiceNow','wave by wave · your team can run it','quoted after the free call'));quoted++;
+        if(ci>0)rows.push(row('build','CI/CD pipeline for your plugins',cover+'contract testing ships inside the rebuild — never billed twice','included','free'));
+      }else if(state.fork==='stay'){
+        if(ci>0){
+          if(ciCustom){rows.push(row('build','CI/CD pipeline for your plugins','scoped with the assessment','Custom','money'));}
+          else{rows.push(row('build','CI/CD pipeline for your plugins',covNote,fmt(cip.p),'money'));fixed+=cip.p;}
+        }
+      }else{
+        rows.push(row('readout','Migrate or stay','both futures priced','decided at the readout'));
+        if(ci>0){
+          if(ciCustom){rows.push(row('build','CI/CD pipeline for your plugins','scoped with the assessment','Custom','money'));}
+          else{rows.push(row('build','CI/CD pipeline for your plugins',covNote+' — included in the rebuild if you migrate',fmt(cip.p),'money'));}
+        }
+      }
+      if(ci>0){
+        if(state.monitor==='yes'){rows.push(row('sub','We support it for you','new payload? we update the actions and the pipeline · we alert you','early access','soon'));early++;}
+        else if(state.monitor==='no'){rows.push(row('free','Your team runs it','delivered to your CI/CD service · alerts from your own pipeline · update at your pace','no ongoing fee','free'));}
+      }else if(state.monitor==='yes'){
+        rows.push(row('sub','We support it for you','needs coverage — set question 4 above 0','early access','soon'));early++;
+      }
+      if(state.handoff==='deeplink'){rows.push(row('free','External chat window','chat continues in a browser window','free · no extra license','free'));}
+      else if(state.handoff==='broker'){
+        rows.push(row('build','Native chat handoff','your users stay in Microsoft Teams · needs ITSM Pro','quoted after the free call'));quoted++;
+        rows.push(row('sub','Hosted handoff relay','we run the connection between Moveworks and ServiceNow','early access','soon'));early++;
+      }
+      if(state.voice==='yes'){rows.push(row('build','Voice into Service Operations Workspace','Webex Contact Center → one workspace','quoted after the free call'));quoted++;}
+      list.innerHTML=rows.join('');
+      var bits=[custom?'fixed fee set on the call':'fixed fee: '+fmt(fixed)];
+      if(quoted)bits.push(quoted+' quoted after the free call');
+      if(early)bits.push(early+' early access');
+      sum.textContent=bits.join(' · ');
+      var body='My path from the pricing page:\n'+
+        'Migrating to ServiceNow: '+LABEL.fork[state.fork]+'\n'+
+        'Plugins: '+shown+'\n'+
+        'Under CI/CD: '+ciShown+' of '+shown+'\n'+
+        'Who runs the pipeline: '+LABEL.monitor[state.monitor]+'\n'+
+        'Handoff: '+LABEL.handoff[state.handoff]+'\n'+
+        'Voice into SOW: '+(state.voice==='yes'?'Yes':'No')+'\n';
+      book.href='mailto:eberteogam@gmail.com?subject='+encodeURIComponent('Free call — my path')+'&body='+encodeURIComponent(body);
+    }
+    document.querySelectorAll('.seg').forEach(function(seg){
+      seg.addEventListener('click',function(e){
+        var b=e.target.closest('button');if(!b||!seg.contains(b))return;
+        state[seg.getAttribute('data-q')]=b.getAttribute('data-v');
+        seg.querySelectorAll('button').forEach(function(x){var on=(x===b);x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});
+        render();
+      });
+    });
     s.addEventListener('input',render);
+    cs.addEventListener('input',function(){ciTouched=true;render();});
     render();
   })();
 
@@ -472,6 +735,63 @@
         .then(function(r){if(r.ok){form.reset();status.textContent='Request received — inbox within one business day.';status.className='form-status ok';}else{throw new Error('bad')}})
         .catch(function(){status.textContent='That did not send. Email eberteogam@gmail.com directly — same document, same day.';status.className='form-status err';});
     });
+  })();
+  // CLP BOT — floating assistant. Backend endpoint is set when credentials are provisioned;
+  // until then the bot answers with a graceful fallback. Protocol mirrors ask.html:
+  // POST {messages:[{role,content},...]} -> {reply} | {error}
+  (function(){
+    var CLPBOT_URL='https://clp-bot.eberteo.workers.dev';
+    var fab=document.getElementById('clpbot-fab'),panel=document.getElementById('clpbot-panel'),
+        closeBtn=document.getElementById('clpbot-x'),logEl=document.getElementById('clpbot-log'),
+        inEl=document.getElementById('clpbot-in'),sendBtn=document.getElementById('clpbot-send'),
+        chips=document.getElementById('clpbot-chips');
+    var history=[],busy=false;
+    function toggle(open){
+      var show=(open!==undefined)?open:panel.hidden;
+      panel.hidden=!show;
+      fab.setAttribute('aria-expanded',show?'true':'false');
+      if(show)inEl.focus();
+    }
+    function addMsg(role,text,extra){
+      var d=document.createElement('div');
+      d.className='cb-msg '+role+(extra?' '+extra:'');
+      d.textContent=text;
+      logEl.appendChild(d);
+      logEl.scrollTop=logEl.scrollHeight;
+      return d;
+    }
+    function send(text){
+      text=(text||inEl.value).trim();
+      if(!text||busy)return;
+      inEl.value='';
+      addMsg('user',text);
+      history.push({role:'user',content:text});
+      if(!CLPBOT_URL){
+        addMsg('bot',"I'm not fully wired up yet. Meanwhile: the assessment fee is fixed and public — drag the slider in Pricing — and for anything else email eberteogam@gmail.com or book the free call. A human answers within one business day.");
+        return;
+      }
+      busy=true;sendBtn.disabled=true;
+      var pending=addMsg('bot','Thinking…','thinking');
+      fetch(CLPBOT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-20)})})
+        .then(function(r){return r.json();})
+        .then(function(data){
+          pending.remove();
+          var reply=data.reply||data.error||'Sorry — something went wrong. Try again, or email eberteogam@gmail.com.';
+          addMsg('bot',reply);
+          if(data.reply)history.push({role:'assistant',content:data.reply});
+        })
+        .catch(function(){
+          pending.remove();
+          addMsg('bot','I could not reach the assistant — please try again in a moment, or email eberteogam@gmail.com.');
+        })
+        .finally(function(){busy=false;sendBtn.disabled=false;inEl.focus();});
+    }
+    fab.addEventListener('click',function(){toggle();});
+    closeBtn.addEventListener('click',function(){toggle(false);});
+    sendBtn.addEventListener('click',function(){send();});
+    inEl.addEventListener('keydown',function(e){if(e.key==='Enter')send();});
+    chips.addEventListener('click',function(e){if(e.target.tagName==='BUTTON')send(e.target.textContent);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden)toggle(false);});
   })();
 </script>
 
