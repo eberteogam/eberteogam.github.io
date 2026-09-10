@@ -122,6 +122,7 @@
   .q:hover{border-color:var(--line2)}
   .q-main,.q-sub{display:grid;grid-template-columns:38px minmax(0,1fr);gap:4px 14px;align-items:start}
   .q-sub{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line2)}
+  .q-sub[hidden]{display:none}
   .qn{width:31px;height:31px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12.5px;color:var(--sn);border:1px solid rgba(98,216,78,.35);background:rgba(98,216,78,.08);margin-top:1px}
   .qn.sub{width:26px;height:26px;font-size:10.5px;border-radius:8px;opacity:.9}
   .ql{font-family:var(--display);font-weight:700;font-size:16.5px;line-height:1.3;align-self:center}
@@ -153,7 +154,9 @@
   .path-fee{min-width:0}
   .path-fee .k{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--sn)}
   .path-fee .fee{font-family:var(--display);font-weight:900;font-size:30px;letter-spacing:-.02em;line-height:1.1;margin-top:3px}
-  .path-fee .bd{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:3px}
+  .path-fee .bd{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:6px;display:grid;gap:2px}
+  .bdrow{display:flex;justify-content:space-between;gap:14px}
+  .bdrow em{font-style:normal;color:var(--muted);letter-spacing:.04em}
   .path-list{list-style:none;margin:0;padding:2px 0 0}
   .path-list li{animation:rowin .3s ease}
   @keyframes rowin{from{opacity:0;transform:translateY(5px)}}
@@ -445,9 +448,18 @@
               <span class="qn">2</span>
               <div class="ql">Bot → human handoff?<small>IT technicians work the chat in Service Operations Workspace</small></div>
               <div class="qc seg" data-q="handoff" role="group" aria-label="Handoff build">
-                <button type="button" data-v="deeplink" class="on" aria-pressed="true">External chat window<em class="ft">free</em></button>
+                <button type="button" data-v="deeplink" aria-pressed="false">External chat window<em class="ft">free</em></button>
                 <button type="button" data-v="broker" aria-pressed="false">Native chat</button>
-                <button type="button" data-v="none" class="esc" aria-pressed="false">Let the call decide</button>
+                <button type="button" data-v="none" class="on esc" aria-pressed="true">Let the call decide</button>
+              </div>
+            </div>
+            <div class="q-sub" id="q-2b" hidden>
+              <span class="qn sub">2b</span>
+              <div class="ql">And who keeps the connection running?</div>
+              <div class="qc seg" data-q="relay" role="group" aria-label="Native chat delivery">
+                <button type="button" data-v="own" aria-pressed="false">Built in our instances</button>
+                <button type="button" data-v="relay" aria-pressed="false">You host the connection</button>
+                <button type="button" data-v="call" class="on esc" aria-pressed="true">Let the call decide</button>
               </div>
             </div>
           </div>
@@ -469,7 +481,7 @@
             <div class="q-main">
               <span class="qn">4</span>
               <div class="ql">Keep watch on your plugins — how many?<small>a provider update or an internal change can break them silently</small></div>
-              <div class="qc slider-row"><span>0</span><input type="range" id="cislider" min="0" max="30" value="18" step="1" aria-label="Plugins covered by CI/CD"><span id="ci-max">18</span><b class="qcount" id="ci-count">18</b></div>
+              <div class="qc slider-row"><span>0</span><input type="range" id="cislider" min="0" max="30" value="0" step="1" aria-label="Plugins covered by CI/CD"><span id="ci-max">18</span><b class="qcount" id="ci-count">0</b></div>
             </div>
             <div class="q-sub">
               <span class="qn sub">4b</span>
@@ -609,13 +621,13 @@
     var nEl=document.getElementById('pl-n'),countEl=document.getElementById('q-count'),
         ciCountEl=document.getElementById('ci-count'),ciMaxEl=document.getElementById('ci-max'),
         feeEl=document.getElementById('path-fee'),bdEl=document.getElementById('path-bd'),
+        q2b=document.getElementById('q-2b'),
         list=document.getElementById('path-list'),sum=document.getElementById('path-sum'),book=document.getElementById('path-book');
-    var state={fork:'unsure',handoff:'deeplink',voice:'no',monitor:'call'};
-    var ciTouched=false;
-    var LABEL={fork:{migrate:'Yes — migrating',stay:'No — staying on Moveworks',unsure:'Let the call decide'},handoff:{deeplink:'External chat window',broker:'Native chat',none:'Let the call decide'},monitor:{yes:'You support it for us',no:'My team supports it',call:'Let the call decide'}};
+    var state={fork:'unsure',handoff:'none',relay:'call',voice:'no',monitor:'call'};
+    var LABEL={fork:{migrate:'Yes — migrating',stay:'No — staying on Moveworks',unsure:'Let the call decide'},handoff:{deeplink:'External chat window',broker:'Native chat',none:'Let the call decide'},relay:{own:'Built in our instances',relay:'You host the connection',call:'Let the call decide'},monitor:{yes:'You support it for us',no:'My team supports it',call:'Let the call decide'}};
     var KIND={build:'Build',sub:'Subscription',free:'Free app',readout:'Readout'};
     function calc(v){
-      var p=6000,parts=['base $6,000'];
+      var p=6000,parts=[];
       var t1=Math.min(v,10);p+=t1*400;parts.push(t1+' × $400');
       if(v>10){var t2=Math.min(v,25)-10;p+=t2*300;parts.push(t2+' × $300');}
       if(v>25){var t3=v-25;p+=t3*250;parts.push(t3+' × $250');}
@@ -648,7 +660,6 @@
       var v=parseInt(s.value,10),min=parseInt(s.min,10),max=parseInt(s.max,10),custom=(v>=max);
       var shown=custom?max+'+':String(v);
       cs.max=v;
-      if(!ciTouched)cs.value=v;
       if(parseInt(cs.value,10)>v)cs.value=v;
       var ci=parseInt(cs.value,10);
       var ciShown=(custom&&ci>=max)?max+'+':String(ci);
@@ -656,8 +667,8 @@
       ciCountEl.textContent=ciShown;ciMaxEl.textContent=shown;
       fill(s,v,min,max);fill(cs,ci,0,v);
       var fixed=0;
-      if(custom){feeEl.textContent='Custom';lastFee=null;bdEl.textContent='multi-tenant · scope + fee set on the call';}
-      else{var c=calc(v);setFee(c.p);bdEl.textContent=c.parts.join(' · ');fixed+=c.p;}
+      if(custom){feeEl.textContent='Custom';lastFee=null;bdEl.innerHTML='<span class="bdrow">multi-tenant · scope + fee set on the call</span>';}
+      else{var c=calc(v);setFee(c.p);bdEl.innerHTML='<span class="bdrow"><em>Base price</em>$6,000</span><span class="bdrow"><em>Per plugin</em>'+c.parts.join(' · ')+'</span>';fixed+=c.p;}
       var rows=[],quoted=0,early=0;
       var ciCustom=(custom&&ci>=max);
       var cip=(ci>0&&!ciCustom)?ct(ci):null;
@@ -687,9 +698,11 @@
       if(state.handoff==='deeplink'){rows.push(row('free','External chat window','chat continues in a browser window','free · no extra license','free'));}
       else if(state.handoff==='broker'){
         rows.push(row('build','Native chat handoff','your users stay in Microsoft Teams · needs ITSM Pro','quoted after the free call'));quoted++;
-        rows.push(row('sub','Hosted handoff relay','we run the connection between Moveworks and ServiceNow','early access','soon'));early++;
+        if(state.relay==='own'){rows.push(row('free','Built in your instances','the connection lives in your Moveworks and ServiceNow — you own it','no ongoing fee','free'));}
+        else if(state.relay==='relay'){rows.push(row('sub','We host the connection','we keep it working when either platform changes · external chat window stays your same-day fallback','early access','soon'));early++;}
       }
       if(state.voice==='yes'){rows.push(row('build','Voice into Service Operations Workspace','Webex Contact Center → one workspace','quoted after the free call'));quoted++;}
+      if(q2b)q2b.hidden=(state.handoff!=='broker');
       list.innerHTML=rows.join('');
       var bits=[custom?'fixed fee set on the call':'fixed fee: '+fmt(fixed)];
       if(quoted)bits.push(quoted+' quoted after the free call');
@@ -700,7 +713,7 @@
         'Plugins: '+shown+'\n'+
         'Under CI/CD: '+ciShown+' of '+shown+'\n'+
         'Who runs the pipeline: '+LABEL.monitor[state.monitor]+'\n'+
-        'Handoff: '+LABEL.handoff[state.handoff]+'\n'+
+        'Handoff: '+LABEL.handoff[state.handoff]+(state.handoff==='broker'?' ('+LABEL.relay[state.relay]+')':'')+'\n'+
         'Voice into SOW: '+(state.voice==='yes'?'Yes':'No')+'\n';
       book.href='mailto:eberteogam@gmail.com?subject='+encodeURIComponent('Free call — my path')+'&body='+encodeURIComponent(body);
     }
@@ -713,7 +726,7 @@
       });
     });
     s.addEventListener('input',render);
-    cs.addEventListener('input',function(){ciTouched=true;render();});
+    cs.addEventListener('input',render);
     render();
   })();
 
