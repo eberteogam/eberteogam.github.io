@@ -161,18 +161,18 @@
   .path-list li{animation:rowin .3s ease}
   @keyframes rowin{from{opacity:0;transform:translateY(5px)}}
   .path-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line)}
-  .pk{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:999px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap;margin-right:8px;vertical-align:2px}
-  .pk.build{color:#A3B4FF;border-color:rgba(61,90,254,.5)}
-  .pk.sub{color:var(--sn);border-color:rgba(98,216,78,.45)}
-  .pk.free{color:var(--text)}
+  .pk{display:inline-block;min-width:34px;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 6px;border-radius:999px;border:1px solid var(--line2);color:var(--sn);white-space:nowrap;margin-right:10px;vertical-align:2px}
   .pn{font-family:var(--display);font-weight:700;font-size:14px;line-height:1.3}
-  .pnote{grid-column:1/-1;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted);letter-spacing:.02em;line-height:1.5}
   .pv{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;white-space:nowrap;justify-self:end}
+  .pv.dim{opacity:.55}
   .pv.money{font-family:var(--display);font-weight:900;font-size:17px;color:var(--text)}
   .pv.free{color:var(--sn)}
   .pv.soon{color:var(--sn);border:1px solid rgba(98,216,78,.35);border-radius:999px;padding:3px 8px;background:rgba(98,216,78,.08);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase}
-  .path-foot{display:flex;flex-direction:column;gap:12px;margin-top:16px}
-  .path-foot .sum{font-family:var(--mono);font-size:11.5px;color:var(--dim);line-height:1.6}
+  .path-total{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line2)}
+  .path-total .tl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--sn)}
+  .path-total .tv{font-family:var(--display);font-weight:900;font-size:26px;letter-spacing:-.02em}
+  .path-foot{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+  .path-foot .sum{display:grid;gap:3px;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.5}
   .path-foot .btn{text-align:center}
   @media(max-width:1020px){
     .mapgrid{grid-template-columns:1fr}
@@ -263,26 +263,41 @@
   /* ---- CLP BOT ---- */
   .clpbot-fab{position:fixed;right:22px;bottom:22px;z-index:90;display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.02em;color:#0C1A0F;background:var(--grad);border:none;border-radius:999px;padding:13px 20px;cursor:pointer;box-shadow:0 10px 34px rgba(98,216,78,.3),0 10px 34px rgba(61,90,254,.2);transition:transform .15s,box-shadow .2s}
   .clpbot-fab:hover{transform:translateY(-2px)}
+  .clpbot-fab[hidden]{display:none}
   .clpbot-fab svg{width:18px;height:18px;stroke:#0C1A0F;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .clpbot-panel{position:fixed;right:22px;bottom:84px;z-index:91;width:min(370px,calc(100vw - 32px));height:min(480px,calc(100vh - 120px));display:flex;flex-direction:column;border-radius:18px;border:1px solid transparent;background:linear-gradient(rgba(14,24,22,.98),rgba(14,24,22,.98)) padding-box,var(--grad) border-box;box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden}
   .clpbot-panel[hidden]{display:none}
-  .clpbot-head{display:flex;align-items:center;gap:10px;padding:13px 16px;font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.04em;border-bottom:1px solid var(--line)}
-  .clpbot-head .dot{width:9px;height:9px;border-radius:50%;background:var(--sn);box-shadow:0 0 10px var(--sn)}
-  .clpbot-x{margin-left:auto;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:2px 6px}
-  .clpbot-x:hover{color:var(--text)}
-  .clpbot-log{flex:1;overflow-y:auto;padding:14px 14px 6px;display:flex;flex-direction:column;gap:10px}
-  .cb-msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.5;color:var(--text)}
-  .cb-msg.bot{align-self:flex-start;background:rgba(255,255,255,.05);border:1px solid var(--line);border-bottom-left-radius:4px}
-  .cb-msg.user{align-self:flex-end;background:rgba(61,90,254,.14);border:1px solid rgba(61,90,254,.42);border-bottom-right-radius:4px}
-  .cb-msg.thinking{color:var(--muted);font-family:var(--mono);font-size:12.5px}
-  .clpbot-chips{display:flex;gap:6px;flex-wrap:wrap;padding:8px 14px}
-  .clpbot-chips button{font-family:var(--mono);font-size:11px;color:var(--dim);background:rgba(255,255,255,.04);border:1px solid var(--line2);border-radius:999px;padding:6px 11px;cursor:pointer}
-  .clpbot-chips button:hover{border-color:var(--sn);color:var(--text)}
-  .clpbot-row{display:flex;gap:8px;padding:10px 14px 14px;border-top:1px solid var(--line)}
-  .clpbot-row input{flex:1;padding:10px 12px;font-family:var(--body);font-size:14px;border:1px solid var(--line2);border-radius:10px;background:rgba(0,0,0,.3);color:var(--text)}
-  .clpbot-row input:focus{border-color:var(--sn);outline:none}
-  .clpbot-row button{font-family:var(--display);font-weight:700;font-size:13px;background:var(--grad);color:#0C1A0F;border:none;border-radius:10px;padding:10px 16px;cursor:pointer}
-  .clpbot-row button:disabled{opacity:.6;cursor:default}
+  @keyframes botin{from{opacity:0;transform:translateY(14px) scale(.97)}}
+  .clpbot-panel{animation:botin .32s cubic-bezier(.2,.8,.2,1)}
+  .clpbot-head{display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(98,216,78,.07),transparent)}
+  .clpbot-av{width:34px;height:34px;flex:0 0 auto;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#0C1A0F;background:var(--grad);box-shadow:0 4px 14px rgba(98,216,78,.3)}
+  .clpbot-id{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .clpbot-id b{font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.03em}
+  .clpbot-id em{display:flex;align-items:center;gap:6px;font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+  .clpbot-id .dot{width:7px;height:7px;border-radius:50%;background:var(--sn);box-shadow:0 0 8px var(--sn);animation:pulse 1.8s ease-in-out infinite}
+  .clpbot-x{margin-left:auto;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;border-radius:8px}
+  .clpbot-x:hover{color:var(--text);background:rgba(255,255,255,.06)}
+  .clpbot-log{flex:1;overflow-y:auto;padding:14px 14px 6px;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin}
+  .cb-msg{max-width:86%;padding:10px 14px;border-radius:15px;font-size:14px;line-height:1.55;color:var(--text);animation:botin .25s ease}
+  .cb-msg.bot{align-self:flex-start;background:rgba(255,255,255,.055);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .cb-msg.user{align-self:flex-end;background:linear-gradient(135deg,rgba(61,90,254,.24),rgba(61,90,254,.14));border:1px solid rgba(61,90,254,.45);border-bottom-right-radius:5px}
+  .cb-msg.thinking{display:flex;gap:5px;padding:14px}
+  .cb-msg.thinking i{width:6px;height:6px;border-radius:50%;background:var(--sn);opacity:.4;animation:dots 1.2s ease-in-out infinite}
+  .cb-msg.thinking i:nth-child(2){animation-delay:.18s}
+  .cb-msg.thinking i:nth-child(3){animation-delay:.36s}
+  @keyframes dots{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+  .clpbot-chips{display:flex;gap:6px;flex-wrap:wrap;padding:6px 14px 2px}
+  .clpbot-chips button{font-family:var(--mono);font-size:10.5px;color:var(--dim);background:rgba(255,255,255,.04);border:1px solid var(--line2);border-radius:999px;padding:6px 11px;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+  .clpbot-chips button:hover{border-color:var(--sn);color:var(--text);background:rgba(98,216,78,.08)}
+  .clpbot-row{display:flex;gap:8px;align-items:center;padding:10px 14px 13px;border-top:1px solid var(--line)}
+  .clpbot-row input{flex:1;min-width:0;padding:11px 14px;font-family:var(--body);font-size:14px;border:1px solid var(--line2);border-radius:999px;background:rgba(0,0,0,.32);color:var(--text)}
+  .clpbot-row input::placeholder{color:var(--muted)}
+  .clpbot-row input:focus{border-color:var(--sn);outline:none;box-shadow:0 0 0 3px rgba(98,216,78,.14)}
+  .clpbot-row button{flex:0 0 auto;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--grad);border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 16px rgba(98,216,78,.28);transition:transform .15s}
+  .clpbot-row button:hover{transform:scale(1.06)}
+  .clpbot-row button svg{width:17px;height:17px;stroke:#0C1A0F;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .clpbot-row button:disabled{opacity:.5;cursor:default;transform:none}
+  @media(max-width:560px){.clpbot-panel{right:12px;left:12px;width:auto;bottom:78px;height:min(440px,calc(100vh - 110px))}}
 
   /* ---- FREE ASSESSMENT ---- */
   .sample{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:start;margin-top:10px}
@@ -439,7 +454,7 @@
             <div class="q-sub">
               <span class="qn sub">1b</span>
               <div class="ql">How many plugins?</div>
-              <div class="qc slider-row"><span>1</span><input type="range" id="pslider" min="1" max="30" value="18" step="1" aria-label="Number of Moveworks plugins"><span>30+</span><b class="qcount" id="q-count">18</b></div>
+              <div class="qc slider-row"><span>1</span><input type="range" id="pslider" min="1" max="30" value="1" step="1" aria-label="Number of Moveworks plugins"><span>30+</span><b class="qcount" id="q-count">1</b></div>
             </div>
           </div>
 
@@ -481,7 +496,7 @@
             <div class="q-main">
               <span class="qn">4</span>
               <div class="ql">Keep watch on your plugins — how many?<small>a provider update or an internal change can break them silently</small></div>
-              <div class="qc slider-row"><span>0</span><input type="range" id="cislider" min="0" max="30" value="0" step="1" aria-label="Plugins covered by CI/CD"><span id="ci-max">18</span><b class="qcount" id="ci-count">0</b></div>
+              <div class="qc slider-row"><span>0</span><input type="range" id="cislider" min="0" max="30" value="0" step="1" aria-label="Plugins covered by CI/CD"><span id="ci-max">1</span><b class="qcount" id="ci-count">0</b></div>
             </div>
             <div class="q-sub">
               <span class="qn sub">4b</span>
@@ -497,17 +512,21 @@
 
         <aside class="path" id="path" aria-live="polite">
           <div class="path-head">
-            <div class="pl-count"><div class="n" id="pl-n">18</div><div class="l">plugins</div></div>
+            <div class="pl-count"><div class="n" id="pl-n">1</div><div class="l">plugins</div></div>
             <div class="path-fee">
               <span class="k">Fieldwork + Assessment · fixed fee</span>
-              <div class="fee" id="path-fee">$12,400</div>
-              <div class="bd" id="path-bd">base $6,000 · 10 × $400 · 8 × $300</div>
+              <div class="fee" id="path-fee">$6,400</div>
+              <div class="bd" id="path-bd"><span class="bdrow"><em>Base price</em>$6,000</span><span class="bdrow"><em>Per plugin</em>1 × $400</span></div>
             </div>
           </div>
           <ul class="path-list" id="path-list"></ul>
+          <div class="path-total">
+            <span class="tl">Total today</span>
+            <span class="tv" id="path-total">$6,400</span>
+          </div>
           <div class="path-foot">
             <span class="sum" id="path-sum"></span>
-            <a class="btn" id="path-book" href="mailto:eberteogam@gmail.com?subject=Free%20call">Book the free call — bring this path</a>
+            <a class="btn" id="path-book" href="https://calendly.com/eberteo/new-meeting" target="_blank" rel="noopener">Book the free call</a>
           </div>
         </aside>
       </div>
@@ -579,14 +598,18 @@
 </footer>
 
 <!-- CLP BOT -->
-<button class="clpbot-fab" id="clpbot-fab" aria-expanded="false" aria-controls="clpbot-panel">
+<button class="clpbot-fab" id="clpbot-fab" aria-expanded="true" aria-controls="clpbot-panel" hidden>
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.4 8.4 0 0 1-3.6-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 3 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 9 8.4z"/></svg>
   CLP BOT
 </button>
-<div class="clpbot-panel" id="clpbot-panel" role="dialog" aria-label="CLP BOT" hidden>
-  <div class="clpbot-head"><span class="dot" aria-hidden="true"></span>CLP BOT<button class="clpbot-x" id="clpbot-x" aria-label="Close chat">×</button></div>
+<div class="clpbot-panel" id="clpbot-panel" role="dialog" aria-label="CLP BOT">
+  <div class="clpbot-head">
+    <span class="clpbot-av" aria-hidden="true">★</span>
+    <span class="clpbot-id"><b>CLP BOT</b></span>
+    <button class="clpbot-x" id="clpbot-x" aria-label="Minimize chat">–</button>
+  </div>
   <div class="clpbot-log" id="clpbot-log">
-    <div class="cb-msg bot">Hi — ask me anything about the assessment: pricing, timeline, access, licensing, or who's behind it.</div>
+    <div class="cb-msg bot">Hi — I'm CLP BOT. Ask me about pricing, timeline, access, licences, or who's behind this.</div>
   </div>
   <div class="clpbot-chips" id="clpbot-chips">
     <button type="button">Is the fee really fixed?</button>
@@ -594,8 +617,10 @@
     <button type="button">Do we have to leave Moveworks?</button>
   </div>
   <div class="clpbot-row">
-    <input id="clpbot-in" type="text" maxlength="1000" placeholder="Type a question…" autocomplete="off" aria-label="Your question">
-    <button id="clpbot-send" type="button">Send</button>
+    <input id="clpbot-in" type="text" maxlength="1000" placeholder="Ask anything…" autocomplete="off" aria-label="Your question">
+    <button id="clpbot-send" type="button" aria-label="Send">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7"/></svg>
+    </button>
   </div>
 </div>
 
@@ -622,10 +647,10 @@
         ciCountEl=document.getElementById('ci-count'),ciMaxEl=document.getElementById('ci-max'),
         feeEl=document.getElementById('path-fee'),bdEl=document.getElementById('path-bd'),
         q2b=document.getElementById('q-2b'),
-        list=document.getElementById('path-list'),sum=document.getElementById('path-sum'),book=document.getElementById('path-book');
+        list=document.getElementById('path-list'),sum=document.getElementById('path-sum'),
+        totalEl=document.getElementById('path-total'),book=document.getElementById('path-book');
     var state={fork:'unsure',handoff:'none',relay:'call',voice:'no',monitor:'call'};
     var LABEL={fork:{migrate:'Yes — migrating',stay:'No — staying on Moveworks',unsure:'Let the call decide'},handoff:{deeplink:'External chat window',broker:'Native chat',none:'Let the call decide'},relay:{own:'Built in our instances',relay:'You host the connection',call:'Let the call decide'},monitor:{yes:'You support it for us',no:'My team supports it',call:'Let the call decide'}};
-    var KIND={build:'Build',sub:'Subscription',free:'Free app',readout:'Readout'};
     function calc(v){
       var p=6000,parts=[];
       var t1=Math.min(v,10);p+=t1*400;parts.push(t1+' × $400');
@@ -653,8 +678,8 @@
       function step(t){if(t0===null)t0=t;var k=Math.min(1,(t-t0)/300);feeEl.textContent=fmt(Math.round(from+(to-from)*k));if(k<1)requestAnimationFrame(step);}
       requestAnimationFrame(step);
     }
-    function row(kind,name,note,val,cls){
-      return '<li><span class="pn"><span class="pk '+kind+'">'+KIND[kind]+'</span>'+name+'</span><span class="pv '+(cls||'')+'">'+val+'</span>'+(note?'<small class="pnote">'+note+'</small>':'')+'</li>';
+    function row(tag,name,val,cls){
+      return '<li><span class="pn"><span class="pk">'+tag+'</span>'+name+'</span><span class="pv '+(cls||'')+'">'+val+'</span></li>';
     }
     function render(){
       var v=parseInt(s.value,10),min=parseInt(s.min,10),max=parseInt(s.max,10),custom=(v>=max);
@@ -666,48 +691,36 @@
       nEl.textContent=shown;countEl.textContent=shown;
       ciCountEl.textContent=ciShown;ciMaxEl.textContent=shown;
       fill(s,v,min,max);fill(cs,ci,0,v);
-      var fixed=0;
-      if(custom){feeEl.textContent='Custom';lastFee=null;bdEl.innerHTML='<span class="bdrow">multi-tenant · scope + fee set on the call</span>';}
+      var fixed=0,later=0,early=0,rows=[];
+      if(custom){feeEl.textContent='Custom';lastFee=null;bdEl.innerHTML='<span class="bdrow">multi-tenant · set on the call</span>';}
       else{var c=calc(v);setFee(c.p);bdEl.innerHTML='<span class="bdrow"><em>Base price</em>$6,000</span><span class="bdrow"><em>Per plugin</em>'+c.parts.join(' · ')+'</span>';fixed+=c.p;}
-      var rows=[],quoted=0,early=0;
-      var ciCustom=(custom&&ci>=max);
-      var cip=(ci>0&&!ciCustom)?ct(ci):null;
-      var cover=(ci>0&&ci<v?ciShown+' of '+shown+' plugins · ':'');
-      var covNote=(ci>0?((ci<v?ciShown+' of '+shown:'all '+ciShown)+' plugins covered'):'');
-      if(state.fork==='migrate'){
-        rows.push(row('build','Rebuild in ServiceNow','wave by wave · your team can run it','quoted after the free call'));quoted++;
-        if(ci>0)rows.push(row('build','CI/CD pipeline for your plugins',cover+'contract testing ships inside the rebuild — never billed twice','included','free'));
-      }else if(state.fork==='stay'){
-        if(ci>0){
-          if(ciCustom){rows.push(row('build','CI/CD pipeline for your plugins','scoped with the assessment','Custom','money'));}
-          else{rows.push(row('build','CI/CD pipeline for your plugins',covNote,fmt(cip.p),'money'));fixed+=cip.p;}
-        }
-      }else{
-        rows.push(row('readout','Migrate or stay','both futures priced','decided at the readout'));
-        if(ci>0){
-          if(ciCustom){rows.push(row('build','CI/CD pipeline for your plugins','scoped with the assessment','Custom','money'));}
-          else{rows.push(row('build','CI/CD pipeline for your plugins',covNote+' — included in the rebuild if you migrate',fmt(cip.p),'money'));}
-        }
+      if(state.fork==='migrate'){rows.push(row('Q1','Rebuild in ServiceNow','quoted on the call'));later++;}
+      else if(state.fork==='stay'){rows.push(row('Q1','Keep building','quoted on the call'));later++;}
+      else{rows.push(row('Q1','Migrate or stay','decide on the call','dim'));}
+      if(state.handoff==='deeplink'){rows.push(row('Q2','External chat window','free','free'));}
+      else if(state.handoff==='broker'){rows.push(row('Q2','Native chat in Teams','quoted on the call'));later++;}
+      else{rows.push(row('Q2','Chat handoff','decide on the call','dim'));}
+      if(state.handoff==='broker'){
+        if(state.relay==='own'){rows.push(row('Q2b','Your instances','no ongoing fee','free'));}
+        else if(state.relay==='relay'){rows.push(row('Q2b','We host it','early access','soon'));early++;}
+        else{rows.push(row('Q2b','Who runs it','decide on the call','dim'));}
       }
+      if(state.voice==='yes'){rows.push(row('Q3','Webex calls','quoted on the call'));later++;}
       if(ci>0){
-        if(state.monitor==='yes'){rows.push(row('sub','We support it for you','new payload? we update the actions and the pipeline · we alert you','early access','soon'));early++;}
-        else if(state.monitor==='no'){rows.push(row('free','Your team runs it','delivered to your CI/CD service · alerts from your own pipeline · update at your pace','no ongoing fee','free'));}
-      }else if(state.monitor==='yes'){
-        rows.push(row('sub','We support it for you','needs coverage — set question 4 above 0','early access','soon'));early++;
+        var cov=(ci<v?ciShown+' of '+shown+' plugins':'All '+ciShown+' plugins');
+        if(custom&&ci>=max){rows.push(row('Q4',cov,'Custom','money'));}
+        else{var t=ct(ci);rows.push(row('Q4',cov,fmt(t.p),'money'));fixed+=t.p;}
+        if(state.monitor==='no'){rows.push(row('Q4b','Your team','no ongoing fee','free'));}
+        else if(state.monitor==='yes'){rows.push(row('Q4b','We support it','early access','soon'));early++;}
+        else{rows.push(row('Q4b','Who supports it','decide on the call','dim'));}
       }
-      if(state.handoff==='deeplink'){rows.push(row('free','External chat window','chat continues in a browser window','free · no extra license','free'));}
-      else if(state.handoff==='broker'){
-        rows.push(row('build','Native chat handoff','your users stay in Microsoft Teams · needs ITSM Pro','quoted after the free call'));quoted++;
-        if(state.relay==='own'){rows.push(row('free','Built in your instances','the connection lives in your Moveworks and ServiceNow — you own it','no ongoing fee','free'));}
-        else if(state.relay==='relay'){rows.push(row('sub','We host the connection','we keep it working when either platform changes · external chat window stays your same-day fallback','early access','soon'));early++;}
-      }
-      if(state.voice==='yes'){rows.push(row('build','Voice into Service Operations Workspace','Webex Contact Center → one workspace','quoted after the free call'));quoted++;}
       if(q2b)q2b.hidden=(state.handoff!=='broker');
       list.innerHTML=rows.join('');
-      var bits=[custom?'fixed fee set on the call':'fixed fee: '+fmt(fixed)];
-      if(quoted)bits.push(quoted+' quoted after the free call');
-      if(early)bits.push(early+' early access');
-      sum.textContent=bits.join(' · ');
+      totalEl.textContent=custom?'Custom':fmt(fixed);
+      var extras=[];
+      if(later)extras.push(later+(later===1?' item':' items')+' quoted on the call');
+      if(early)extras.push(early+(early===1?' item':' items')+' in early access');
+      sum.innerHTML=extras.map(function(x){return '<span>'+x+'</span>';}).join('');
       var body='My path from the pricing page:\n'+
         'Migrating to ServiceNow: '+LABEL.fork[state.fork]+'\n'+
         'Plugins: '+shown+'\n'+
@@ -715,7 +728,7 @@
         'Who runs the pipeline: '+LABEL.monitor[state.monitor]+'\n'+
         'Handoff: '+LABEL.handoff[state.handoff]+(state.handoff==='broker'?' ('+LABEL.relay[state.relay]+')':'')+'\n'+
         'Voice into SOW: '+(state.voice==='yes'?'Yes':'No')+'\n';
-      book.href='mailto:eberteogam@gmail.com?subject='+encodeURIComponent('Free call — my path')+'&body='+encodeURIComponent(body);
+      book.href='https://calendly.com/eberteo/new-meeting?a1='+encodeURIComponent(body+'Total today: '+(custom?'Custom':fmt(fixed)));
     }
     document.querySelectorAll('.seg').forEach(function(seg){
       seg.addEventListener('click',function(e){
@@ -759,10 +772,13 @@
         inEl=document.getElementById('clpbot-in'),sendBtn=document.getElementById('clpbot-send'),
         chips=document.getElementById('clpbot-chips');
     var history=[],busy=false;
-    function toggle(open){
+    function toggle(open,focus){
       var show=(open!==undefined)?open:panel.hidden;
       panel.hidden=!show;
+      fab.hidden=show;
       fab.setAttribute('aria-expanded',show?'true':'false');
+      try{sessionStorage.setItem('clpbot',show?'open':'closed');}catch(e){}
+      if(show&&focus===false)return;
       if(show)inEl.focus();
     }
     function addMsg(role,text,extra){
@@ -784,7 +800,11 @@
         return;
       }
       busy=true;sendBtn.disabled=true;
-      var pending=addMsg('bot','Thinking…','thinking');
+      var pending=document.createElement('div');
+      pending.className='cb-msg bot thinking';
+      pending.innerHTML='<i></i><i></i><i></i>';
+      logEl.appendChild(pending);
+      logEl.scrollTop=logEl.scrollHeight;
       fetch(CLPBOT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-20)})})
         .then(function(r){return r.json();})
         .then(function(data){
@@ -805,6 +825,7 @@
     inEl.addEventListener('keydown',function(e){if(e.key==='Enter')send();});
     chips.addEventListener('click',function(e){if(e.target.tagName==='BUTTON')send(e.target.textContent);});
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden)toggle(false);});
+    try{if(sessionStorage.getItem('clpbot')==='closed')toggle(false,false);}catch(e){}
   })();
 </script>
 
