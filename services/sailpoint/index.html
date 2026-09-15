@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SailPoint IdentityIQ · CI/CD · Docker — CLP Engineering</title>
-<meta name="description" content="SailPoint IdentityIQ engineering, CI/CD pipelines with automated API testing, and Docker containerization. Fixed quotes, scope in writing.">
+<title>SailPoint Machine Identity &amp; AI Agent Governance — CLP</title>
+<meta name="description" content="Fixed-fee SailPoint engagements: machine identity, AI agent access governance, CMDB ownership and certification from non-discoverable CSDM fields, ServiceNow integration credential reviews, Moveworks conversational processes for IdentityIQ and ISC, IdentityIQ Docker packaging with CI/CD, and IdentityIQ to Identity Security Cloud migration.">
 <link rel="canonical" href="https://eberteogam.github.io/services/sailpoint/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,25 +17,24 @@
     --text:#F3F7FD; --muted:#9FB2CF; --dim:#CBD8EC;
     --blue:#0071CE; --blue2:#3D9BFF; --magenta:#CC27B0; --magenta2:#E17FD2;
     --grad:linear-gradient(90deg,#0071CE,#CC27B0);
-    --maxw:1060px;
+    --maxw:1080px;
     --display:'Manrope',system-ui,sans-serif;
-    --body:'Inter',-apple-system,Segoe UI,sans-serif;
+    --body:'Inter',-apple-system,'Segoe UI',sans-serif;
     --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
   body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative}
-  /* sail-curve backdrop */
   .sails{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
   .sails svg{position:absolute;top:-120px;right:-180px;width:960px;height:auto;opacity:.5}
   .sails .low{top:auto;bottom:-260px;left:-260px;right:auto;width:820px;opacity:.32;transform:rotate(180deg)}
   a{color:inherit}
-  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--blue2);outline-offset:3px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--blue2);outline-offset:3px}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-  header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(5,28,62,.82);backdrop-filter:blur(12px);z-index:50}
+  header.site{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(5,28,62,.84);backdrop-filter:blur(12px);z-index:50}
   .site-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--maxw);margin:0 auto}
   .wordmark{font-family:var(--display);font-weight:800;font-size:16px;text-decoration:none;letter-spacing:.01em;display:flex;align-items:center;gap:10px}
   .wordmark .sailmark{width:20px;height:20px;flex:0 0 auto}
@@ -46,82 +45,234 @@
   .btn{display:inline-block;font-family:var(--display);font-weight:800;font-size:15px;background:var(--blue);color:#fff;padding:13px 24px;border:none;border-radius:10px;text-decoration:none;cursor:pointer;transition:background .15s,transform .15s,box-shadow .2s;box-shadow:0 8px 26px rgba(0,113,206,.32)}
   .btn:hover{background:#1683E2}
   .btn:active{transform:translateY(1px)}
-  .btn.ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--line2);box-shadow:none}
-  .btn.ghost:hover{border-color:var(--magenta2)}
   nav.top .btn{padding:9px 16px;font-size:14px}
-  @media(max-width:700px){nav.top a.navlink{display:none}}
+  @media(max-width:760px){nav.top a.navlink{display:none}}
 
-  .hero{padding:82px 0 62px}
-  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
-  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px}}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--blue2);text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;margin-bottom:20px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.04)}
-  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--magenta);box-shadow:0 0 10px var(--magenta)}
-  h1{font-family:var(--display);font-weight:800;font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-.02em}
-  .hero-sub{margin:20px 0 28px;font-size:17.5px;color:var(--muted);max-width:48ch}
-  .hero-sub b{color:var(--text)}
-  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+  /* ---- HERO ---- */
+  .hero{padding:72px 0 60px;overflow-x:clip}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:44px;align-items:center}
+  @media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,3.3vw,40px);line-height:1.1;letter-spacing:-.022em;text-wrap:balance}
 
-  /* identity panel (hero card) */
-  .idpanel{background:linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.03)) padding-box,linear-gradient(135deg,rgba(0,113,206,.6),rgba(204,39,176,.6)) border-box;border:1px solid transparent;border-radius:18px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.45);backdrop-filter:blur(8px)}
-  .idpanel .cap{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:16px}
-  .idpanel .cap i{font-style:normal;color:var(--magenta2)}
-  .idrow{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.03);margin-bottom:10px}
-  .idrow .l{font-size:14px;color:var(--dim)}
-  .idrow .l small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;margin-top:2px}
-  .pill{font-family:var(--mono);font-size:11px;letter-spacing:.05em;border-radius:999px;padding:4px 11px;white-space:nowrap}
-  .pill.ok{background:rgba(61,155,255,.14);color:var(--blue2);border:1px solid rgba(61,155,255,.35)}
-  .pill.mg{background:rgba(204,39,176,.14);color:var(--magenta2);border:1px solid rgba(204,39,176,.35)}
-  .idpanel .foot{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px}
+  /* hero robot — our gradient glow on a faint grid */
+  .hero-copy{display:flex;flex-direction:column;align-items:flex-start}
+  .bot-art{position:relative;width:min(314px,100%);margin:22px 0 0 10px;isolation:isolate}
+  .bot-art::before{content:"";position:absolute;inset:-14% -22%;z-index:-1;background:linear-gradient(90deg,#0071CE,#CC27B0);opacity:.16;-webkit-mask-image:radial-gradient(closest-side,#000 30%,transparent);mask-image:radial-gradient(closest-side,#000 30%,transparent)}
+  .bot-art::after{content:"";position:absolute;inset:-14% -22%;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:22px 22px;-webkit-mask-image:radial-gradient(closest-side,#000,transparent);mask-image:radial-gradient(closest-side,#000,transparent)}
+  .bot-art svg{display:block;width:100%;height:auto;overflow:visible}
+  .bot-body{animation:bob 3.2s ease-in-out infinite}
+  .bot-bulb{filter:drop-shadow(0 0 7px rgba(204,39,176,.9));animation:blink 1.6s ease-in-out infinite}
+  .bot-shadow{opacity:.32;filter:blur(6px)}
+  .bot-drop{animation:drip 3.2s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-6px)}}
+  @keyframes blink{50%{opacity:.45}}
+  @keyframes drip{0%,40%{transform:translateY(0);opacity:1}80%{transform:translateY(10px);opacity:0}100%{transform:translateY(0);opacity:0}}
+  @media(max-width:560px){.bot-art{width:230px}}
 
-  section.doc{padding:66px 0;border-top:1px solid var(--line)}
-  .kicker{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin-bottom:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--magenta2)}
-  h2{font-family:var(--display);font-weight:800;font-size:clamp(25px,3.2vw,34px);letter-spacing:-.015em}
-  .sec-intro{color:var(--muted);font-size:15.5px;margin:10px 0 34px;max-width:60ch}
-  .sec-intro b{color:var(--text)}
+  /* connection diagram — SailPoint hub */
+  .map{position:relative;background:linear-gradient(rgba(9,34,72,.97),rgba(7,28,60,.97)) padding-box,var(--grad) border-box;border:1px solid transparent;border-radius:24px;padding:28px;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 70px rgba(204,39,176,.14)}
+  @keyframes pop{from{opacity:0;transform:scale(.55)}}
+  @keyframes rowin{from{opacity:0;transform:translateX(-10px)}}
+  @keyframes draw{from{transform:scaleX(0)}}
+  .map-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(120px,1.05fr) minmax(0,.78fr);row-gap:14px}
+  .hub{grid-column:3;grid-row:1 / span 5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px 14px;border-radius:18px;text-align:center;background:linear-gradient(#0B2C5C,#082349) padding-box,var(--grad) border-box;border:1px solid transparent;box-shadow:0 0 40px rgba(204,39,176,.2);animation:pop .5s cubic-bezier(.2,1.4,.4,1) .15s both}
+  .hub-logo{display:block;width:100%;max-width:150px;height:auto;margin-bottom:6px}
+  .hub-p{display:block;width:100%;font-family:var(--mono);font-size:14px;padding:8px 4px;border-radius:10px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--dim)}
+  .hub-m{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--magenta2);line-height:1.2}
+  .hub-m::before{content:"↓";display:block;font-size:18px;letter-spacing:0}
+  .node{display:flex;align-items:center;gap:12px;min-width:0;padding:13px 15px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.035);font-family:var(--display);font-weight:700;font-size:16px;line-height:1.2;animation:rowin .5s ease both;animation-delay:calc(.3s + var(--i) * .1s)}
+  .ni{flex:0 0 auto;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(61,155,255,.1);border:1px solid rgba(61,155,255,.28)}
+  .ni svg{width:20px;height:20px;stroke:url(#ig);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .link{position:relative;align-self:stretch}
+  .link::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:linear-gradient(90deg,var(--blue2),var(--magenta2));transform-origin:left;animation:draw .5s ease both;animation-delay:calc(.7s + var(--i) * .12s)}
+  .link .ah{position:absolute;top:50%;width:10px;height:10px;margin-top:-5px;border:solid var(--blue2);border-width:0 0 2px 2px;transform:rotate(45deg);left:1px}
+  .link .ah.r{left:auto;right:1px;border-color:var(--magenta2);transform:rotate(-135deg)}
+  .link em{position:absolute;left:4px;right:4px;bottom:calc(50% + 9px);font-style:normal;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;line-height:1.25;color:var(--dim)}
+  .link b{position:absolute;top:50%;left:10px;width:9px;height:9px;margin-top:-4.5px;border-radius:50%;background:#fff;box-shadow:0 0 10px 2px rgba(225,127,210,.75);opacity:0;animation:packet 2.4s ease-in-out infinite alternate;animation-delay:calc(1.4s + var(--i) * .45s)}
+  @keyframes packet{0%{left:10px;opacity:1}100%{left:calc(100% - 19px);opacity:1}}
+  @media(max-width:520px){.map{padding:14px 12px}.map-grid{grid-template-columns:minmax(0,1fr) 84px 74px;row-gap:8px}.node{padding:8px 9px;gap:8px;font-size:12.5px}.ni{width:26px;height:26px;border-radius:8px}.ni svg{width:14px;height:14px}.link em{font-size:8.5px;letter-spacing:0;text-transform:none;left:2px;right:2px}.hub{padding:12px 5px}.hub-p{font-size:9px;letter-spacing:-.02em;padding:5px 2px}.hub-m{font-size:8px;letter-spacing:0}}
+  @media(max-width:400px){.ni{display:none}}
+  @media(max-width:360px){.map-grid{grid-template-columns:minmax(0,1fr) 76px 66px}.node{font-size:11.5px;padding:7px}}
 
-  .services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .svc{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 24px;display:flex;flex-direction:column;transition:transform .16s,border-color .16s,background .16s,box-shadow .16s}
-  .svc:hover{transform:translateY(-3px);border-color:var(--line2);background:var(--surface2);box-shadow:0 16px 44px rgba(0,0,0,.4)}
-  .svc .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:10px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .svc h3{font-family:var(--display);font-weight:800;font-size:19px;margin-bottom:10px}
-  .svc p{font-size:14.5px;color:var(--dim);margin-bottom:14px}
-  .svc ul{list-style:none;flex:1}
-  .svc li{font-size:14px;color:var(--muted);padding:4px 0 4px 22px;position:relative}
-  .svc li::before{content:"→";position:absolute;left:0;color:var(--blue2);font-weight:700}
-  .svc .btn{margin-top:18px;text-align:center}
-  @media(max-width:880px){.services{grid-template-columns:1fr}}
+  /* ---- SECTIONS ---- */
+  section.doc{padding:68px 0;border-top:1px solid var(--line)}
+  h2{font-family:var(--display);font-weight:800;font-size:clamp(26px,3.3vw,36px);letter-spacing:-.015em}
 
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  .step{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
-  .step .idx{font-family:var(--mono);font-size:11px;letter-spacing:.1em;display:block;margin-bottom:10px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .step h3{font-family:var(--display);font-weight:800;font-size:17px;margin-bottom:6px}
-  .step p{font-size:14px;color:var(--muted)}
-  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+  /* coverage band — client quotes */
+  .coverage{padding:60px 0 64px;border-top:1px solid var(--line)}
+  .sits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+  .sit{display:flex;flex-direction:column;padding:20px 22px 16px;border-radius:18px;border:1px solid var(--line);background:var(--surface);transition:border-color .2s,background .2s,transform .2s}
+  .sit:hover{border-color:var(--line2);background:var(--surface2);transform:translateY(-2px)}
+  .sit-mark{font-family:Georgia,'Times New Roman',serif;font-weight:700;font-size:54px;line-height:1;height:28px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sit-q{margin:8px 0 18px;font-family:var(--display);font-weight:700;font-size:19px;line-height:1.32;color:var(--text)}
+  .sit-a{display:flex;align-items:baseline;gap:8px;margin-top:auto;padding-top:13px;border-top:1px dashed var(--line2);font-size:13.5px;color:var(--blue2)}
+  .sit-a::before{content:"→"}
+  .sit-a b{margin-left:auto;font-family:var(--display);font-weight:800;font-size:14px;color:var(--text);white-space:nowrap}
+  @media(max-width:900px){.sits{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.sits{grid-template-columns:1fr}}
 
-  .proof-row{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
-  .proof-row:first-of-type{border-top:1px solid var(--line)}
+  /* services + pricing — cards on the right, the robot keeps your pick */
+  .price-grid{display:grid;grid-template-columns:292px minmax(0,1fr);gap:40px;align-items:start}
+  .price-side{position:sticky;top:84px;display:flex;flex-direction:column;align-items:center;gap:12px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  #services{overflow-x:clip}
+  .pick-art{position:relative;width:min(244px,100%);isolation:isolate}
+  .pick-art::before{content:"";position:absolute;inset:-6% -14%;z-index:-1;background:linear-gradient(90deg,#0071CE,#CC27B0);opacity:.14;-webkit-mask-image:radial-gradient(closest-side,#000 30%,transparent);mask-image:radial-gradient(closest-side,#000 30%,transparent)}
+  .pick-art svg{display:block;width:100%;height:auto;overflow:visible}
+  .pick-bot{animation:bob 3.6s ease-in-out infinite}
+  .pick-sign{transform-box:fill-box;transform-origin:100% 100%;animation:sway 3.6s ease-in-out infinite}
+  .pick-wave{transform-box:fill-box;transform-origin:0 50%;animation:wave 1.8s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(0)}50%{transform:rotate(-3deg)}}
+  @keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(-14deg)}}
+  .pick-art.cheer .pick-bot{animation:hop .55s cubic-bezier(.3,1.5,.5,1)}
+  .pick-art.cheer .pick-wave{animation:wave .26s ease-in-out 2}
+  .pick-art.cheer .bot-bulb{animation:flash .55s ease}
+  @keyframes hop{40%{transform:translateY(-14px)}}
+  @keyframes flash{40%{filter:drop-shadow(0 0 18px #E17FD2)}}
+
+  .pick-card{width:100%;padding:16px 16px 14px;border-radius:18px;border:1px solid transparent;background:linear-gradient(rgba(9,34,72,.97),rgba(7,28,60,.97)) padding-box,var(--grad) border-box;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+  .pc-title{font-family:var(--display);font-weight:800;font-size:17px}
+  .pc-empty{font-size:14px;color:var(--muted);padding:8px 0 14px}
+  .pick-card.ready .pc-empty{display:none}
+  .pc-list{list-style:none;margin:6px 0 12px;max-height:190px;overflow-y:auto;scrollbar-width:thin}
+  .pc-list li{display:grid;grid-template-columns:minmax(0,1fr) auto 22px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px}
+  .pc-n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pc-p{font-family:var(--display);font-weight:700;color:var(--dim)}
+  .pc-x{width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line2);background:none;color:var(--muted);font-size:14px;line-height:1;cursor:pointer;transition:color .15s,border-color .15s}
+  .pc-x:hover{color:var(--text);border-color:var(--magenta2)}
+  .pc-foot{display:flex;flex-direction:column;gap:12px}
+  .pc-short{display:none}
+  .pc-sum{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .pc-sum b{font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:-.02em;text-transform:none;color:var(--text)}
+  .pick-card:not(.ready) .pc-sum{display:none}
+  .pick-card .btn{width:100%;text-align:center}
+  .pick-card:not(.ready) .btn{background:rgba(255,255,255,.06);border:1px solid var(--line2);box-shadow:none;color:var(--muted)}
+
+  .menu{background:linear-gradient(rgba(9,34,72,.97),rgba(7,28,60,.97)) padding-box,var(--grad) border-box;border:1px solid transparent;border-radius:22px;padding:16px;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 70px rgba(0,113,206,.14)}
+  .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .tile{position:relative;display:flex;flex-direction:column;padding:18px 18px 16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);cursor:pointer;transition:transform .18s,background .18s,box-shadow .18s}
+  .tile:hover{transform:translateY(-2px);background:rgba(255,255,255,.055);box-shadow:0 14px 30px rgba(0,0,0,.32)}
+  .tile.on{border-color:transparent;background:linear-gradient(rgba(14,46,94,.98),rgba(14,46,94,.98)) padding-box,var(--grad) border-box}
+  .tile:has(.mchk:focus-visible){outline:2px solid var(--blue2);outline-offset:3px}
+  .mchk{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+  .t-head{display:flex;align-items:center;gap:12px}
+  .mi{flex:0 0 auto;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(61,155,255,.1);border:1px solid rgba(61,155,255,.28)}
+  .mi svg{width:19px;height:19px;stroke:url(#ig);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .mname{display:block;font-family:var(--display);font-weight:700;font-size:16px;line-height:1.25}
+  .mdesc{display:block;margin:12px 0 16px;font-size:13.5px;line-height:1.5;color:var(--muted)}
+  .t-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto}
+  .mprice{font-family:var(--display);font-weight:800;font-size:24px;letter-spacing:-.02em;line-height:1.05;white-space:nowrap}
+  .mprice small{display:block;margin-bottom:2px;font-family:var(--mono);font-weight:400;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .t-add{position:relative;flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line2);background:rgba(255,255,255,.04);transition:background .18s,border-color .18s}
+  .t-add::before,.t-add::after{content:"";position:absolute;left:50%;top:50%;width:13px;height:2px;margin:-1px 0 0 -6.5px;border-radius:2px;background:var(--dim)}
+  .t-add::after{transform:rotate(90deg)}
+  .tile:hover .t-add{border-color:var(--blue2)}
+  .tile.on .t-add{background:var(--grad);border-color:transparent}
+  .tile.on .t-add::before{box-sizing:border-box;width:10px;height:17px;margin:-11px 0 0 -5px;background:none;border:solid #fff;border-width:0 3px 3px 0;border-radius:1px;transform:rotate(45deg)}
+  .tile.on .t-add::after{display:none}
+  .tile.strip{display:grid;grid-template-columns:40px minmax(0,1fr) auto 34px;gap:14px;align-items:center;margin-top:12px;padding:14px 18px}
+  .tile.strip .mdesc{margin:2px 0 0}
+  .tile.strip .mprice{text-align:right}
+
+  @media(max-width:920px){
+    .price-grid{grid-template-columns:1fr;gap:22px}
+    .price-side{display:contents}
+    .pick-art{order:1;justify-self:center;width:min(240px,100%)}
+    .menu{order:2}
+    .pick-card{order:3;position:sticky;bottom:12px;z-index:5;display:flex;align-items:center;padding:10px 10px 10px 16px;border-radius:14px}
+    .pc-title,.pc-empty,.pc-list,.pc-sum{display:none}
+    .pick-card.ready .pc-sum{display:none}
+    .pc-foot{flex:1;flex-direction:row;align-items:center;justify-content:space-between}
+    .pc-short{display:block;font-size:14px;color:var(--muted)}
+    .pc-short b{font-family:var(--display);color:var(--text)}
+    .pick-card .btn{width:auto;padding:10px 18px;font-size:14px;white-space:nowrap}
+  }
+  @media(max-width:600px){
+    .menu{padding:12px}
+    .tiles{grid-template-columns:1fr;gap:10px}
+    .tile{padding:16px}
+    .mprice{font-size:21px}
+    .tile.strip{grid-template-columns:minmax(0,1fr) 34px;gap:12px 12px;padding:16px}
+    .tile.strip .t-body{grid-column:1 / -1}
+    .tile.strip .mprice{text-align:left}
+    .tile.strip .mi{display:none}
+  }
+
+  /* process orbit — one loop, four stops */
+  .orbit{position:relative;width:min(520px,100%);aspect-ratio:1;margin:40px auto 30px}
+  .orbit-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .orbit-ring .halo{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:2 7}
+  .orbit-ring .track{fill:none;stroke:url(#og);stroke-width:2.5;opacity:.7}
+  .orbit-ring .chev{fill:none;stroke:var(--dim);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .orbit-ring .trail{fill:none;stroke:#E17FD2;stroke-width:4;stroke-linecap:round;stroke-dasharray:14 86;stroke-dashoffset:14;filter:drop-shadow(0 0 5px rgba(225,127,210,.8));animation:trail 8s linear infinite}
+  @keyframes trail{from{stroke-dashoffset:14}to{stroke-dashoffset:-86}}
+  @media (prefers-reduced-motion:reduce){.orbit-ring .trail{display:none}}
+  .orbit-title{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:40%;text-align:center;font-size:clamp(22px,3vw,32px);line-height:1.12}
+  .stn{position:absolute;width:0;height:0}
+  .stn.tl{left:27%;top:27%}.stn.tr{left:73%;top:27%}.stn.br{left:73%;top:73%}.stn.bl{left:27%;top:73%}
+  .stn-ico{position:absolute;left:-30px;top:-30px;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(#0B2C5C,#082349) padding-box,var(--grad) border-box;border:1px solid transparent;box-shadow:0 0 0 7px var(--bg);animation:ping 8s ease-out infinite;animation-delay:var(--d)}
+  .stn-ico svg{width:26px;height:26px;stroke:url(#ig);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  @keyframes ping{0%{box-shadow:0 0 0 7px var(--bg),0 0 0 9px rgba(225,127,210,.55),0 0 34px rgba(204,39,176,.6)}22%,100%{box-shadow:0 0 0 7px var(--bg),0 0 0 9px rgba(225,127,210,0),0 0 34px rgba(204,39,176,0)}}
+  .stn-t{position:absolute;left:0;width:150px;margin-left:-75px;text-align:center}
+  .stn.tl .stn-t,.stn.tr .stn-t{bottom:40px}
+  .stn.bl .stn-t,.stn.br .stn-t{top:40px}
+  .stn-t b{display:block;font-family:var(--display);font-weight:800;font-size:17px;line-height:1.2}
+  @media(max-width:520px){.orbit{margin:52px auto 44px}.stn-ico{left:-23px;top:-23px;width:46px;height:46px;box-shadow:0 0 0 5px var(--bg)}.stn-ico svg{width:20px;height:20px}.stn-t{width:120px;margin-left:-60px}.stn.tl .stn-t,.stn.tr .stn-t{bottom:30px}.stn.bl .stn-t,.stn.br .stn-t{top:30px}.stn-t b{font-size:14.5px}.orbit-title{width:44%}}
+
+  /* proof */
+  .proof{margin-top:28px}
+  .proof-row{display:grid;grid-template-columns:230px 1fr;gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .proof-row:first-child{border-top:1px solid var(--line)}
   .proof-row .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
   .proof-row .v{font-size:15px;color:var(--dim)}
   .proof-row .v a{color:var(--blue2)}
   @media(max-width:640px){.proof-row{grid-template-columns:1fr;gap:4px}}
 
-  details{border-bottom:1px solid var(--line);padding:2px 0}
-  details:first-of-type{border-top:1px solid var(--line)}
-  summary{cursor:pointer;font-family:var(--display);font-weight:800;font-size:16.5px;padding:15px 0;list-style:none;display:flex;justify-content:space-between;gap:16px}
-  summary::-webkit-details-marker{display:none}
-  summary::after{content:"+";font-family:var(--mono);font-size:19px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  details[open] summary::after{content:"–"}
-  details p{padding:0 0 16px;color:var(--muted);max-width:64ch;font-size:15px}
-
-  .final{padding:80px 0;border-top:1px solid var(--line)}
-  .final h2{max-width:24ch;margin-bottom:14px}
-  .final p{color:var(--muted);font-size:15.5px;margin-bottom:26px;max-width:48ch}
   footer.site{border-top:1px solid var(--line);padding:24px 0 42px}
   .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
   .foot-inner p,.foot-inner a{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+  /* ---- CLP BOT ---- */
+  .clpbot-fab{position:fixed;right:22px;bottom:22px;z-index:90;display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.02em;color:#fff;background:var(--grad);border:none;border-radius:999px;padding:13px 20px;cursor:pointer;box-shadow:0 10px 34px rgba(204,39,176,.32),0 10px 34px rgba(0,113,206,.24);transition:transform .15s}
+  .clpbot-fab:hover{transform:translateY(-2px)}
+  .clpbot-fab[hidden]{display:none}
+  .clpbot-fab svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  @keyframes botin{from{opacity:0;transform:translateY(14px) scale(.97)}}
+  .clpbot-panel{position:fixed;right:22px;bottom:84px;z-index:91;width:min(370px,calc(100vw - 32px));height:min(480px,calc(100vh - 120px));display:flex;flex-direction:column;border-radius:18px;border:1px solid transparent;background:linear-gradient(rgba(6,26,56,.98),rgba(6,26,56,.98)) padding-box,var(--grad) border-box;box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden;animation:botin .32s cubic-bezier(.2,.8,.2,1)}
+  .clpbot-panel[hidden]{display:none}
+  .clpbot-head{display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(204,39,176,.1),transparent)}
+  .clpbot-av{width:34px;height:34px;flex:0 0 auto;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--grad);box-shadow:0 4px 14px rgba(204,39,176,.32)}
+  .clpbot-av svg{width:18px;height:18px}
+  .clpbot-id{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .clpbot-id b{font-family:var(--display);font-weight:800;font-size:14px;letter-spacing:.03em}
+  .clpbot-x{margin-left:auto;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;padding:0 4px;border-radius:8px}
+  .clpbot-x:hover{color:var(--text);background:rgba(255,255,255,.06)}
+  .clpbot-log{flex:1;overflow-y:auto;padding:14px 14px 6px;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin}
+  .cb-msg{max-width:86%;padding:10px 14px;border-radius:15px;font-size:14px;line-height:1.55;color:var(--text);animation:botin .25s ease}
+  .cb-msg.bot{align-self:flex-start;background:rgba(255,255,255,.055);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .cb-msg.user{align-self:flex-end;background:linear-gradient(135deg,rgba(0,113,206,.32),rgba(0,113,206,.16));border:1px solid rgba(61,155,255,.45);border-bottom-right-radius:5px}
+  .cb-msg.thinking{display:flex;gap:5px;padding:14px}
+  .cb-msg.thinking i{width:6px;height:6px;border-radius:50%;background:var(--magenta2);opacity:.4;animation:dots 1.2s ease-in-out infinite}
+  .cb-msg.thinking i:nth-child(2){animation-delay:.18s}
+  .cb-msg.thinking i:nth-child(3){animation-delay:.36s}
+  @keyframes dots{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+  .clpbot-chips{display:flex;gap:6px;flex-wrap:wrap;padding:6px 14px 2px}
+  .clpbot-chips button{font-family:var(--mono);font-size:10.5px;color:var(--dim);background:rgba(255,255,255,.04);border:1px solid var(--line2);border-radius:999px;padding:6px 11px;cursor:pointer;transition:border-color .15s,color .15s,background .15s}
+  .clpbot-chips button:hover{border-color:var(--magenta2);color:var(--text);background:rgba(204,39,176,.1)}
+  .clpbot-row{display:flex;gap:8px;align-items:center;padding:10px 14px 13px;border-top:1px solid var(--line)}
+  .clpbot-row input{flex:1;min-width:0;padding:11px 14px;font-family:var(--body);font-size:14px;border:1px solid var(--line2);border-radius:999px;background:rgba(0,0,0,.28);color:var(--text)}
+  .clpbot-row input::placeholder{color:var(--muted)}
+  .clpbot-row input:focus{border-color:var(--blue2);outline:none;box-shadow:0 0 0 3px rgba(61,155,255,.18)}
+  .clpbot-row button{flex:0 0 auto;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--grad);border:none;border-radius:50%;cursor:pointer;box-shadow:0 4px 16px rgba(204,39,176,.3);transition:transform .15s}
+  .clpbot-row button:hover{transform:scale(1.06)}
+  .clpbot-row button svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .clpbot-row button:disabled{opacity:.5;cursor:default;transform:none}
+  @media(max-width:560px){.clpbot-panel{right:12px;left:12px;width:auto;bottom:78px;height:min(440px,calc(100vh - 110px))}}
 </style>
 </head>
 <body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ig" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3D9BFF"/><stop offset="1" stop-color="#E17FD2"/></linearGradient></defs></svg>
 
 <div class="sails" aria-hidden="true">
   <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -147,126 +298,251 @@
   <div class="site-inner">
     <a class="wordmark" href="#top">
       <svg class="sailmark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20 C 7 10, 12 5, 21 3 C 16 9, 13 14, 12 20 Z" fill="url(#wm)"/><defs><linearGradient id="wm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0071CE"/><stop offset="1" stop-color="#CC27B0"/></linearGradient></defs></svg>
-      CLP<span>identity · pipelines · containers</span>
+      CLP<span>identity · machines · agents</span>
     </a>
     <nav class="top">
+      <a class="navlink" href="#coverage">Coverage</a>
       <a class="navlink" href="#services">Services</a>
-      <a class="navlink" href="#process">Process</a>
-      <a class="navlink" href="#proof">Proof</a>
-      <a class="btn" href="https://calendly.com/eberteo/new-meeting">Book a call</a>
+      <a class="navlink" href="#process">How it runs</a>
+      <a class="btn" href="https://calendly.com/eberteo/new-meeting" target="_blank" rel="noopener">Book a call</a>
     </nav>
   </div>
 </header>
 
 <main id="top">
 
+  <!-- HERO -->
   <section class="hero">
     <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow"><span class="dot"></span>Identity · CI/CD · Docker</span>
-        <h1>Access, governed. <span class="grad-text">Releases, tested. Deploys, repeatable.</span></h1>
-        <p class="hero-sub"><b>SailPoint IdentityIQ</b> wired to your systems, <b>pipelines</b> that test every release automatically, and <b>containers</b> that run the same on every machine. Fixed quotes. Scope in writing before work starts.</p>
-        <div class="hero-ctas">
-          <a class="btn" href="https://calendly.com/eberteo/new-meeting">Book a 30-minute call</a>
-          <a class="btn ghost" href="#services">See services</a>
+      <div class="hero-copy">
+        <h1>Who owns your <span class="grad-text">machine identities?</span></h1>
+        <div class="bot-art">
+          <svg viewBox="0 0 400 448" role="img" aria-label="A worried robot holding a sign that says: Who owns me?">
+            <ellipse class="bot-shadow" cx="200" cy="434" rx="92" ry="11" fill="#000"/>
+            <g class="bot-body">
+              <line x1="200" y1="42" x2="200" y2="88" stroke="#F6F1E8" stroke-width="3"/>
+              <circle class="bot-bulb" cx="200" cy="28" r="14" fill="#CC27B0" stroke="#F6F1E8" stroke-width="3"/>
+              <ellipse cx="116" cy="156" rx="8" ry="17" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="3"/>
+              <ellipse cx="284" cy="156" rx="8" ry="17" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="121" y="86" width="158" height="137" rx="30" fill="#3D86F0" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="133" y="97" width="46" height="36" rx="11" fill="#fff" opacity=".18"/>
+              <ellipse class="bot-drop" cx="298" cy="117" rx="9" ry="15" fill="#8FD0FF" stroke="#F6F1E8" stroke-width="2.5"/>
+              <circle cx="169" cy="151" r="22" fill="#fff" stroke="#11151C" stroke-width="2"/>
+              <circle cx="231" cy="151" r="22" fill="#fff" stroke="#11151C" stroke-width="2"/>
+              <circle cx="170" cy="152" r="9" fill="#11151C"/>
+              <circle cx="231" cy="151" r="9" fill="#11151C"/>
+              <ellipse cx="143" cy="186" rx="13" ry="6.5" fill="#E17FD2"/>
+              <ellipse cx="256" cy="186" rx="13" ry="6.5" fill="#E17FD2"/>
+              <path d="M173 197l13 8 13-8 13 8 13-8" fill="none" stroke="#11151C" stroke-width="3" stroke-linejoin="round"/>
+              <line x1="200" y1="223" x2="200" y2="245" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="134" y="244" width="132" height="138" rx="26" fill="#3D86F0" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="154" y="382" width="26" height="40" rx="6" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="220" y="382" width="26" height="40" rx="6" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="3"/>
+              <ellipse cx="64" cy="322" rx="14" ry="18" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="3"/>
+              <ellipse cx="336" cy="322" rx="14" ry="18" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="66" y="282" width="268" height="76" rx="12" fill="#F6F1E8"/>
+              <text x="200" y="332" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="800" font-size="31" letter-spacing="-.5" fill="#11151C">WHO OWNS ME?</text>
+            </g>
+          </svg>
         </div>
       </div>
-      <div class="idpanel">
-        <span class="cap">Identity lifecycle · live <i>● governed</i></span>
-        <div class="idrow"><span class="l">New hire detected<small>HR source · aggregation</small></span><span class="pill mg">Joiner</span></div>
-        <div class="idrow"><span class="l">Active Directory account<small>provisioned · birthright roles</small></span><span class="pill ok">✓ done</span></div>
-        <div class="idrow"><span class="l">Finance app access<small>role-based · approved</small></span><span class="pill ok">✓ done</span></div>
-        <div class="idrow"><span class="l">Access review campaign<small>quarterly certification</small></span><span class="pill mg">scheduled</span></div>
-        <p class="foot">joiner → mover → leaver · automated end to end</p>
+
+      <div class="map" role="img" aria-label="Diagram: SailPoint IdentityIQ and Identity Security Cloud at the center. Moveworks connects through conversational processes, a Docker package through CI/CD, the CMDB through its ownership fields, machines and AI agents through ownership, and ServiceNow integrations through a credential review.">
+        <div class="map-grid" aria-hidden="true">
+          <div class="hub">
+            <svg class="hub-logo" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 151 31" role="img" aria-label="SailPoint"> <path fill="#fff" d="M42.354 15.421c-1.65-.468-2.5-1.278-2.5-2.406 0-1.391 1.27-2.375 3.014-2.375 1.803 0 2.945.96 3.012 2.506h4.4c-.072-3.898-3.013-6.515-7.36-6.515-4.346 0-7.5 2.734-7.5 6.505 0 2.99 1.895 5.086 5.627 6.25l2.698.752c1.997.573 2.825 1.356 2.777 2.67-.03 1.515-1.352 2.506-3.4 2.506-2.223 0-3.334-1.323-3.456-2.679h-4.448c.08 3.898 3.306 6.577 7.907 6.577 3.721 0 7.779-2.001 7.843-6.376.091-3.184-1.92-5.401-5.99-6.574l-2.624-.84ZM59.66 13.748a7.676 7.676 0 0 0-5.301 2.325 7.71 7.71 0 0 0 0 10.746 7.677 7.677 0 0 0 5.3 2.326c1.234 0 3.385-.599 4.257-1.935l.278-.423v2.057h4.15V14.068h-4.137v2.001l-.277-.393c-1.314-1.873-3.974-1.928-4.27-1.928Zm.444 11.435c-1.887 0-3.92-1.428-3.92-3.73 0-2.301 2.03-3.73 3.92-3.73 1.889 0 3.79 1.309 3.79 3.73 0 2.422-1.956 3.73-3.79 3.73ZM74.974 14.07h-4.149v14.788h4.149V14.07ZM81.653 6.92h-4.168v21.933h4.168V6.92ZM93.007 6.898h-8.969v21.954h4.448v-7.684h4.531c5.28 0 7.165-3.835 7.165-7.125-.01-4.931-3.608-7.145-7.175-7.145Zm-.228 10.435h-4.303V10.76h4.448c1.945 0 2.825 1.918 2.825 3.28 0 1.626-1.11 3.293-2.955 3.293h-.015ZM107.548 13.748c-4.432 0-7.65 3.223-7.65 7.668s3.202 7.7 7.65 7.7 7.667-3.238 7.667-7.698c0-4.46-3.219-7.67-7.667-7.67Zm0 11.275a3.584 3.584 0 0 1-3.324-2.195 3.593 3.593 0 0 1 .749-3.918 3.585 3.585 0 0 1 3.899-.807 3.594 3.594 0 0 1 2.237 3.3 3.468 3.468 0 0 1-.907 2.497 3.474 3.474 0 0 1-2.404 1.123h-.25ZM120.952 14.07h-4.151v14.788h4.151V14.07ZM127.853 16.186l-.277.53v-2.648h-4.19V28.85h4.167v-7.83c0-2.105 1.017-3.218 2.92-3.218 1.715 0 2.759 1.208 2.759 3.146v7.895h4.18v-8.86c.019-4.023-1.884-6.25-5.34-6.25a4.845 4.845 0 0 0-4.22 2.447l.001.006ZM72.898 11.968a2.585 2.585 0 0 0 2.396-1.597 2.6 2.6 0 0 0-.554-2.83 2.588 2.588 0 0 0-4.425 1.826v.01a2.593 2.593 0 0 0 2.588 2.592h-.005ZM118.871 11.968a2.591 2.591 0 0 0 2.547-3.096 2.595 2.595 0 0 0-2.03-2.044 2.586 2.586 0 0 0-2.661 1.098 2.595 2.595 0 0 0-.44 1.441v.01c-.002.34.064.676.194.99a2.596 2.596 0 0 0 2.39 1.6ZM148.235 14.06h-2.904V8.292h-4.168v5.766h-2.778v3.52h2.778v11.273h4.168V17.58h2.904v-3.52ZM20.636 17.661 17.683 0 0 22.09h21.376l-.74-4.429ZM20.608 10.895 22.48 22.09h8.762L19.037 1.494l1.571 9.4ZM2.063 23.182l20.714 7.28-1.218-7.28H2.063ZM23.831 30.156l7.042-6.974h-8.209l1.167 6.974ZM149.338 26.024c.241.14.439.344.572.59.141.258.213.548.209.842.004.293-.068.582-.209.84a1.533 1.533 0 0 1-.572.585 1.608 1.608 0 0 1-.829.213 1.632 1.632 0 0 1-.833-.213 1.523 1.523 0 0 1-.576-.586 1.683 1.683 0 0 1-.208-.839 1.701 1.701 0 0 1 .208-.843c.134-.246.333-.45.576-.59.254-.144.542-.217.833-.212.291-.005.577.068.829.213Zm.123 2.415a1.512 1.512 0 0 0 0-1.965 1.382 1.382 0 0 0-1.912 0 1.511 1.511 0 0 0 0 1.965 1.38 1.38 0 0 0 1.912 0Zm-.355-1a.547.547 0 0 1-.319.176l.49.704-.416.008-.454-.696h-.188v.696h-.351v-1.765h.759a.618.618 0 0 1 .429.143.508.508 0 0 1 .16.39.513.513 0 0 1-.11.339v.004Zm-.883-.103h.384a.295.295 0 0 0 .188-.057.208.208 0 0 0 .074-.172.2.2 0 0 0-.074-.168.312.312 0 0 0-.188-.053h-.384v.45Z"/> </svg>
+            <span class="hub-p">IIQ</span>
+            <span class="hub-m">migrate</span>
+            <span class="hub-p">ISC</span>
+          </div>
+          <div class="node" style="--i:0"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.4 8.4 0 0 1-3.6-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 3 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 9 8.4z"/></svg></span>Moveworks</div>
+          <div class="link" style="--i:0"><em>conversational processes</em><i class="ah"></i><i class="ah r"></i><b></b></div>
+          <div class="node" style="--i:1"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span>Docker package</div>
+          <div class="link" style="--i:1"><em>CI / CD</em><i class="ah"></i><i class="ah r"></i><b></b></div>
+          <div class="node" style="--i:2"><span class="ni"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>CMDB</div>
+          <div class="link" style="--i:2"><em>owners</em><i class="ah"></i><i class="ah r"></i><b></b></div>
+          <div class="node" style="--i:3"><span class="ni"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></span>Machines · AI&nbsp;agents</div>
+          <div class="link" style="--i:3"><em>ownership</em><i class="ah"></i><i class="ah r"></i><b></b></div>
+          <div class="node" style="--i:4"><span class="ni"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>ServiceNow integrations</div>
+          <div class="link" style="--i:4"><em>credential review</em><i class="ah"></i><i class="ah r"></i><b></b></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="doc" id="services">
+  <!-- COVERAGE -->
+  <section class="coverage" id="coverage">
     <div class="wrap">
-      <span class="kicker">§01 · Services</span>
-      <h2>Three things, done properly</h2>
-      <p class="sec-intro">Engineering engagements, scoped on a call and <b>quoted fixed</b> — no open-ended hourly billing.</p>
-      <div class="services">
-        <div class="svc">
-          <span class="k">SailPoint IdentityIQ</span>
-          <h3>Identity governance, wired up</h3>
-          <p>Connect your HR and business systems to SailPoint, automate access when people join, move, or leave, and stand up the access-review campaigns your auditors ask for.</p>
-          <ul>
-            <li>App onboarding — files, databases, LDAP / Active Directory</li>
-            <li>Joiner / mover / leaver automation</li>
-            <li>Access certifications + policy violations</li>
-            <li>Custom rules (Beanshell) where the out-of-box stops</li>
-          </ul>
-          <a class="btn ghost" href="https://calendly.com/eberteo/new-meeting">Scope it on a call</a>
-        </div>
-        <div class="svc">
-          <span class="k">CI/CD &amp; API testing</span>
-          <h3>Releases that stop breaking things</h3>
-          <p>Pipelines that automatically test your API integrations on every change — so a vendor tweaking a field doesn't take your workflows down in production.</p>
-          <ul>
-            <li>GitHub Actions pipelines, built and documented</li>
-            <li>Automated API contract tests (request/response replay)</li>
-            <li>Separate test vs. production environments, secrets isolated</li>
-            <li>Works for ServiceNow, Moveworks, and plain REST integrations</li>
-          </ul>
-          <a class="btn ghost" href="https://calendly.com/eberteo/new-meeting">Scope it on a call</a>
-        </div>
-        <div class="svc">
-          <span class="k">Docker &amp; deployment</span>
-          <h3>Runs the same on every machine</h3>
-          <p>Package your applications into containers with a deployment setup your team can actually operate — documented, repeatable, no snowflake servers.</p>
-          <ul>
-            <li>Containerize existing apps (Docker)</li>
-            <li>Deployment architecture, designed and documented</li>
-            <li>Load-balanced multi-service setups</li>
-            <li>Dev environments that match production (WSL2 / Linux)</li>
-          </ul>
-          <a class="btn ghost" href="https://calendly.com/eberteo/new-meeting">Scope it on a call</a>
-        </div>
+      <h2>Sound familiar?</h2>
+      <div class="sits">
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">We don't know how many machine accounts we have.</p><span class="sit-a">Machine identity <b>from $12,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">AI agents have access we can't see.</p><span class="sit-a">Credential review <b>from $5,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">We need to move off IdentityIQ.</p><span class="sit-a">ISC migration <b>from $16,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Employees want to request access in chat.</p><span class="sit-a">Moveworks processes <b>from $5,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Integrations log in with shared accounts.</p><span class="sit-a">Credential review <b>from $5,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Our CMDB and identity data don't match.</p><span class="sit-a">CMDB ownership <b>from $15,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Audit wants proof of who can access what.</p><span class="sit-a">CMDB ownership <b>from $15,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Our access model needs a second opinion.</p><span class="sit-a">Advisory <b>$2,000 / 10 h</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Every IdentityIQ environment is built by hand.</p><span class="sit-a">Docker package + CI/CD <b>from $8,000</b></span></div>
       </div>
     </div>
   </section>
 
+  <!-- SERVICES AND PRICING -->
+  <section class="doc" id="services">
+    <div class="wrap price-grid">
+      <div class="price-side">
+        <h2 class="sr-only">Pick what you need.</h2>
+        <div class="pick-art" aria-hidden="true">
+          <svg viewBox="0 10 370 410">
+            <ellipse class="bot-shadow" cx="224" cy="404" rx="80" ry="11" fill="#000"/>
+            <g class="pick-bot">
+              <g class="pick-sign">
+                <line x1="104" y1="122" x2="141" y2="222" stroke="#F6F1E8" stroke-width="7" stroke-linecap="round"/>
+                <line x1="104" y1="122" x2="141" y2="222" stroke="#CFC6B4" stroke-width="4" stroke-linecap="round"/>
+                <g transform="rotate(4.5 112 80)">
+                  <rect x="18" y="32" width="188" height="96" rx="12" fill="#F6F1E8" stroke="#E4DCCB" stroke-width="2"/>
+                  <path d="M38 40l2.6 5.6 6 .6-4.5 4 1.3 6-5.4-3.1-5.4 3.1 1.3-6-4.5-4 6-.6z" fill="#CC27B0"/>
+                  <text x="112" y="80" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="800" font-size="24.5" letter-spacing="-.4" fill="#11151C">Pick what <tspan fill="#0071CE">you</tspan></text>
+                  <text x="112" y="112" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="800" font-size="24.5" letter-spacing="-.4" fill="#CC27B0">need.</text>
+                </g>
+                <polyline points="141,226 145,254 178,288" fill="none" stroke="#F6F1E8" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="141,226 145,254 178,288" fill="none" stroke="#1F5FC8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="141" cy="222" r="8.5" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="3"/>
+              </g>
+              <line x1="224" y1="104" x2="224" y2="144" stroke="#F6F1E8" stroke-width="3"/>
+              <circle class="bot-bulb" cx="224" cy="95" r="9" fill="#CC27B0" stroke="#F6F1E8" stroke-width="2.5"/>
+              <polyline points="270,290 310,310 334,315" fill="none" stroke="#F6F1E8" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="270,290 310,310 334,315" fill="none" stroke="#1F5FC8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+              <g class="pick-wave">
+                <rect x="324" y="305" width="26" height="21" rx="8" fill="#3D86F0" stroke="#F6F1E8" stroke-width="3"/>
+                <path d="M334 311v9M340 311v9" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+              </g>
+              <ellipse cx="160" cy="199" rx="6.5" ry="13" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="2.5"/>
+              <ellipse cx="288" cy="199" rx="6.5" ry="13" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="2.5"/>
+              <rect x="165" y="143" width="118" height="111" rx="23" fill="#3D86F0" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="174" y="151" width="36" height="30" rx="9" fill="#fff" opacity=".18"/>
+              <circle cx="199" cy="195" r="18" fill="#fff" stroke="#11151C" stroke-width="2"/>
+              <circle cx="249" cy="195" r="18" fill="#fff" stroke="#11151C" stroke-width="2"/>
+              <circle class="pick-eye" cx="201" cy="196" r="6.5" fill="#11151C"/>
+              <circle class="pick-eye" cx="251" cy="196" r="6.5" fill="#11151C"/>
+              <ellipse cx="180" cy="226" rx="10.5" ry="5.5" fill="#E17FD2"/>
+              <ellipse cx="268" cy="226" rx="10.5" ry="5.5" fill="#E17FD2"/>
+              <path d="M208 238q16 12 32 0" fill="none" stroke="#11151C" stroke-width="3" stroke-linecap="round"/>
+              <line x1="224" y1="254" x2="224" y2="270" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="190" y="361" width="19" height="31" rx="4" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="240" y="361" width="19" height="31" rx="4" fill="#1F5FC8" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="176" y="269" width="97" height="94" rx="18" fill="#3D86F0" stroke="#F6F1E8" stroke-width="3"/>
+              <rect x="207" y="279" width="34" height="5.5" rx="2.75" fill="#fff"/>
+              <rect x="207" y="288" width="34" height="5.5" rx="2.75" fill="#fff"/>
+              <rect x="207" y="297" width="34" height="5.5" rx="2.75" fill="#fff"/>
+            </g>
+          </svg>
+        </div>
+        <div class="pick-card" id="pick">
+          <div class="pc-title">Your pick</div>
+          <p class="pc-empty">Nothing picked yet</p>
+          <ul class="pc-list" id="pc-list"></ul>
+          <div class="pc-foot">
+            <span class="pc-short" id="pc-short" aria-live="polite">Nothing picked yet</span>
+            <span class="pc-sum">from <b id="pc-total">$0</b></span>
+            <a class="btn" id="pc-go" href="https://calendly.com/eberteo/new-meeting" target="_blank" rel="noopener">Book a call</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu" id="menu">
+        <div class="tiles">
+          <label class="tile">
+            <input class="mchk" type="checkbox" value="Integration credential exposure review" data-fee="5000" data-short="Credential review">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span class="mname">Integration credential exposure review</span></span>
+            <span class="mdesc">Finds the shared logins inside your integrations, such as ServiceNow to SailPoint, including the ones AI agents act through, and what they can reach.</span>
+            <span class="t-foot"><span class="mprice"><small>from</small>$5,000</span><span class="t-add" aria-hidden="true"></span></span>
+          </label>
+          <label class="tile">
+            <input class="mchk" type="checkbox" value="Machine identity" data-fee="12000" data-short="Machine identity">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></span><span class="mname">Machine identity</span></span>
+            <span class="mdesc">Every bot, script, and service account found, classified, and given an owner, plus a fix plan your team can apply.</span>
+            <span class="t-foot"><span class="mprice"><small>from</small>$12,000</span><span class="t-add" aria-hidden="true"></span></span>
+          </label>
+          <label class="tile">
+            <input class="mchk" type="checkbox" value="Moveworks conversational processes for IIQ / ISC" data-fee="5000" data-short="Moveworks processes">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.4 8.4 0 0 1-3.6-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 3 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 9 8.4z"/></svg></span><span class="mname">Moveworks conversational processes</span></span>
+            <span class="mdesc">Employees request access, check status, and approve in Moveworks chat, while IdentityIQ or ISC stays the system of record.</span>
+            <span class="t-foot"><span class="mprice"><small>from</small>$5,000</span><span class="t-add" aria-hidden="true"></span></span>
+          </label>
+          <label class="tile">
+            <input class="mchk" type="checkbox" value="IdentityIQ Docker package and CI/CD" data-fee="8000" data-short="Docker + CI/CD">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span><span class="mname">IdentityIQ Docker package and CI/CD</span></span>
+            <span class="mdesc">IdentityIQ in containers with a pipeline that builds every environment the same way, from dev to production.</span>
+            <span class="t-foot"><span class="mprice"><small>from</small>$8,000</span><span class="t-add" aria-hidden="true"></span></span>
+          </label>
+          <label class="tile">
+            <input class="mchk" type="checkbox" value="CMDB ownership and certification" data-fee="15000" data-short="CMDB ownership">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><span class="mname">CMDB ownership and certification</span></span>
+            <span class="mdesc">Owners from the non-discoverable CSDM fields (owned by, managed by, support group) on every machine account, then the first certification campaign.</span>
+            <span class="t-foot"><span class="mprice"><small>from</small>$15,000</span><span class="t-add" aria-hidden="true"></span></span>
+          </label>
+          <label class="tile">
+            <input class="mchk" type="checkbox" value="IdentityIQ to ISC migration" data-fee="16000" data-short="IIQ to ISC migration">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.5 9.5 4 4 0 0 0 7 19"/><path d="M12 12v8M9 15l3-3 3 3"/></svg></span><span class="mname">IdentityIQ to ISC migration</span></span>
+            <span class="mdesc">A plan to move from IdentityIQ to Identity Security Cloud before anything moves.</span>
+            <span class="t-foot"><span class="mprice"><small>from</small>$16,000</span><span class="t-add" aria-hidden="true"></span></span>
+          </label>
+        </div>
+        <label class="tile strip">
+          <input class="mchk" type="checkbox" value="Advisory block" data-fee="2000" data-short="Advisory · 10 h">
+          <span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span>
+          <span class="t-body"><span class="mname">Advisory</span><span class="mdesc">Architecture review or a second opinion on work already underway, drawn down as you need it.</span></span>
+          <span class="mprice"><small>per 10 hours</small>$2,000</span>
+          <span class="t-add" aria-hidden="true"></span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT RUNS -->
   <section class="doc" id="process">
     <div class="wrap">
-      <span class="kicker">§02 · Process</span>
-      <h2>How engagements run</h2>
-      <div class="steps" style="margin-top:30px">
-        <div class="step"><span class="idx">STEP 1</span><h3>Call</h3><p>30 minutes, free. You describe the problem; we define the scope together.</p></div>
-        <div class="step"><span class="idx">STEP 2</span><h3>Fixed quote</h3><p>Scope, fee, and timeline written into a Statement of Work. Signed online.</p></div>
-        <div class="step"><span class="idx">STEP 3</span><h3>Build + handover</h3><p>We build, document, and hand it over so your team can run it without us.</p></div>
+      <div class="orbit">
+        <svg class="orbit-ring" viewBox="0 0 400 400" aria-hidden="true">
+          <defs><linearGradient id="og" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3D9BFF"/><stop offset="1" stop-color="#E17FD2"/></linearGradient></defs>
+          <circle class="halo" cx="200" cy="200" r="165"/>
+          <circle class="track" cx="200" cy="200" r="130"/>
+          <circle class="trail" cx="200" cy="200" r="130" pathLength="100" transform="rotate(225 200 200)"/>
+          <path class="chev" d="M195 64l7 6-7 6M324 195l6 7 6-7M205 324l-7 6 7 6M64 205l6-7 6 7"/>
+        </svg>
+        <h2 class="orbit-title">From call to <span class="grad-text">findings</span></h2>
+        <div class="stn tl">
+          <span class="stn-ico" style="--d:0s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+          <span class="stn-t"><b>Free call</b></span>
+        </div>
+        <div class="stn tr">
+          <span class="stn-ico" style="--d:2s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 15.5l2 2 4-5"/></svg></span>
+          <span class="stn-t"><b>Fixed quote</b></span>
+        </div>
+        <div class="stn br">
+          <span class="stn-ico" style="--d:4s"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L21 2M17 6l3 3M14 9l2 2"/></svg></span>
+          <span class="stn-t"><b>Fieldwork</b></span>
+        </div>
+        <div class="stn bl">
+          <span class="stn-ico" style="--d:6s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></span>
+          <span class="stn-t"><b>Findings</b></span>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- PROOF -->
   <section class="doc" id="proof">
     <div class="wrap">
-      <span class="kicker">§03 · Proof</span>
-      <h2>Built, not read about</h2>
-      <div class="proof-row" style="margin-top:26px"><span class="k">SailPoint IIQ</span><span class="v"><a href="https://eberteogam.github.io/SailPoint%20IdentityIQ%20Journal.html">Public multi-month engineering log</a> — installs, connectors, aggregation &amp; correlation, policies, certifications, roles, Beanshell rules</span></div>
-      <div class="proof-row"><span class="k">Identity Security Cloud</span><span class="v"><a href="https://eberteogam.github.io/SailPoint/index.html">ISC notes</a> — access requests, RBAC, and the ServiceNow ↔ SailPoint integration</span></div>
-      <div class="proof-row"><span class="k">Containers</span><span class="v"><a href="https://documenter.getpostman.com/view/12028505/2sAYHzFhes">Shipped: Docker microservices with round-robin load balancing</a> — full public API documentation</span></div>
-      <div class="proof-row"><span class="k">Deployment design</span><span class="v"><a href="https://www.figma.com/board/sLEJf6iOlu4VjCmvluQvMa/Rupeos-Back-end-Structure?node-id=0-1&t=7L0vDura54sqZlQD-1">Automatic deployment architecture</a> — microservices back-end, documented end to end</span></div>
-      <div class="proof-row"><span class="k">DevOps notes</span><span class="v"><a href="https://eberteogam.github.io/DevOps%20Environments.html">Docker, WSL2 &amp; Git</a> — container internals, Podman, team Git workflow</span></div>
-    </div>
-  </section>
-
-  <section class="doc" id="faq">
-    <div class="wrap">
-      <span class="kicker">§04 · Questions</span>
-      <h2>Straight answers</h2>
-      <details style="margin-top:22px"><summary>Are quotes really fixed?</summary><p>Yes. Scope, fee, timeline, and exclusions go into a Statement of Work before work starts. If the scope changes, the quote changes — in writing, before the work.</p></details>
-      <details><summary>Do you hand everything over?</summary><p>Yes — documentation and a walkthrough are part of every engagement. The goal is that your team operates it without us. Ongoing support is available separately if you want it.</p></details>
-      <details><summary>What stacks do you work in?</summary><p>SailPoint IdentityIQ and Identity Security Cloud, GitHub Actions, Docker, Linux/WSL2, and REST integrations across ServiceNow, Moveworks, and standard APIs.</p></details>
-    </div>
-  </section>
-
-  <section class="final">
-    <div class="wrap">
-      <h2>Describe the problem. <span class="grad-text">Leave with a fixed quote.</span></h2>
-      <p>Thirty minutes, free. If it's not a fit, you'll hear that too.</p>
-      <a class="btn" href="https://calendly.com/eberteo/new-meeting">Book the call</a>
+      <h2>Check the depth before you book</h2>
+      <div class="proof">
+        <div class="proof-row"><span class="k">SailPoint IdentityIQ</span><span class="v"><a href="https://eberteogam.github.io/SailPoint%20IdentityIQ%20Journal.html">Public engineering log</a> — connectors, aggregation and correlation, orphan accounts, policies, certifications, roles, Beanshell rules</span></div>
+        <div class="proof-row"><span class="k">Identity Security Cloud</span><span class="v"><a href="https://eberteogam.github.io/SailPoint/index.html">ISC notes</a> — human and machine identities, RBAC, access requests, policies, and the ServiceNow ↔ SailPoint integration</span></div>
+        <div class="proof-row"><span class="k">CMDB · CSDM v5</span><span class="v"><a href="https://eberteogam.github.io/ServiceNow%20CMDB%20and%20CSDM.html">CMDB notes</a> — IRE identification and reconciliation, ingestion methods, CSDM application services</span></div>
+        <div class="proof-row"><span class="k">Containers · deployment</span><span class="v"><a href="https://documenter.getpostman.com/view/12028505/2sAYHzFhes">Docker microservices, shipped</a> — round-robin load balancing, public API docs · <a href="https://eberteogam.github.io/DevOps%20Environments.html">DevOps notes</a> — Docker, WSL2, Git</span></div>
+      </div>
     </div>
   </section>
 
@@ -274,11 +550,138 @@
 
 <footer class="site">
   <div class="wrap foot-inner">
-    <p>© 2026 Cali Live Play LLC · eberteogam@gmail.com</p>
-    <p><a href="https://www.linkedin.com/in/eberteo/">LinkedIn</a> · <a href="https://eberteogam.github.io">Engineering notes</a></p>
+    <p>© 2026 Cali Live Play LLC</p>
+    <p><a href="https://www.linkedin.com/company/caliliveplay/">LinkedIn</a> · <a href="https://eberteogam.github.io/services/servicenow/">ServiceNow services</a> · <a href="https://eberteogam.github.io">Engineering notes</a></p>
   </div>
 </footer>
 
+<!-- CLP BOT -->
+<button class="clpbot-fab" id="clpbot-fab" aria-expanded="true" aria-controls="clpbot-panel" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.4 8.4 0 0 1-3.6-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 3 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 9 8.4z"/></svg>
+  CLP BOT
+</button>
+<div class="clpbot-panel" id="clpbot-panel" role="dialog" aria-label="CLP BOT">
+  <div class="clpbot-head">
+    <span class="clpbot-av" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20 C 7 10, 12 5, 21 3 C 16 9, 13 14, 12 20 Z" fill="#fff"/></svg></span>
+    <span class="clpbot-id"><b>CLP BOT</b></span>
+    <button class="clpbot-x" id="clpbot-x" aria-label="Minimize chat">–</button>
+  </div>
+  <div class="clpbot-log" id="clpbot-log">
+    <div class="cb-msg bot">Hi — I'm CLP BOT. Ask me about machine identity, AI agent access, CMDB ownership and certifications, Moveworks with SailPoint, or IdentityIQ in Docker.</div>
+  </div>
+  <div class="clpbot-chips" id="clpbot-chips">
+    <button type="button">Where should we start?</button>
+    <button type="button">What access do you need?</button>
+    <button type="button">Is the fee really fixed?</button>
+  </div>
+  <div class="clpbot-row">
+    <input id="clpbot-in" type="text" maxlength="1000" placeholder="Ask anything…" autocomplete="off" aria-label="Your question">
+    <button id="clpbot-send" type="button" aria-label="Send">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+
+  // Services — pick one or more. "Your pick" lists them, totals the starting fees, and carries the
+  // selection into Calendly (a1). The robot hops once per pick.
+  (function(){
+    var menu=document.getElementById('menu'),card=document.getElementById('pick'),
+        list=document.getElementById('pc-list'),total=document.getElementById('pc-total'),
+        short=document.getElementById('pc-short'),go=document.getElementById('pc-go'),
+        art=document.querySelector('.pick-art'),BASE='https://calendly.com/eberteo/new-meeting';
+    var boxes=[].slice.call(menu.querySelectorAll('.mchk'));
+    function money(n){return '$'+n.toLocaleString('en-US');}
+    function update(){
+      var names=[],fee=0;
+      list.textContent='';
+      boxes.forEach(function(c){
+        c.closest('.tile').classList.toggle('on',c.checked);
+        if(!c.checked)return;
+        var f=+c.getAttribute('data-fee'),n=c.getAttribute('data-short');
+        names.push(c.value);fee+=f;
+        var li=document.createElement('li'),name=document.createElement('span'),
+            price=document.createElement('span'),x=document.createElement('button');
+        name.className='pc-n';name.textContent=n;
+        price.className='pc-p';price.textContent=money(f);
+        x.type='button';x.className='pc-x';x.textContent='×';x.setAttribute('aria-label','Remove '+n);
+        x.addEventListener('click',function(){c.checked=false;update();});
+        li.appendChild(name);li.appendChild(price);li.appendChild(x);
+        list.appendChild(li);
+      });
+      card.classList.toggle('ready',names.length>0);
+      total.textContent=money(fee);
+      short.innerHTML=names.length?'<b>'+names.length+' picked</b> · from '+money(fee):'Nothing picked yet';
+      go.href=names.length?BASE+'?a1='+encodeURIComponent(names.join('; ')):BASE;
+    }
+    function cheer(){art.classList.remove('cheer');void art.getBoundingClientRect();art.classList.add('cheer');}
+    menu.addEventListener('change',function(e){update();if(e.target.checked)cheer();});
+    art.addEventListener('animationend',function(e){if(e.animationName==='hop')art.classList.remove('cheer');});
+    window.addEventListener('pageshow',update);
+    update();
+  })();
+
+  // CLP BOT — SailPoint assistant. Worker source: clpbot-sailpoint/ (prompt mirrors services/sailpoint/clp-bot-kb.md).
+  // POST {messages:[{role,content},...]} -> {reply} | {error}
+  (function(){
+    var CLPBOT_URL='https://clp-sailpoint-bot.eberteo.workers.dev',STORE='clpbot-sp';
+    var fab=document.getElementById('clpbot-fab'),panel=document.getElementById('clpbot-panel'),
+        closeBtn=document.getElementById('clpbot-x'),logEl=document.getElementById('clpbot-log'),
+        inEl=document.getElementById('clpbot-in'),sendBtn=document.getElementById('clpbot-send'),
+        chips=document.getElementById('clpbot-chips');
+    var history=[],busy=false;
+    function toggle(open,focus){
+      var show=(open!==undefined)?open:panel.hidden;
+      panel.hidden=!show;
+      fab.hidden=show;
+      fab.setAttribute('aria-expanded',show?'true':'false');
+      try{sessionStorage.setItem(STORE,show?'open':'closed');}catch(e){}
+      if(show&&focus!==false)inEl.focus();
+    }
+    function addMsg(role,text){
+      var d=document.createElement('div');
+      d.className='cb-msg '+role;
+      d.textContent=text;
+      logEl.appendChild(d);
+      logEl.scrollTop=logEl.scrollHeight;
+      return d;
+    }
+    function send(text){
+      text=(text||inEl.value).trim();
+      if(!text||busy)return;
+      inEl.value='';
+      addMsg('user',text);
+      history.push({role:'user',content:text});
+      busy=true;sendBtn.disabled=true;
+      var pending=document.createElement('div');
+      pending.className='cb-msg bot thinking';
+      pending.innerHTML='<i></i><i></i><i></i>';
+      logEl.appendChild(pending);
+      logEl.scrollTop=logEl.scrollHeight;
+      fetch(CLPBOT_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-20)})})
+        .then(function(r){return r.json();})
+        .then(function(data){
+          pending.remove();
+          var reply=data.reply||data.error||'Sorry — something went wrong. Try again, or email eberteogam@gmail.com.';
+          addMsg('bot',reply);
+          if(data.reply)history.push({role:'assistant',content:data.reply});
+        })
+        .catch(function(){
+          pending.remove();
+          addMsg('bot','I could not reach the assistant — please try again in a moment, or email eberteogam@gmail.com.');
+        })
+        .finally(function(){busy=false;sendBtn.disabled=false;inEl.focus();});
+    }
+    fab.addEventListener('click',function(){toggle();});
+    closeBtn.addEventListener('click',function(){toggle(false);});
+    sendBtn.addEventListener('click',function(){send();});
+    inEl.addEventListener('keydown',function(e){if(e.key==='Enter')send();});
+    chips.addEventListener('click',function(e){var b=e.target.closest('button');if(b)send(b.textContent);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden)toggle(false);});
+    try{if(sessionStorage.getItem(STORE)==='closed')toggle(false,false);}catch(e){}
+  })();
+</script>
+
 </body>
 </html>
-
