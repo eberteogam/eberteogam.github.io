@@ -92,7 +92,8 @@
     <h2 id="overview">Overview</h2>
     <p>Stripe Workflows lets you react to payment events with built-in actions. Writeback adds one more: <b>write the result into a system outside Stripe</b>. You pick the trigger, add the Writeback step, map a handful of fields once, and every matching payment updates your form submission, ticket, or endpoint automatically.</p>
     <pre><code>Stripe event  →  Workflow runs  →  Writeback step  →  your record updated
-(payment succeeded)                  (maps fields)      (JotForm / ServiceNow / REST)</code></pre>
+(payment succeeded)                  (maps fields)      (JotForm / ServiceNow / Moveworks / REST)</code></pre>
+    <p>Under the hood, Writeback is a <a href="https://docs.stripe.com/stripe-apps">Stripe App</a> that ships an extension on the <code>extend.workflows.custom_action</code> extension point, so the step appears in the Workflow builder for any account that installs the app. Installing it asks the account administrator to accept the <code>workflow_custom_action_run_write</code> permission, which is what lets the step read values from earlier workflow steps. See Stripe's <a href="https://docs.stripe.com/workflows/custom-actions">custom actions</a> documentation.</p>
 
     <h2 id="requirements">Requirements</h2>
     <ul>
@@ -153,7 +154,7 @@ Content-Type: application/json
   "occurred_at":    "2026-08-26T14:03:11Z",
   "stripe_account": "acct_1xxxxxxxxxxxxx"
 }</code></pre>
-    <p>Respond with any 2xx status to acknowledge. Non-2xx responses are recorded as failures in the run log and retried <span class="tag">preview</span>.</p>
+    <p>Respond <code>200</code> to acknowledge. Stripe treats <code>4xx</code> as a permanent failure and does not retry it, and <code>5xx</code> as a transient failure that is retried automatically. Each run has a <b>20-second</b> timeout, and every request carries an <code>id</code> that stays the same across retries — use it as an idempotency key so a repeated call does not write twice.</p>
 
     <h2 id="troubleshooting">Troubleshooting</h2>
     <ul>
