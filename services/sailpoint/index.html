@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SailPoint Machine Identity &amp; AI Agent Governance — CLP</title>
-<meta name="description" content="Fixed-fee SailPoint engagements: machine identity, AI agent access governance, CMDB ownership and certification from non-discoverable CSDM fields, ServiceNow integration credential reviews, Moveworks conversational processes for IdentityIQ and ISC, IdentityIQ Docker packaging with CI/CD, and IdentityIQ to Identity Security Cloud migration.">
+<meta name="description" content="Fixed-fee SailPoint engagements: Moveworks conversational access requests, CI/CD pipelines for IdentityIQ packages, CMDB as source of truth for ownership, Machine Identity Security, the ServiceNow SailPoint catalog item integration, and IdentityIQ to Identity Security Cloud migration.">
 <link rel="canonical" href="https://eberteogam.github.io/services/sailpoint/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -198,26 +198,19 @@
     .tile.strip .mi{display:none}
   }
 
-  /* process orbit — one loop, four stops */
-  .orbit{position:relative;width:min(520px,100%);aspect-ratio:1;margin:40px auto 30px}
-  .orbit-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-  .orbit-ring .halo{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:2 7}
-  .orbit-ring .track{fill:none;stroke:url(#og);stroke-width:2.5;opacity:.7}
-  .orbit-ring .chev{fill:none;stroke:var(--dim);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-  .orbit-ring .trail{fill:none;stroke:#E17FD2;stroke-width:4;stroke-linecap:round;stroke-dasharray:14 86;stroke-dashoffset:14;filter:drop-shadow(0 0 5px rgba(225,127,210,.8));animation:trail 8s linear infinite}
-  @keyframes trail{from{stroke-dashoffset:14}to{stroke-dashoffset:-86}}
-  @media (prefers-reduced-motion:reduce){.orbit-ring .trail{display:none}}
-  .orbit-title{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:40%;text-align:center;font-size:clamp(22px,3vw,32px);line-height:1.12}
-  .stn{position:absolute;width:0;height:0}
-  .stn.tl{left:27%;top:27%}.stn.tr{left:73%;top:27%}.stn.br{left:73%;top:73%}.stn.bl{left:27%;top:73%}
-  .stn-ico{position:absolute;left:-30px;top:-30px;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(#0B2C5C,#082349) padding-box,var(--grad) border-box;border:1px solid transparent;box-shadow:0 0 0 7px var(--bg);animation:ping 8s ease-out infinite;animation-delay:var(--d)}
-  .stn-ico svg{width:26px;height:26px;stroke:url(#ig);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  @keyframes ping{0%{box-shadow:0 0 0 7px var(--bg),0 0 0 9px rgba(225,127,210,.55),0 0 34px rgba(204,39,176,.6)}22%,100%{box-shadow:0 0 0 7px var(--bg),0 0 0 9px rgba(225,127,210,0),0 0 34px rgba(204,39,176,0)}}
-  .stn-t{position:absolute;left:0;width:150px;margin-left:-75px;text-align:center}
-  .stn.tl .stn-t,.stn.tr .stn-t{bottom:40px}
-  .stn.bl .stn-t,.stn.br .stn-t{top:40px}
-  .stn-t b{display:block;font-family:var(--display);font-weight:800;font-size:17px;line-height:1.2}
-  @media(max-width:520px){.orbit{margin:52px auto 44px}.stn-ico{left:-23px;top:-23px;width:46px;height:46px;box-shadow:0 0 0 5px var(--bg)}.stn-ico svg{width:20px;height:20px}.stn-t{width:120px;margin-left:-60px}.stn.tl .stn-t,.stn.tr .stn-t{bottom:30px}.stn.bl .stn-t,.stn.br .stn-t{top:30px}.stn-t b{font-size:14.5px}.orbit-title{width:44%}}
+  /* how it runs — four pictures */
+  .steps{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px;margin-top:36px}
+  .step{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 16px 18px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);animation:rowin .5s ease both;animation-delay:calc(var(--i) * .1s);transition:transform .2s,background .2s,box-shadow .2s,border-color .2s}
+  .step:hover{transform:translateY(-3px);border-color:var(--line2);background:rgba(255,255,255,.055);box-shadow:0 18px 40px rgba(0,0,0,.34)}
+  .step::after{content:"";position:absolute;right:-19px;top:44%;width:12px;height:12px;border:solid var(--blue2);border-width:2px 2px 0 0;transform:rotate(45deg);opacity:.65}
+  .step:last-child::after{display:none}
+  .step-art{position:relative;display:block;width:100%;max-width:210px;aspect-ratio:64 / 78;margin-bottom:12px;isolation:isolate}
+  .step-art::before{content:"";position:absolute;inset:6% 2% 10%;z-index:-1;border-radius:24px;background:linear-gradient(90deg,#0071CE,#CC27B0);opacity:.16;-webkit-mask-image:radial-gradient(closest-side,#000 25%,transparent);mask-image:radial-gradient(closest-side,#000 25%,transparent)}
+  .step-art img{display:block;width:100%;height:100%;object-fit:contain;animation:float 5s ease-in-out infinite;animation-delay:calc(var(--i) * .5s)}
+  @keyframes float{50%{transform:translateY(-7px)}}
+  .step h3{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.01em}
+  @media(max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.step::after{display:none}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr;gap:14px}.step{flex-direction:row;align-items:center;gap:16px;text-align:left;padding:14px 18px}.step-art{width:86px;flex:0 0 86px;margin-bottom:0}.step h3{font-size:16.5px}}
 
   /* proof */
   .proof{margin-top:28px}
@@ -347,7 +340,7 @@
         </div>
       </div>
 
-      <div class="map" role="img" aria-label="Diagram: SailPoint IdentityIQ and Identity Security Cloud at the center. Moveworks connects through conversational processes, a Docker package through CI/CD, the CMDB through its ownership fields, machines and AI agents through ownership, and ServiceNow integrations through a credential review.">
+      <div class="map" role="img" aria-label="Diagram: SailPoint IdentityIQ and Identity Security Cloud at the center. Moveworks connects through conversational processes, a Docker package through CI/CD, the CMDB through its ownership fields, machines and AI agents through ownership, and ServiceNow integrations through catalog item flows.">
         <div class="map-grid" aria-hidden="true">
           <div class="hub">
             <svg class="hub-logo" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 151 31" role="img" aria-label="SailPoint"> <path fill="#fff" d="M42.354 15.421c-1.65-.468-2.5-1.278-2.5-2.406 0-1.391 1.27-2.375 3.014-2.375 1.803 0 2.945.96 3.012 2.506h4.4c-.072-3.898-3.013-6.515-7.36-6.515-4.346 0-7.5 2.734-7.5 6.505 0 2.99 1.895 5.086 5.627 6.25l2.698.752c1.997.573 2.825 1.356 2.777 2.67-.03 1.515-1.352 2.506-3.4 2.506-2.223 0-3.334-1.323-3.456-2.679h-4.448c.08 3.898 3.306 6.577 7.907 6.577 3.721 0 7.779-2.001 7.843-6.376.091-3.184-1.92-5.401-5.99-6.574l-2.624-.84ZM59.66 13.748a7.676 7.676 0 0 0-5.301 2.325 7.71 7.71 0 0 0 0 10.746 7.677 7.677 0 0 0 5.3 2.326c1.234 0 3.385-.599 4.257-1.935l.278-.423v2.057h4.15V14.068h-4.137v2.001l-.277-.393c-1.314-1.873-3.974-1.928-4.27-1.928Zm.444 11.435c-1.887 0-3.92-1.428-3.92-3.73 0-2.301 2.03-3.73 3.92-3.73 1.889 0 3.79 1.309 3.79 3.73 0 2.422-1.956 3.73-3.79 3.73ZM74.974 14.07h-4.149v14.788h4.149V14.07ZM81.653 6.92h-4.168v21.933h4.168V6.92ZM93.007 6.898h-8.969v21.954h4.448v-7.684h4.531c5.28 0 7.165-3.835 7.165-7.125-.01-4.931-3.608-7.145-7.175-7.145Zm-.228 10.435h-4.303V10.76h4.448c1.945 0 2.825 1.918 2.825 3.28 0 1.626-1.11 3.293-2.955 3.293h-.015ZM107.548 13.748c-4.432 0-7.65 3.223-7.65 7.668s3.202 7.7 7.65 7.7 7.667-3.238 7.667-7.698c0-4.46-3.219-7.67-7.667-7.67Zm0 11.275a3.584 3.584 0 0 1-3.324-2.195 3.593 3.593 0 0 1 .749-3.918 3.585 3.585 0 0 1 3.899-.807 3.594 3.594 0 0 1 2.237 3.3 3.468 3.468 0 0 1-.907 2.497 3.474 3.474 0 0 1-2.404 1.123h-.25ZM120.952 14.07h-4.151v14.788h4.151V14.07ZM127.853 16.186l-.277.53v-2.648h-4.19V28.85h4.167v-7.83c0-2.105 1.017-3.218 2.92-3.218 1.715 0 2.759 1.208 2.759 3.146v7.895h4.18v-8.86c.019-4.023-1.884-6.25-5.34-6.25a4.845 4.845 0 0 0-4.22 2.447l.001.006ZM72.898 11.968a2.585 2.585 0 0 0 2.396-1.597 2.6 2.6 0 0 0-.554-2.83 2.588 2.588 0 0 0-4.425 1.826v.01a2.593 2.593 0 0 0 2.588 2.592h-.005ZM118.871 11.968a2.591 2.591 0 0 0 2.547-3.096 2.595 2.595 0 0 0-2.03-2.044 2.586 2.586 0 0 0-2.661 1.098 2.595 2.595 0 0 0-.44 1.441v.01c-.002.34.064.676.194.99a2.596 2.596 0 0 0 2.39 1.6ZM148.235 14.06h-2.904V8.292h-4.168v5.766h-2.778v3.52h2.778v11.273h4.168V17.58h2.904v-3.52ZM20.636 17.661 17.683 0 0 22.09h21.376l-.74-4.429ZM20.608 10.895 22.48 22.09h8.762L19.037 1.494l1.571 9.4ZM2.063 23.182l20.714 7.28-1.218-7.28H2.063ZM23.831 30.156l7.042-6.974h-8.209l1.167 6.974ZM149.338 26.024c.241.14.439.344.572.59.141.258.213.548.209.842.004.293-.068.582-.209.84a1.533 1.533 0 0 1-.572.585 1.608 1.608 0 0 1-.829.213 1.632 1.632 0 0 1-.833-.213 1.523 1.523 0 0 1-.576-.586 1.683 1.683 0 0 1-.208-.839 1.701 1.701 0 0 1 .208-.843c.134-.246.333-.45.576-.59.254-.144.542-.217.833-.212.291-.005.577.068.829.213Zm.123 2.415a1.512 1.512 0 0 0 0-1.965 1.382 1.382 0 0 0-1.912 0 1.511 1.511 0 0 0 0 1.965 1.38 1.38 0 0 0 1.912 0Zm-.355-1a.547.547 0 0 1-.319.176l.49.704-.416.008-.454-.696h-.188v.696h-.351v-1.765h.759a.618.618 0 0 1 .429.143.508.508 0 0 1 .16.39.513.513 0 0 1-.11.339v.004Zm-.883-.103h.384a.295.295 0 0 0 .188-.057.208.208 0 0 0 .074-.172.2.2 0 0 0-.074-.168.312.312 0 0 0-.188-.053h-.384v.45Z"/> </svg>
@@ -364,7 +357,7 @@
           <div class="node" style="--i:3"><span class="ni"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></span>Machines · AI&nbsp;agents</div>
           <div class="link" style="--i:3"><em>ownership</em><i class="ah"></i><i class="ah r"></i><b></b></div>
           <div class="node" style="--i:4"><span class="ni"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>ServiceNow integrations</div>
-          <div class="link" style="--i:4"><em>credential review</em><i class="ah"></i><i class="ah r"></i><b></b></div>
+          <div class="link" style="--i:4"><em>catalog items</em><i class="ah"></i><i class="ah r"></i><b></b></div>
         </div>
       </div>
     </div>
@@ -375,15 +368,15 @@
     <div class="wrap">
       <h2>Sound familiar?</h2>
       <div class="sits">
-        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">We don't know how many machine accounts we have.</p><span class="sit-a">Machine identity <b>from $12,000</b></span></div>
-        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">AI agents have access we can't see.</p><span class="sit-a">Credential review <b>from $5,000</b></span></div>
-        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">We need to move off IdentityIQ.</p><span class="sit-a">ISC migration <b>from $16,000</b></span></div>
-        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Employees want to request access in chat.</p><span class="sit-a">Moveworks processes <b>from $5,000</b></span></div>
-        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Integrations log in with shared accounts.</p><span class="sit-a">Credential review <b>from $5,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">We don't know how many machine accounts we have.</p><span class="sit-a">Machine Identity <b>from $12,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">AI agents have access we can't see.</p><span class="sit-a">Machine Identity <b>from $12,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">We need to move off IdentityIQ.</p><span class="sit-a">IIQ to ISC <b>from $16,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Employees want to request access in chat.</p><span class="sit-a">Moveworks requests <b>from $5,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Every access request becomes a manual ticket.</p><span class="sit-a">ServiceNow catalog <b>from $5,000</b></span></div>
         <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Our CMDB and identity data don't match.</p><span class="sit-a">CMDB ownership <b>from $15,000</b></span></div>
         <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Audit wants proof of who can access what.</p><span class="sit-a">CMDB ownership <b>from $15,000</b></span></div>
         <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Our access model needs a second opinion.</p><span class="sit-a">Advisory <b>$2,000 / 10 h</b></span></div>
-        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Every IdentityIQ environment is built by hand.</p><span class="sit-a">Docker package + CI/CD <b>from $8,000</b></span></div>
+        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Every IdentityIQ environment is built by hand.</p><span class="sit-a">CI/CD for IIQ <b>from $8,000</b></span></div>
       </div>
     </div>
   </section>
@@ -454,39 +447,39 @@
       <div class="menu" id="menu">
         <div class="tiles">
           <label class="tile">
-            <input class="mchk" type="checkbox" value="Integration credential exposure review" data-fee="5000" data-short="Credential review">
-            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><span class="mname">Integration credential exposure review</span></span>
-            <span class="mdesc">Finds the shared logins inside your integrations, such as ServiceNow to SailPoint, including the ones AI agents act through, and what they can reach.</span>
+            <input class="mchk" type="checkbox" value="Moveworks conversational access requests" data-fee="5000" data-short="Moveworks requests">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.4 8.4 0 0 1-3.6-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 3 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 9 8.4z"/></svg></span><span class="mname">Moveworks conversational access requests</span></span>
+            <span class="mdesc">Moveworks for conversational access requests for SailPoint, tracked in ServiceNow.</span>
             <span class="t-foot"><span class="mprice"><small>from</small>$5,000</span><span class="t-add" aria-hidden="true"></span></span>
           </label>
           <label class="tile">
-            <input class="mchk" type="checkbox" value="Machine identity" data-fee="12000" data-short="Machine identity">
-            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></span><span class="mname">Machine identity</span></span>
-            <span class="mdesc">Every bot, script, and service account found, classified, and given an owner, plus a fix plan your team can apply.</span>
-            <span class="t-foot"><span class="mprice"><small>from</small>$12,000</span><span class="t-add" aria-hidden="true"></span></span>
-          </label>
-          <label class="tile">
-            <input class="mchk" type="checkbox" value="Moveworks conversational processes for IIQ / ISC" data-fee="5000" data-short="Moveworks processes">
-            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.4 8.4 0 0 1-3.6-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 3 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 9 8.4z"/></svg></span><span class="mname">Moveworks conversational processes</span></span>
-            <span class="mdesc">Employees request access, check status, and approve in Moveworks chat, while IdentityIQ or ISC stays the system of record.</span>
-            <span class="t-foot"><span class="mprice"><small>from</small>$5,000</span><span class="t-add" aria-hidden="true"></span></span>
-          </label>
-          <label class="tile">
-            <input class="mchk" type="checkbox" value="IdentityIQ Docker package and CI/CD" data-fee="8000" data-short="Docker + CI/CD">
-            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span><span class="mname">IdentityIQ Docker package and CI/CD</span></span>
-            <span class="mdesc">IdentityIQ in containers with a pipeline that builds every environment the same way, from dev to production.</span>
+            <input class="mchk" type="checkbox" value="CI/CD pipelines for IdentityIQ packages" data-fee="8000" data-short="CI/CD for IIQ">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span><span class="mname">CI/CD pipelines for IIQ packages</span></span>
+            <span class="mdesc">CI/CD pipelines for IIQ packages, including automated version control. Most teams still handle this manually.</span>
             <span class="t-foot"><span class="mprice"><small>from</small>$8,000</span><span class="t-add" aria-hidden="true"></span></span>
           </label>
           <label class="tile">
-            <input class="mchk" type="checkbox" value="CMDB ownership and certification" data-fee="15000" data-short="CMDB ownership">
-            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><span class="mname">CMDB ownership and certification</span></span>
-            <span class="mdesc">Owners from the non-discoverable CSDM fields (owned by, managed by, support group) on every machine account, then the first certification campaign.</span>
+            <input class="mchk" type="checkbox" value="CMDB as the source of truth for ownership" data-fee="15000" data-short="CMDB ownership">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><span class="mname">CMDB as source of truth</span></span>
+            <span class="mdesc">CMDB as source of truth for application, machine, and identity ownership. Certification campaigns in SailPoint feed those updates back.</span>
             <span class="t-foot"><span class="mprice"><small>from</small>$15,000</span><span class="t-add" aria-hidden="true"></span></span>
           </label>
           <label class="tile">
-            <input class="mchk" type="checkbox" value="IdentityIQ to ISC migration" data-fee="16000" data-short="IIQ to ISC migration">
-            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.5 9.5 4 4 0 0 0 7 19"/><path d="M12 12v8M9 15l3-3 3 3"/></svg></span><span class="mname">IdentityIQ to ISC migration</span></span>
-            <span class="mdesc">A plan to move from IdentityIQ to Identity Security Cloud before anything moves.</span>
+            <input class="mchk" type="checkbox" value="Machine Identity Security in SailPoint" data-fee="12000" data-short="Machine Identity">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg></span><span class="mname">Machine Identity Security</span></span>
+            <span class="mdesc">Machine Identity Security in SailPoint: every service account, bot, and AI agent found, classified, and given an owner.</span>
+            <span class="t-foot"><span class="mprice"><small>from</small>$12,000</span><span class="t-add" aria-hidden="true"></span></span>
+          </label>
+          <label class="tile">
+            <input class="mchk" type="checkbox" value="ServiceNow SailPoint integration — catalog item flows" data-fee="5000" data-short="ServiceNow catalog">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span class="mname">ServiceNow SailPoint integration</span></span>
+            <span class="mdesc">The classic ServiceNow SailPoint integration: catalog item flows that request access, run in SailPoint, and report status back.</span>
+            <span class="t-foot"><span class="mprice"><small>from</small>$5,000</span><span class="t-add" aria-hidden="true"></span></span>
+          </label>
+          <label class="tile">
+            <input class="mchk" type="checkbox" value="IdentityIQ to ISC migration" data-fee="16000" data-short="IIQ to ISC">
+            <span class="t-head"><span class="mi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.5 9.5 4 4 0 0 0 7 19"/><path d="M12 12v8M9 15l3-3 3 3"/></svg></span><span class="mname">IIQ to ISC migration</span></span>
+            <span class="mdesc">IIQ to ISC migration if you're ready for cloud: sources, connectors, correlation, transforms, and a cutover plan.</span>
             <span class="t-foot"><span class="mprice"><small>from</small>$16,000</span><span class="t-add" aria-hidden="true"></span></span>
           </label>
         </div>
@@ -504,32 +497,25 @@
   <!-- HOW IT RUNS -->
   <section class="doc" id="process">
     <div class="wrap">
-      <div class="orbit">
-        <svg class="orbit-ring" viewBox="0 0 400 400" aria-hidden="true">
-          <defs><linearGradient id="og" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3D9BFF"/><stop offset="1" stop-color="#E17FD2"/></linearGradient></defs>
-          <circle class="halo" cx="200" cy="200" r="165"/>
-          <circle class="track" cx="200" cy="200" r="130"/>
-          <circle class="trail" cx="200" cy="200" r="130" pathLength="100" transform="rotate(225 200 200)"/>
-          <path class="chev" d="M195 64l7 6-7 6M324 195l6 7 6-7M205 324l-7 6 7 6M64 205l6-7 6 7"/>
-        </svg>
-        <h2 class="orbit-title">From call to <span class="grad-text">findings</span></h2>
-        <div class="stn tl">
-          <span class="stn-ico" style="--d:0s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
-          <span class="stn-t"><b>Free call</b></span>
-        </div>
-        <div class="stn tr">
-          <span class="stn-ico" style="--d:2s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 15.5l2 2 4-5"/></svg></span>
-          <span class="stn-t"><b>Fixed quote</b></span>
-        </div>
-        <div class="stn br">
-          <span class="stn-ico" style="--d:4s"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L21 2M17 6l3 3M14 9l2 2"/></svg></span>
-          <span class="stn-t"><b>Fieldwork</b></span>
-        </div>
-        <div class="stn bl">
-          <span class="stn-ico" style="--d:6s"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></span>
-          <span class="stn-t"><b>Findings</b></span>
-        </div>
-      </div>
+      <h2>From call to <span class="grad-text">assessment</span></h2>
+      <ol class="steps">
+        <li class="step" style="--i:0">
+          <span class="step-art"><img src="step-1-call.png" width="640" height="780" alt="A robot wearing a headset, taking a call" loading="lazy" decoding="async"></span>
+          <h3>Free call</h3>
+        </li>
+        <li class="step" style="--i:1">
+          <span class="step-art"><img src="step-2-quote.png" width="640" height="780" alt="An agreement stamped QUOTED, signed" loading="lazy" decoding="async"></span>
+          <h3>Statement of Work</h3>
+        </li>
+        <li class="step" style="--i:2">
+          <span class="step-art"><img src="step-3-fieldwork.png" width="640" height="780" alt="A terminal searching for service accounts with no owner, 37 found" loading="lazy" decoding="async"></span>
+          <h3>Fieldwork</h3>
+        </li>
+        <li class="step" style="--i:3">
+          <span class="step-art"><img src="step-4-findings.png" width="640" height="780" alt="An assessment report with a chart and a checked list" loading="lazy" decoding="async"></span>
+          <h3>Assessment</h3>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -547,6 +533,7 @@
   </section>
 
 </main>
+
 
 <footer class="site">
   <div class="wrap foot-inner">
