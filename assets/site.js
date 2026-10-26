@@ -1,4 +1,4 @@
-// Shared behavior: light/dark toggle + active-section nav highlighting + analytics.
+// Shared behavior: active-section nav highlighting + analytics.
 (function () {
   var root = document.documentElement;
 
@@ -13,15 +13,6 @@
     gc.setAttribute("data-goatcounter", "https://" + GOATCOUNTER_CODE + ".goatcounter.com/count");
     document.head.appendChild(gc);
   }
-
-  function currentTheme() {
-    if (root.dataset.theme) return root.dataset.theme;
-    return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-  }
-
-  var stored = null;
-  try { stored = localStorage.getItem("theme"); } catch (e) {}
-  if (stored === "light" || stored === "dark") root.dataset.theme = stored;
 
   function ready(fn) {
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
@@ -133,20 +124,6 @@
           if (grid) grid.style.display = any ? "" : "none";
         });
       });
-    }
-
-    if (nav) {
-      var btn = document.createElement("button");
-      btn.className = "theme-toggle";
-      btn.setAttribute("aria-label", "Toggle light/dark theme");
-      btn.textContent = currentTheme() === "light" ? "🌙" : "☀️";
-      btn.addEventListener("click", function () {
-        var next = currentTheme() === "light" ? "dark" : "light";
-        root.dataset.theme = next;
-        btn.textContent = next === "light" ? "🌙" : "☀️";
-        try { localStorage.setItem("theme", next); } catch (e) {}
-      });
-      nav.appendChild(btn);
     }
 
     // Highlight the nav link of the section currently in view (homepage only).
