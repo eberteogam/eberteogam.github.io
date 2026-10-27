@@ -67,7 +67,7 @@
       <a href="docs.html" aria-current="page">Docs</a>
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
-      <a href="index.html#access">Get early access</a>
+      <a href="https://calendly.com/eberteo/new-meeting">Book a call</a>
     </nav>
   </div>
 </header>
@@ -92,7 +92,7 @@
     <h2 id="overview">Overview</h2>
     <p>Stripe Workflows lets you react to payment events with built-in actions. Writeback adds one more: <b>write the result into a system outside Stripe</b>. You pick the trigger, add the Writeback step, map a handful of fields once, and every matching payment updates your form submission, ticket, or endpoint automatically.</p>
     <pre><code>Stripe event  →  Workflow runs  →  Writeback step  →  your record updated
-(payment succeeded)                  (maps fields)      (JotForm / ServiceNow / Moveworks / REST)</code></pre>
+(payment succeeded)                  (maps fields)      (JotForm / Airtable / Notion / monday.com / REST)</code></pre>
     <p>Under the hood, Writeback is a <a href="https://docs.stripe.com/stripe-apps">Stripe App</a> that ships an extension on the <code>extend.workflows.custom_action</code> extension point, so the step appears in the Workflow builder for any account that installs the app. Installing it asks the account administrator to accept the <code>workflow_custom_action_run_write</code> permission, which is what lets the step read values from earlier workflow steps. See Stripe's <a href="https://docs.stripe.com/workflows/custom-actions">custom actions</a> documentation.</p>
 
     <h2 id="requirements">Requirements</h2>
@@ -105,7 +105,7 @@
     <h2 id="install">Install</h2>
     <h3>Private install <span class="tag now">available now</span></h3>
     <ol>
-      <li><a href="index.html#access">Request early access</a> with a one-line description of what should update when a payment lands.</li>
+      <li><a href="https://calendly.com/eberteo/new-meeting">Book the setup call</a> with a one-line description of what should update when a payment lands.</li>
       <li>We schedule one short call to confirm the trigger, the destination, and the field mapping.</li>
       <li>The app is uploaded to <b>your</b> Stripe account with <code>stripe apps upload</code> — either by us as a developer on your account, or by you from the bundle we send. Nothing is shared with other accounts.</li>
       <li>Writeback appears as an action in your Workflow builder the same day.</li>
@@ -135,10 +135,12 @@
     </table></div>
 
     <h2 id="connectors">Connectors</h2>
-    <h3>JotForm <span class="tag now">available first</span></h3>
+    <h3>JotForm <span class="tag now">early access</span></h3>
     <p>Updates an existing submission. Writeback locates it by the reference you mapped (typically a submission ID carried in Stripe metadata, or an order number field) and writes the mapped values into the fields you choose. Requires a JotForm API key with write access to the form.</p>
-    <h3>ServiceNow <span class="tag">next</span></h3>
-    <p>Updates a record in a table you specify (for example a request, case, or custom billing table) via the Table API. Matched by record number or a correlation-ID field. Requires an integration user with write access to that table.</p>
+    <h3>Airtable, Notion, monday.com <span class="tag">coming</span></h3>
+    <p>Each writes the mapped values into the record or row that matches your reference, the same way as JotForm. Until they ship, webhook mode reaches any of them through their own APIs.</p>
+    <h3>ServiceNow and Moveworks <span class="tag">built by CLP</span></h3>
+    <p>Not part of the self-serve app. We build these per client: the payment status written onto the ServiceNow ticket (through the Table API, matched by ticket number or a correlation ID), and Moveworks plugins so an employee can ask "did they pay?" in chat, get failed-payment alerts, and request refunds that go through an approval step. Quoted on the call.</p>
     <h3>Any REST endpoint — webhook mode <span class="tag now">available</span></h3>
     <p>Writeback sends an HTTPS <code>POST</code> with a JSON body to the URL you provide. Your endpoint decides what to do with it. Illustrative payload — the final schema is published at Marketplace launch:</p>
     <pre><code>POST https://your-endpoint.example.com/writeback

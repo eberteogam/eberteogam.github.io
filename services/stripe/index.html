@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Writeback — Custom actions for Stripe Workflows</title>
-<meta name="description" content="Writeback adds custom actions to Stripe Workflows: when a payment succeeds, fails, or refunds, your forms and ticketing systems update automatically.">
+<title>Writeback for Stripe</title>
+<meta name="description" content="Writeback adds custom actions to Stripe Workflows: when a payment succeeds, fails, or refunds, your forms and ticketing systems update automatically. Stripe payments into ServiceNow and Moveworks.">
 <link rel="canonical" href="https://eberteogam.github.io/services/stripe/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
-  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit}
   a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--blurple);outline-offset:3px}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
@@ -43,13 +43,11 @@
   .btn.ghost:hover{border-color:var(--blurple);background:#fff}
   nav.top .btn{padding:9px 16px;font-size:14px}
   @media(max-width:700px){nav.top a.navlink{display:none}}
+  @media(max-width:460px){.wordmark span{display:none}nav.top .btn{white-space:nowrap}}
 
   .hero{padding:80px 0 56px;text-align:center;background:
     radial-gradient(560px 280px at 50% -8%, rgba(99,91,255,.14), transparent 70%)}
-  .chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--blurple);background:var(--blurple-soft);border-radius:999px;padding:7px 14px;margin-bottom:22px}
   h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,56px);line-height:1.06;letter-spacing:-.02em;max-width:22ch;margin:0 auto}
-  .hero-sub{margin:20px auto 30px;font-size:18px;color:var(--muted);max-width:52ch}
-  .hero-sub b{color:var(--ink)}
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:44px}
 
 
@@ -58,12 +56,12 @@
   h2{font-family:var(--display);font-weight:700;font-size:clamp(25px,3.2vw,34px);letter-spacing:-.015em}
   .sec-intro{color:var(--muted);font-size:15.5px;margin:10px 0 34px;max-width:60ch}
 
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 22px;box-shadow:0 6px 22px rgba(26,31,54,.05);transition:transform .16s,box-shadow .16s}
+  .grid3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) minmax(0,1fr);gap:18px}
+  .tile{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 22px;box-shadow:0 6px 22px rgba(26,31,54,.05);transition:transform .16s,box-shadow .16s}
   .tile:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(26,31,54,.10)}
   .tile h3{font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:8px}
-  .tile p{font-size:14.5px;color:var(--muted)}
-  @media(max-width:840px){.grid3{grid-template-columns:1fr}}
+  @media(max-width:840px){.grid3{grid-template-columns:minmax(0,1fr)}}
+  @media(max-width:430px){.logo{padding:10px 12px}.logo.hook{flex-direction:column;gap:2px;height:auto;min-height:62px}.logo.hook b,.logo.hook small{white-space:normal;text-align:center}}
 
   /* install paths */
   .paths{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -82,38 +80,209 @@
   @media(max-width:800px){.paths{grid-template-columns:1fr}}
 
   /* step details */
-  .evs{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
-  .ev{font-family:var(--mono);font-size:12px;border-radius:999px;padding:5px 11px;border:1px solid}
+  .evs{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .ev{font-family:var(--mono);font-size:13px;border-radius:999px;padding:8px 15px;border:1px solid}
   .ev.ok{color:#0A8A5F;background:#E6FBF2;border-color:#BCEBD7}
   .ev.bad{color:#C43A2B;background:#FDECEA;border-color:#F6C9C3}
   .ev.warn{color:#8A5A0A;background:#FFF5E2;border-color:#F2DCB2}
-  .logos{display:flex;flex-direction:column;align-items:flex-start;gap:20px;margin-top:20px}
-  .logos img{display:block;height:34px;width:auto;max-width:100%;object-fit:contain}
-  .logos img[alt="ServiceNow"]{height:23px}
-  .logos img[alt="Moveworks"]{height:29px}
-  .conn{font-family:var(--display);font-weight:700;font-size:14px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;box-shadow:0 3px 10px rgba(26,31,54,.05)}
-  .conn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted);letter-spacing:.05em}
-  .maps{display:flex;flex-direction:column;gap:8px;margin-top:16px}
-  .map{display:flex;align-items:center;gap:8px;font-size:13px}
-  .map code{font-family:var(--mono);font-size:12px;background:#F1F2F8;border:1px solid var(--line);border-radius:7px;padding:3px 8px;white-space:nowrap}
+  .logos{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .logo{display:flex;align-items:center;justify-content:space-between;gap:12px;height:58px;padding:10px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 3px 12px rgba(26,31,54,.05);transition:border-color .16s,box-shadow .16s,transform .16s}
+  .lmark{flex:1;min-width:0;display:flex;align-items:center}
+  .lst{flex:0 0 auto;font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 9px;background:#fff}
+  .lst.on{color:#0A8A5F;border-color:#BCEBD7;background:#E6FBF2}
+  .notion-mark{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-weight:700;font-size:16px;color:#111;line-height:1}
+  .notion-mark img{height:22px!important;width:22px!important}
+  .logo:hover{border-color:rgba(99,91,255,.45);box-shadow:0 8px 22px rgba(99,91,255,.14);transform:translateY(-2px)}
+  .logo img{display:block;width:auto;max-width:100%;height:24px;object-fit:contain;object-position:left center}
+  .logo img[alt="Airtable"]{height:24px}
+  .logo img[alt="monday.com"]{height:20px}
+  .logo.hook{justify-content:center;gap:9px;background:var(--blurple-soft);border-color:rgba(99,91,255,.28)}
+  .logo.hook b{font-family:var(--display);font-weight:700;font-size:14px;color:var(--blurple);white-space:nowrap}
+  .logo.hook small{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.04em;white-space:nowrap}
+  .maps{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .map{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;font-size:13px;min-width:0}
+  .map code{font-family:var(--mono);font-size:12.5px;background:#F1F2F8;border:1px solid var(--line);border-radius:8px;padding:5px 10px;white-space:nowrap}
   .map i{font-style:normal;color:var(--blurple);font-weight:700}
   .map code:last-child{background:var(--blurple-soft);border-color:rgba(99,91,255,.25);color:var(--blurple)}
+
+  /* ---- PAYMENTS ---- */
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:#fff;margin-bottom:16px}
+  .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .dot.st{background:var(--blurple);box-shadow:0 0 10px rgba(99,91,255,.7)}
+  .dot.sn{background:#3FBF4E;box-shadow:0 0 10px rgba(63,191,78,.7)}
+  .dot.mw{background:#3D5AFE;box-shadow:0 0 10px rgba(61,90,254,.7)}
+  #payments h2 .thin{display:block;font-family:var(--body);font-weight:500;font-size:.52em;color:var(--muted);letter-spacing:0;margin-top:8px}
+  .paytop{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;margin-top:30px}
+  .flowcard{display:flex;align-items:center;padding:40px 28px 34px;border-radius:18px;border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box,var(--grad) border-box;box-shadow:0 12px 34px rgba(99,91,255,.12)}
+  .fan{display:grid;grid-template-columns:auto minmax(60px,1fr) auto;align-items:center;width:100%}
+  .node{font-family:var(--display);font-weight:700;font-size:15px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:#fff;white-space:nowrap}
+  .node.st{color:var(--blurple);border-color:rgba(99,91,255,.45);background:var(--blurple-soft);box-shadow:0 0 0 4px rgba(99,91,255,.06)}
+  .node.sn{color:#1F7A2E;border-color:rgba(63,191,78,.5);background:#EEFAF0}
+  .node.mw{color:#2A3FC9;border-color:rgba(61,90,254,.4);background:#EEF1FF}
+  .node.nt{color:var(--ink);background:#F7F8FC}
+  .pipewrap{position:relative;display:flex;align-items:center;margin:0 0 0 8px}
+  .plabel{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-style:normal;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--blurple);white-space:nowrap}
+  .pipe{flex:1;height:2px;position:relative;background:repeating-linear-gradient(90deg,#A79FFF 0 8px,transparent 8px 16px);background-size:32px 2px;animation:dashflow 1.2s linear infinite}
+  .pipe::after{content:"";position:absolute;right:-1px;top:50%;transform:translateY(-50%);border-left:9px solid var(--blurple);border-top:5px solid transparent;border-bottom:5px solid transparent}
+  .trunk .pipe::after{display:none}
+  @keyframes dashflow{to{background-position:32px 0}}
+  @keyframes dashflowv{to{background-position:0 32px}}
+  .branches{display:grid;gap:14px}
+  .branch{position:relative;display:flex;align-items:center}
+  .branch::before{content:"";position:absolute;left:0;top:-7px;bottom:-7px;width:2px;background:var(--blurple);opacity:.55}
+  .branch:first-child::before{top:50%}
+  .branch:last-child::before{bottom:50%}
+  .branch .pipe{flex:0 0 44px;margin-right:10px}
+  .branch.b-sn .pipe::after{border-left-color:#3FBF4E}
+  .branch.b-mw .pipe::after{border-left-color:#3D5AFE}
+  .branch.b-nt .pipe::after{border-left-color:#9AA3B5}
+  .paychat{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 18px;box-shadow:0 6px 22px rgba(26,31,54,.05)}
+  .paychat .cap{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .paylog{display:flex;flex-direction:column;gap:9px}
+  .paylog .cb-msg{animation:none;opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
+  .paychat.in .paylog .cb-msg{opacity:1;transform:none}
+  .paychat.in .paylog .cb-msg:nth-child(2){transition-delay:.8s}
+  .paychat.in .paylog .cb-msg:nth-child(3){transition-delay:1.6s}
+  .paychat.in .paylog .cb-msg:nth-child(4){transition-delay:2.4s}
+  @media (prefers-reduced-motion:reduce){.paylog .cb-msg{opacity:1;transform:none;transition:none}}
+  .rchip{display:inline-block;margin-left:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;padding:2px 9px;border-radius:999px;border:1px solid rgba(99,91,255,.35);background:#fff;color:var(--blurple);vertical-align:1px;white-space:nowrap}
+  .paycards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}
+  .paycard{display:flex;flex-direction:column;gap:16px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 22px;box-shadow:0 6px 22px rgba(26,31,54,.05)}
+  .paycard.built{border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box,var(--grad) border-box}
+  .pk2{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.01em}
+  .pk2 small{display:block;font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--blurple);margin-bottom:4px}
+  .lchips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .lchip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;height:72px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:#fff;min-width:0}
+  .lchip img{display:block;height:20px;width:auto;max-width:100%;object-fit:contain}
+  .lchip img[alt="monday.com"]{height:16px}
+  .lchip em{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .lchip.on{border-color:#BCEBD7;background:#F3FBF7}
+  .lchip.on em{color:#0A8A5F}
+  .lchip .notion-mark{font-size:15px}
+  .lchip .notion-mark img{height:20px!important;width:20px!important}
+  .blogos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .blogo{display:flex;align-items:center;justify-content:center;height:56px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:#fff}
+  .blogo img{display:block;height:20px;width:auto;max-width:100%;object-fit:contain}
+  .kw{list-style:none;display:grid;gap:9px}
+  .kw li{position:relative;padding-left:24px;font-family:var(--display);font-weight:700;font-size:16px;line-height:1.3}
+  .kw li::before{content:"";position:absolute;left:0;top:.38em;width:11px;height:11px;border-radius:4px;background:var(--grad)}
+  .payprice{margin-top:auto;font-family:var(--display);font-weight:800;font-size:24px;letter-spacing:-.01em}
+  .payprice small{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+  .paycard .btn{text-align:center}
+  @media(max-width:900px){.paytop{grid-template-columns:minmax(0,1fr)}}
+  .flowcard,.paychat,.paycard{min-width:0}
+  @media(max-width:360px){.node{white-space:normal}.flowcard{padding:24px 14px 20px}}
+  @media(max-width:760px){
+    .paycards{grid-template-columns:1fr}
+    .flowcard{padding:28px 20px 24px}
+    .fan{grid-template-columns:1fr;justify-items:start}
+    .fan .trunk{width:2px;height:58px;margin:6px 0 0 22px;display:block}
+    .fan .trunk .pipe{position:absolute;inset:0;height:auto;width:2px;background:repeating-linear-gradient(180deg,#A79FFF 0 8px,transparent 8px 16px);background-size:2px 32px;animation:dashflowv 1.2s linear infinite}
+    .fan .trunk .plabel{top:50%;left:14px;transform:translateY(-50%)}
+    .branches{margin-left:22px;width:calc(100% - 22px)}
+    .branch:first-child::before{top:-7px}
+    .branch .pipe{flex-basis:28px}
+  }
+  /* combined flow: Your form -> Stripe Payment Link (Writeback) -> destinations */
+  .fan.fan5{grid-template-columns:auto minmax(36px,1fr) auto minmax(56px,1fr) auto;max-width:none}
+  .pipewrap.lead{margin:0 8px}
+  .node.stbox{display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 18px;color:var(--ink)}
+  .wbchip{padding:9px 16px;border-radius:10px;font-size:14px;color:#fff;background:#5148E8;box-shadow:0 6px 18px rgba(99,91,255,.3)}
+  @media(max-width:760px){
+    .fan.fan5{grid-template-columns:1fr}
+    .fan .lead{position:relative;width:2px;height:44px;margin:6px 0 6px 22px;display:block}
+    .fan .lead .pipe{position:absolute;inset:0;height:auto;width:2px;background:repeating-linear-gradient(180deg,#A79FFF 0 8px,transparent 8px 16px);background-size:2px 32px;animation:dashflowv 1.2s linear infinite}
+    .fan .lead .pipe::after{right:auto;top:auto;left:50%;bottom:-6px;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:9px solid var(--blurple);border-bottom:0}
+  }
+  @media(max-width:520px){.eyebrow{font-size:10.5px;letter-spacing:.07em;gap:7px;padding:6px 11px}}
+
+  /* ---- COMPLIANCE ---- */
+  .ckick{color:#5148E8}
+  .csub{max-width:56ch;margin:12px 0 30px;font-size:17px;line-height:1.55;color:var(--muted)}
+  .cflow{display:flex;align-items:center;gap:0;padding:30px 26px;border-radius:18px;border:1.5px solid transparent;background:linear-gradient(#fff,#fff) padding-box,var(--grad) border-box;box-shadow:0 12px 34px rgba(99,91,255,.12)}
+  .cnode{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;font-family:var(--display);font-weight:700;font-size:15px;line-height:1.25;color:var(--ink);padding:13px 16px;border-radius:12px;border:1px solid var(--line);background:#F7F8FC}
+  .cnode small{display:block;margin-top:3px;font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.02em;color:#5148E8}
+  .cnode.cst{border-color:rgba(99,91,255,.45);background:var(--blurple-soft)}
+  .cnode.cwb{color:#fff;border-color:transparent;background:#5148E8;box-shadow:0 6px 18px rgba(99,91,255,.3)}
+  .cnode.cok{color:#0B6E4C;border-color:#BCEBD7;background:#E6FBF2}
+  .carrow{flex:1;min-width:26px;height:2px;margin:0 8px;position:relative;background:repeating-linear-gradient(90deg,#A79FFF 0 8px,transparent 8px 16px);background-size:32px 2px;animation:dashflow 1.2s linear infinite}
+  .carrow::after{content:"";position:absolute;right:-1px;top:50%;transform:translateY(-50%);border-left:9px solid #5148E8;border-top:5px solid transparent;border-bottom:5px solid transparent}
+  .cgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}
+  .ccard h3{font-size:18px;margin-bottom:6px}
+  .ccard p{font-size:15px;line-height:1.5;color:var(--muted)}
+  .cnote{margin-top:22px;max-width:70ch;font-size:13px;line-height:1.5;color:var(--muted)}
+  @media(max-width:860px){.cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:760px){
+    .cflow{flex-direction:column;align-items:stretch;padding:24px 20px}
+    .cnode{width:100%}
+    .carrow{flex:0 0 auto;align-self:center;width:2px;min-width:0;height:30px;margin:8px 0 10px;background:repeating-linear-gradient(180deg,#A79FFF 0 8px,transparent 8px 16px);background-size:2px 32px;animation:dashflowv 1.2s linear infinite}
+    .carrow::after{right:auto;top:auto;left:50%;bottom:-6px;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:9px solid #5148E8;border-bottom:0}
+    .cgrid{grid-template-columns:minmax(0,1fr)}
+  }
 
   /* pricing + form */
   .duo{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
   @media(max-width:800px){.duo{grid-template-columns:1fr}}
   .pricebox{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 26px;box-shadow:0 6px 22px rgba(26,31,54,.05)}
+  .pricebox{max-width:520px}
   .pricebox .big{font-family:var(--display);font-weight:800;font-size:34px;margin:8px 0 6px}
   .pricebox p{font-size:14.5px;color:var(--muted)}
-  .field{margin-bottom:13px}
-  .field label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
-  .field input{width:100%;padding:12px;font-family:var(--body);font-size:15.5px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
-  .field input:focus{border-color:var(--blurple);box-shadow:0 0 0 3px rgba(99,91,255,.14)}
-  .form-note{font-size:13px;color:var(--muted);margin-top:10px}
-  .form-status{font-family:var(--mono);font-size:13px;margin-top:12px;display:none}
-  .form-status.ok{display:block;color:#0A8A5F}
-  .form-status.err{display:block;color:#C43A2B}
 
+
+  /* ---- polish: spacing, rhythm, pricing ---- */
+  nav.top a.btn{color:#fff}
+  @media(min-width:841px){.grid3{grid-template-columns:minmax(0,.85fr) minmax(0,1.2fr) minmax(0,1.15fr)}}
+  .blogo{height:60px}
+  .blogo img[alt="Moveworks"]{height:30px}
+  section.doc{padding:84px 0}
+  section.doc h2.sh{margin-bottom:30px}
+  .hero{padding:96px 0 72px}
+  .hero-ctas{margin:34px 0 0}
+  .tile h3{margin-bottom:0}
+  .tile{display:flex;flex-direction:column;gap:18px;padding:26px 24px}
+  .tile .logos,.tile .maps,.tile .evs{margin-top:0}
+  .evs-col{flex-direction:column;align-items:flex-start;gap:10px}
+  .evs-col .ev{min-width:128px;text-align:center}
+  /* payments: with the chat hidden, the diagram owns the row */
+  .paytop{grid-template-columns:minmax(0,1fr);margin-top:34px}
+  .fan{max-width:760px;margin:0 auto}
+  .paycards{gap:20px;margin-top:20px}
+  .paycard{gap:18px;padding:26px 24px}
+  .paycard .pk2 small{margin-bottom:0}
+  .paycard .btn{margin-top:auto}
+  .lchip{height:64px}
+  .kw{gap:11px}
+  /* compliance */
+  #compliance .csub{margin:14px 0 32px}
+  .cflow{padding:34px 30px}
+  .cnode.cst{gap:10px;padding:14px 18px}
+  .cnode.cst .cnode.cwb{flex:none;padding:9px 16px;font-size:14px;border-radius:10px}
+  #compliance h2.c-h2{margin:56px 0 22px}
+  .cgrid{gap:20px;margin-top:0}
+  .ccard{position:relative;gap:10px;padding:26px 24px 24px}
+  .ccard::before{content:"";width:28px;height:28px;border-radius:9px;background:var(--blurple-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235148E8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/16px no-repeat;border:1px solid rgba(99,91,255,.28)}
+  .ccard h3{margin:0}
+  .ccard p{font-size:16px;line-height:1.5;color:var(--ink)}
+  .ccard h3 + p{color:var(--muted)}
+  .cnote{margin-top:26px}
+  /* install */
+  .paths.single{grid-template-columns:minmax(0,1fr)}
+  .paths.single .path{padding:32px 32px 30px}
+  .path ul{margin:4px 0 22px}
+  @media(min-width:761px){.paths.single .path ul{columns:2;column-gap:36px}.paths.single .path li{break-inside:avoid}.paths.single .path .btn{width:auto;align-self:flex-start;padding:13px 34px}}
+  /* pricing — no box: a big gradient $0 and the line beside it */
+  .price0{display:flex;align-items:center;gap:34px;flex-wrap:wrap}
+  .p0-big{font-family:var(--display);font-weight:800;font-size:clamp(96px,15vw,168px);line-height:.85;letter-spacing:-.06em;padding:0 .04em .06em 0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 18px 34px rgba(99,91,255,.22))}
+  .p0-txt{flex:1;min-width:220px;max-width:24ch;padding-left:28px;border-left:3px solid var(--blurple);font-family:var(--display);font-weight:700;font-size:clamp(20px,2.4vw,27px);line-height:1.3;color:var(--ink)}
+  @media(max-width:760px){
+    section.doc{padding:64px 0}
+    .hero{padding:72px 0 56px}
+    .cflow{padding:26px 20px}
+    #compliance h2.c-h2{margin-top:44px}
+    .paths.single .path{padding:26px 22px}
+    .price0{gap:18px}
+    .p0-txt{padding-left:18px;max-width:none}
+  }
 
   footer.site{border-top:1px solid var(--line);padding:26px 0 44px;background:#fff}
   .foot-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
@@ -154,20 +323,75 @@
   .clpbot-row button svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
   .clpbot-row button:disabled{opacity:.5;cursor:default;transform:none}
   @media(max-width:560px){.clpbot-panel{right:12px;left:12px;width:auto;bottom:78px;height:min(440px,calc(100vh - 110px))}}
+
+  /* ---- grey dark theme (default) ---- */
+  :root{color-scheme:dark;--bg:#1E1F24;--card:#272930;--surface:#30323A;--ink:#ECEDF3;--muted:#A6ABBA;--line:#383B45;--blurple-soft:rgba(99,91,255,.16);--accent-text:#A39EFF}
+  header.site{background:rgba(30,31,36,.9)}
+  .hero{background:radial-gradient(560px 280px at 50% -8%, rgba(99,91,255,.22), transparent 70%)}
+  .btn.ghost,.btn.ghost:hover{background:var(--surface)}
+  .path.live,.flowcard,.cflow,.paycard.built{background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box}
+  .paychat,.paycard,.rchip,footer.site,.clpbot-panel,.clpbot-chips button,.clpbot-row input{background:var(--card)}
+  .node,.node.nt,.path code,.map code,.clpbot-x:hover,.cb-msg.bot{background:var(--surface)}
+  .node.nt,.map code{color:var(--ink)}
+  .node.st,.kicker,.ckick,.plabel,.pk2 small,.cnode small,.map i,.rchip,.logo.hook b,.badge.soon,.map code:last-child,.clpbot-chips button:hover{color:var(--accent-text)}
+  .node.sn{color:#7EE08B;background:rgba(63,191,78,.12);border-color:rgba(63,191,78,.45)}
+  .node.mw{color:#A3B2FF;background:rgba(61,90,254,.16);border-color:rgba(61,90,254,.5)}
+  .ev.ok,.badge.now{color:#6FE0B0;background:rgba(10,138,95,.16);border-color:rgba(10,138,95,.5)}
+  .ev.bad{color:#FF9C90;background:rgba(196,58,43,.16);border-color:rgba(196,58,43,.5)}
+  .ev.warn{color:#F5C46A;background:rgba(245,196,106,.12);border-color:rgba(245,196,106,.35)}
+  .tile,.paycard,.paychat{box-shadow:0 6px 22px rgba(0,0,0,.28)}
+  .ccard::before{background-color:#EDEBFF}
+  /* logo chips stay light so the brand marks remain legible */
+  .logo,.lchip,.blogo{background:#F4F5F8;border-color:#F4F5F8}
+  .lchip.on{background:#E6FBF2;border-color:#BCEBD7}
+  .lchip em,.logo .lst{color:#5B6478}
+  .eyebrow{background:var(--card)}
+
+  /* Payments: logos fill the card now that the button is gone */
+  .paycard .lchips{flex:1;grid-auto-rows:minmax(84px,1fr)}
+  .paycard .lchip{height:auto}
+  .paycard .lchip img{height:26px}
+  .paycard .lchip img[alt="monday.com"]{height:21px}
+  .paycard .lchip .notion-mark{font-size:18px}
+  .paycard .lchip .notion-mark img{height:24px!important;width:24px!important}
+
+  /* 3 steps: install strip on top, arrow down into "Pick:" */
+  .installstrip{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px 24px;padding:20px 24px;border:1.5px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box}
+  .installstrip .btn{white-space:nowrap}
+  .howdown{display:block;position:relative;width:2px;height:34px;margin:8px 0 10px 40px;background:repeating-linear-gradient(180deg,#A79FFF 0 8px,transparent 8px 16px);background-size:2px 32px;animation:dashflowv 1.2s linear infinite}
+  .howdown::after{content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:9px solid var(--blurple)}
+  .picklabel{margin:0 0 12px;font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.01em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;width:max-content}
+  /* event chips fill their card */
+  #how .evs-col{flex:1;justify-content:space-between;align-items:stretch}
+  #how .evs-col .ev{display:flex;align-items:center;justify-content:center;flex:1;max-height:58px;min-height:44px;font-size:14px}
+  /* providers: 2x2 logos, webhook full width */
+  #how .logos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(58px,1fr);gap:10px;flex:1}
+  #how .logo{height:auto}
+  #how .logo{justify-content:center;padding:10px 12px}
+  #how .lmark{flex:1 1 auto;min-width:0;justify-content:center}
+  #how .logo img{height:22px;object-position:center}
+  #how .logo img[alt="monday.com"]{height:17px}
+  #how .logo.hook{grid-column:1/-1}
+  /* mapping: aligned table + example result */
+  .maptable{display:grid;grid-template-columns:max-content auto minmax(0,max-content);gap:10px 8px;align-items:center}
+  .maptable .map{display:contents}
+  .recprev{display:flex;flex-direction:column;gap:7px;margin-top:auto;padding:14px 16px;border:1px dashed rgba(167,159,255,.45);border-radius:12px;background:var(--surface)}
+  .recprev-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text)}
+  .recrow{display:flex;justify-content:space-between;gap:12px;font-size:13.5px}
+  .recrow em{font-style:normal;color:var(--muted)}
+  .recrow b{font-weight:500;color:var(--ink);font-family:var(--mono);font-size:12.5px}
+  .recrow b.paid{color:#6FE0B0}
+  .stepno{align-self:flex-start;margin-bottom:-8px;padding:4px 10px;border:1px solid rgba(167,159,255,.4);border-radius:999px;background:var(--blurple-soft);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text)}
+  /* compliance: 4 cards, one row on desktop */
+  @media(min-width:961px){.cgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  @media(max-width:560px){.installstrip{flex-direction:column;align-items:stretch}.installstrip .btn{text-align:center}}
 </style>
 </head>
 <body>
 
 <header class="site">
   <div class="site-inner">
-    <a class="wordmark" href="#top">Writeback<span>for Stripe Workflows</span></a>
-    <nav class="top">
-      <a class="navlink" href="#how">3 steps</a>
-      <a class="navlink" href="#install">Install</a>
-      <a class="navlink" href="#pricing">Pricing</a>
-      <!-- TODO: point at the Stripe store listing when it is live -->
-      <a class="btn" href="#">Get access</a>
-    </nav>
+    <a class="wordmark" href="#top">Writeback<span>for Stripe Payment Links</span></a>
   </div>
 </header>
 
@@ -175,9 +399,11 @@
 
   <section class="hero">
     <div class="wrap">
-      <span class="chip">⚡ Custom action · Stripe Workflows</span>
-      <h1>Your payment happened. <span class="grad-text">Now your systems know it too.</span></h1>
-      <p class="hero-sub">We focus on <b>Stripe Workflows</b>: when a payment succeeds, fails, or refunds, your forms and ticketing records update <b>automatically</b> — status, receipt link, reference ID. <b>No missed payments.</b></p>
+      <h1>
+        <span class="grad-text">
+        External payments happened. Now your systems know it too.
+      </span>
+      </h1>
       <div class="hero-ctas">
         <!-- TODO: point at the Stripe store listing when it is live -->
         <a class="btn" href="#">Get access</a>
@@ -185,93 +411,131 @@
     </div>
   </section>
 
-  <section class="doc" id="how">
+  <section class="doc" id="payments">
     <div class="wrap">
-      <h2>3 easy steps</h2>
-      <div class="grid3">
-        <div class="tile">
-          <h3>Pick the payment event</h3>
-          <p>Succeeded, failed, or refunded.</p>
-          <span class="evs"><span class="ev ok">succeeded</span><span class="ev bad">failed</span><span class="ev warn">refunded</span></span>
+      <span class="eyebrow">Stripe <span class="dot st"></span>ServiceNow <span class="dot sn"></span> Moveworks<span class="dot mw"></span></span>
+      <h2>We focus on Stripe Payment links and integrate it with other SaaS</h2>
+
+      <div class="paytop">
+        <div class="flowcard" role="img" aria-label="Your form sends the customer to a Stripe Payment Link. Writeback sends the result back to your form provider, a ServiceNow ticket, or a Moveworks chat.">
+          <div class="fan fan5">
+            <span class="node nt">Your form</span>
+            <span class="pipewrap lead" aria-hidden="true"><i class="pipe"></i></span>
+            <span class="node st stbox">Stripe Payment Link<span class="wbchip">Writeback</span></span>
+            <span class="pipewrap trunk" aria-hidden="true"><i class="pipe"></i></span>
+            <div class="branches" aria-hidden="true">
+              <div class="branch b-nt"><i class="pipe"></i><span class="node nt"> Your Form Provider</span></div>
+<!--              This one specified soon:-->
+              <div class="branch b-sn"><i class="pipe"></i><span class="node sn">ServiceNow ticket</span></div>
+<!--              This one specified soon:-->
+              <div class="branch b-mw"><i class="pipe"></i><span class="node mw">Moveworks chat</span></div>
+            </div>
+          </div>
         </div>
-        <div class="tile">
-          <h3>Choose your provider</h3>
-          <p>Where the payment gets written.</p>
-          <span class="logos">
-            <img src="logo-jotform.svg" alt="JotForm" width="367" height="66" loading="lazy">
-            <img src="logo-servicenow.svg" alt="ServiceNow" width="130" height="19" loading="lazy">
-            <img src="logo-moveworks.svg" alt="Moveworks" width="150" height="36" loading="lazy">
-            <span class="conn">Webhook mode<small>any REST endpoint</small></span>
-          </span>
+
+<!--        Let's hide the below section for now: -->
+<!--        <div class="paychat" id="paychat" role="group" aria-label="Example Moveworks chat about a payment">-->
+<!--          <span class="cap">Moveworks plugin · we build it</span>-->
+<!--          <div class="paylog">-->
+<!--            <div class="cb-msg user">Did Acme pay INV-1042?</div>-->
+<!--            <div class="cb-msg bot">Paid · $1,250 · Oct 12<span class="rchip">receipt ↗</span></div>-->
+<!--            <div class="cb-msg user">Refund $50?</div>-->
+<!--            <div class="cb-msg bot">Sent for approval ✓</div>-->
+<!--          </div>-->
+<!--        </div>-->
+      </div>
+
+      <div class="paycards">
+        <div class="paycard">
+          <div class="pk2"><small>Compatible with:</small></div>
+          <div class="lchips">
+            <span class="lchip on"><img src="logo-jotform.svg" alt="JotForm" width="367" height="66" loading="lazy"></span>
+            <span class="lchip"><img src="logo-airtable.svg" alt="Airtable" width="680" height="148" loading="lazy"></span>
+            <span class="lchip"><span class="notion-mark"><img src="logo-notion.svg" alt="" width="100" height="100" loading="lazy"><b>Notion</b></span></span>
+            <span class="lchip"><img src="logo-monday.svg" alt="monday.com" width="467" height="47" loading="lazy"></span>
+          </div>
         </div>
-        <div class="tile">
-          <h3>Do your field mapping</h3>
-          <p>Say which Stripe value lands in which field. Once.</p>
-          <span class="maps">
-            <span class="map"><code>status</code><i>→</i><code>Payment status</code></span>
-            <span class="map"><code>receipt_url</code><i>→</i><code>Receipt link</code></span>
-            <span class="map"><code>payment_intent</code><i>→</i><code>Reference ID</code></span>
-          </span>
+        <div class="paycard built">
+          <div class="pk2"><small>Additionally, we support integrations with: </small></div>
+          <div class="blogos">
+            <span class="blogo"><img src="logo-servicenow.svg" alt="ServiceNow" width="130" height="19" loading="lazy"></span>
+            <span class="blogo"><img src="logo-moveworks.svg" alt="Moveworks" width="150" height="36" loading="lazy"></span>
+          </div>
+          <ul class="kw">
+            <li>Follow your ITSM approach</li>
+            <li>Refunds with approval</li>
+            <li>Agents interacting with scoped information</li>
+          </ul>
+          <a class="btn" href="https://calendly.com/eberteo/new-meeting" target="_blank" rel="noopener">Book a free call</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="doc" id="install">
+  <section class="doc" id="how">
     <div class="wrap">
-      <span class="kicker">Install</span>
-      <h2>Two ways to run it</h2>
-      <div class="paths">
-        <div class="path live">
-          <span class="badge now">Available now</span>
-          <h3>Private install — your Stripe account</h3>
-          <p>We tailor the action to your workflow and install it directly to your Stripe account with the Stripe CLI (<code>stripe apps upload</code>). It appears in your Workflow builder same-day.</p>
-          <ul>
-            <li>Field mapping done for you</li>
-            <li>Your account only — nothing shared</li>
-            <li>White-glove setup on one call</li>
-          </ul>
-          <a class="btn" href="#access">Request a private install</a>
+      <h2 class="sh">3 Steps after installing our plugin</h2>
+      <div class="tile installstrip">
+        <h3>Install the plugin from here:</h3>
+<!--        TODO: replace href with the Stripe App Marketplace listing URL once it is live -->
+        <a class="btn" href="#">Stripe App Marketplace ↗</a>
+      </div>
+      <span class="howdown" aria-hidden="true"></span>
+      <p class="picklabel">Pick:</p>
+      <div class="grid3">
+        <div class="tile">
+          <span class="stepno">Step 1</span>
+          <h3>The Payment Event</h3>
+          <span class="evs evs-col"><span class="ev ok">succeeded</span><span class="ev bad">failed</span><span class="ev warn">refunded</span></span>
         </div>
-        <div class="path">
-          <span class="badge soon">Coming</span>
-          <h3>Stripe App Marketplace</h3>
-          <p>One-click install from the official Stripe App Marketplace once review completes. Same action, self-serve — and the same step exposed as a function your AI assistant can call.</p>
-          <ul>
-            <li>Install in minutes from your Stripe Dashboard</li>
-            <li>Configure connectors in the app's settings</li>
-            <li>Function calling: your LLM asks, the write-back runs</li>
-            <li>Early-access users migrate free</li>
-          </ul>
-          <a class="btn ghost" href="#access">Get notified at launch</a>
+        <div class="tile">
+          <span class="stepno">Step 2</span>
+          <h3>Your Form Provider</h3>
+          <span class="logos">
+            <span class="logo"><span class="lmark"><img src="logo-jotform.svg" alt="JotForm" width="367" height="66" loading="lazy"></span></span>
+            <span class="logo"><span class="lmark"><img src="logo-airtable.svg" alt="Airtable" width="680" height="148" loading="lazy"></span></span>
+            <span class="logo"><span class="lmark"><span class="notion-mark"><img src="logo-notion.svg" alt="" width="100" height="100" loading="lazy"><b>Notion</b></span></span></span>
+            <span class="logo"><span class="lmark"><img src="logo-monday.svg" alt="monday.com" width="467" height="47" loading="lazy"></span></span>
+            <span class="logo hook"><b>Webhook mode</b><small>any REST endpoint</small></span>
+          </span>
         </div>
+        <div class="tile">
+          <span class="stepno">Step 3</span>
+          <h3>The Field Mapping</h3>
+          <span class="maps maptable">
+            <span class="map"><code>status</code><i>→</i><code>Payment status</code></span>
+            <span class="map"><code>receipt_url</code><i>→</i><code>Receipt link</code></span>
+            <span class="map"><code>payment_intent</code><i>→</i><code>Reference ID</code></span>
+          </span>
+          <div class="recprev" role="img" aria-label="Example result in your form: Payment status Paid, a receipt link, and the reference ID">
+            <span class="recprev-h">Your form</span>
+            <span class="recrow"><em>Payment status</em><b class="paid">Paid ✓</b></span>
+            <span class="recrow"><em>Receipt link</em><b>receipt ↗</b></span>
+            <span class="recrow"><em>Reference ID</em><b>pi_3Q8x…</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc" id="compliance">
+    <div class="wrap">
+      <h2 class="sh">Our Compliance</h2>
+      <div class="cgrid">
+        <div class="tile ccard"><p>Card information stays on Stripe, it never touches your form provider.</p></div>
+<!--        (name the tool Jeremy used for applying after taxes) -->
+        <div class="tile ccard"><p>Surcharge-integration for Credit Cards in external Payment Links.</p></div>
+        <div class="tile ccard"><p>No extra SaaS, no extra license, no extra server to run.</p></div>
+        <div class="tile ccard"><p>API Keys are stored in your Stripe's Secret Store, never in our code.</p></div>
       </div>
     </div>
   </section>
 
   <section class="doc" id="pricing">
-    <div class="wrap duo">
-      <div>
-        <span class="kicker">Pricing</span>
-        <h2>Free while in early access</h2>
-        <div class="pricebox" style="margin-top:22px">
-          <span class="kicker" style="margin:0">Early access</span>
-          <div class="big">$0</div>
-          <p>Free during the preview period, including private installs. Paid plans announced at Marketplace launch — early-access users keep preferred pricing.</p>
-        </div>
-      </div>
-      <div class="pricebox" id="access">
-        <span class="kicker">Get early access</span>
-        <form id="access-form" method="POST" action="https://formsubmit.co/ajax/eberteogam@gmail.com">
-          <input type="hidden" name="_subject" value="Early access request — Stripe">
-          <input type="text" name="_honey" aria-label="Leave this field empty" style="display:none" tabindex="-1" autocomplete="off">
-          <div class="field"><label for="a-name">Name</label><input id="a-name" name="name" type="text" autocomplete="name" required></div>
-          <div class="field"><label for="a-email">Work email</label><input id="a-email" name="email" type="email" autocomplete="email" required></div>
-          <div class="field"><label for="a-usecase">What should update when a payment lands?</label><input id="a-usecase" name="usecase" type="text" placeholder="e.g. JotForm submission → mark paid" required></div>
-          <button class="btn" type="submit" style="width:100%">Request access</button>
-          <p class="form-note">We reply within one business day.</p>
-          <p class="form-status" id="access-status" role="status"></p>
-        </form>
+    <div class="wrap">
+      <h2 class="sh">Free while in early access</h2>
+      <div class="price0">
+        <div class="p0-big" aria-label="0 dollars">$0</div>
       </div>
     </div>
   </section>
@@ -281,31 +545,23 @@
 <footer class="site">
   <div class="wrap">
     <div class="foot-inner">
-      <p>© 2026 Cali Live Play LLC · Support: eberteogam@gmail.com</p>
-      <p><a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms</a> · <a href="docs.html">Docs</a></p>
+      <p>© 2026 Cali Live Play LLC · Support: Chat with CLP</p>
+      <p><a href="privacy.html">Privacy policy</a> · <a href="terms.html">Terms</a> · <a href="docs.html">Docs</a> · <a href="https://www.linkedin.com/company/caliliveplay/">LinkedIn</a> · <a href="/services/servicenow/">ServiceNow services</a></p>
     </div>
     <p class="legal">Writeback is an independent product built on the Stripe Apps platform. Stripe and Stripe Workflows are trademarks of Stripe, Inc. This product is not affiliated with, endorsed by, or sponsored by Stripe, Inc.</p>
   </div>
 </footer>
 
 <script>
+  // Payments chat demo — bubbles appear one by one when the card scrolls in (all at once with reduced motion, via CSS).
   (function(){
-    var form=document.getElementById('access-form');
-    var status=document.getElementById('access-status');
-    form.addEventListener('submit',function(e){
-      e.preventDefault();
-      var action=form.getAttribute('action');
-      var data=new FormData(form);
-      if(!action||action.indexOf('[[')===0){
-        var body=encodeURIComponent('Early access request.\nName: '+data.get('name')+'\nUse case: '+data.get('usecase'));
-        window.location.href='mailto:eberteogam@gmail.com?subject='+encodeURIComponent('Writeback early access')+'&body='+body;
-        return;
-      }
-      status.className='form-status';
-      fetch(action,{method:'POST',body:data,headers:{'Accept':'application/json'}})
-        .then(function(r){if(r.ok){form.reset();status.textContent='Request received — reply within one business day.';status.className='form-status ok';}else{throw new Error('bad')}})
-        .catch(function(){status.textContent='Did not send. Email eberteogam@gmail.com directly.';status.className='form-status err';});
-    });
+    var card=document.getElementById('paychat');
+    if(!card)return;
+    if(!('IntersectionObserver' in window)){card.classList.add('in');return;}
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){card.classList.add('in');io.disconnect();}});
+    },{threshold:.25});
+    io.observe(card);
   })();
 </script>
 
@@ -321,7 +577,7 @@
     <button class="clpbot-x" id="clpbot-x" aria-label="Minimize chat">–</button>
   </div>
   <div class="clpbot-log" id="clpbot-log">
-    <div class="cb-msg bot">Hi — I'm CLP BOT. Ask me about Writeback: which payment events it runs on, where it writes (JotForm, ServiceNow, Moveworks, webhook), field mapping, or how to get it installed.</div>
+    <div class="cb-msg bot">Hi — I'm CLP BOT. Ask me about Writeback — payment events, where it writes, field mapping, installing it — or about payments in ServiceNow and Moveworks.</div>
   </div>
   <div class="clpbot-chips" id="clpbot-chips">
     <button type="button">What does it cost?</button>

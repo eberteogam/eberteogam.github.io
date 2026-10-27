@@ -110,6 +110,15 @@
   .sit-a b{margin-left:auto;font-family:var(--display);font-weight:800;font-size:14px;color:var(--text);white-space:nowrap}
   @media(max-width:900px){.sits{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media(max-width:560px){.sits{grid-template-columns:1fr}}
+  /* "Sound familiar?" — endless horizontal carousel (JS adds .loop and a cloned set) */
+  .sits-viewport{margin-top:28px}
+  .sits-viewport.is-looping{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .sits-viewport .sits{margin-top:0}
+  .sits.loop{display:flex;width:max-content;gap:14px;padding:4px 14px 4px 0;animation:sits-scroll var(--sits-dur,42s) linear infinite!important}
+  .sits.loop .sit{flex:0 0 300px}
+  .sits-viewport:hover .sits.loop,.sits-viewport:focus-within .sits.loop{animation-play-state:paused!important}
+  @keyframes sits-scroll{to{transform:translateX(-50%)}}
+  @media(max-width:560px){.sits.loop .sit{flex-basis:250px}}
 
   /* services + pricing — cards on the right, the robot keeps your pick */
   .price-grid{display:grid;grid-template-columns:292px minmax(0,1fr);gap:40px;align-items:start}
@@ -362,16 +371,15 @@
   <section class="coverage" id="coverage">
     <div class="wrap">
       <h2>Sound familiar?</h2>
+      <div class="sits-viewport" id="sits-viewport">
       <div class="sits">
         <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">We don't know how many machine accounts we have.</p><span class="sit-a">Machine Identity</span></div>
         <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">AI agents have access we can't see.</p><span class="sit-a">Machine Identity</span></div>
-        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">We need to move off IdentityIQ.</p><span class="sit-a">IIQ to ISC</span></div>
         <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Employees want to request access in chat.</p><span class="sit-a">Moveworks requests</span></div>
         <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Every access request becomes a manual ticket.</p><span class="sit-a">ServiceNow catalog</span></div>
-        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Our CMDB and identity data don't match.</p><span class="sit-a">CMDB ownership</span></div>
         <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Audit wants proof of who can access what.</p><span class="sit-a">CMDB ownership</span></div>
-        <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Our access model needs a second opinion.</p><span class="sit-a">Advisory</span></div>
         <div class="sit"><span class="sit-mark" aria-hidden="true">&ldquo;</span><p class="sit-q">Every IdentityIQ environment is built by hand.</p><span class="sit-a">CI/CD for IIQ</span></div>
+      </div>
       </div>
     </div>
   </section>
@@ -661,5 +669,22 @@
   })();
 </script>
 
+<script>
+  // "Sound familiar?": duplicate the cards once so the row can scroll forever without a jump.
+  (function () {
+    var box = document.getElementById("sits-viewport");
+    if (!box) return;
+    var track = box.querySelector(".sits");
+    var cards = Array.prototype.slice.call(track.children);
+    cards.forEach(function (c) {
+      var k = c.cloneNode(true);
+      k.setAttribute("aria-hidden", "true");
+      track.appendChild(k);
+    });
+    track.style.setProperty("--sits-dur", (cards.length * 7) + "s");
+    track.classList.add("loop");
+    box.classList.add("is-looping");
+  })();
+</script>
 </body>
 </html>

@@ -655,7 +655,7 @@ h3.kb-cat {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 5 / 4;
   object-fit: cover;
   object-position: top;
 }
@@ -692,5 +692,5 @@ h3.kb-cat {
 }
 
 /* Project previews: taller media */
-#projects .card .thumb { height: 210px; background-color: #0d0d12; }
+#projects .card .thumb { height: 270px; background-color: #0d0d12; }
 #projects .card .thumb-diagram { object-position: 30% 45%; background-color: #fff8e5; }
