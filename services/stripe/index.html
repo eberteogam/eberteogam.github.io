@@ -50,7 +50,6 @@
   h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,56px);line-height:1.06;letter-spacing:-.02em;max-width:22ch;margin:0 auto}
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:44px}
 
-
   section.doc{padding:66px 0;border-top:1px solid var(--line)}
   .kicker{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--blurple);margin-bottom:12px}
   h2{font-family:var(--display);font-weight:700;font-size:clamp(25px,3.2vw,34px);letter-spacing:-.015em}
@@ -228,7 +227,6 @@
   .pricebox .big{font-family:var(--display);font-weight:800;font-size:34px;margin:8px 0 6px}
   .pricebox p{font-size:14.5px;color:var(--muted)}
 
-
   /* ---- polish: spacing, rhythm, pricing ---- */
   nav.top a.btn{color:#fff}
   @media(min-width:841px){.grid3{grid-template-columns:minmax(0,.85fr) minmax(0,1.2fr) minmax(0,1.15fr)}}
@@ -356,13 +354,36 @@
   .paycard .lchip .notion-mark img{height:24px!important;width:24px!important}
 
   /* 3 steps: install strip on top, arrow down into "Pick:" */
-  .installstrip{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px 24px;padding:20px 24px;border:1.5px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box}
-  .installstrip .btn{white-space:nowrap}
+  .installstrip{flex-direction:row;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px 24px;padding:26px 24px;border:1.5px solid transparent;background:radial-gradient(420px 120px at 50% 50%,rgba(99,91,255,.20),transparent 70%),linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box}
+  .installstrip .btn{white-space:nowrap;padding:16px 34px;font-size:16.5px;box-shadow:0 0 0 6px rgba(99,91,255,.14),0 10px 34px rgba(99,91,255,.45)}
+  .installstrip .btn:hover{transform:translateY(-2px)}
+  #how .howdown{margin:10px auto 12px}
+  #how .picklabel{margin-left:auto;margin-right:auto}
+  /* Step 2: two ways the payment can go */
+  .ways{display:flex;flex-direction:column;gap:22px;flex:1}
+  .way{display:flex;flex-direction:column;gap:8px}
+  .way-k{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text)}
+  .way-chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .way-chips .chip-l:last-child:nth-child(odd){grid-column:1/-1}
+  .chip-l{display:flex;align-items:center;justify-content:center;height:52px;transition:transform .15s,box-shadow .15s;min-width:0;padding:0 12px;border-radius:10px;background:#F4F5F8;border:1px solid #F4F5F8}
+  .chip-l:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .chip-l img{display:block;height:19px;width:auto;max-width:100%}
+  .chip-l img[alt="monday.com"]{height:15px}
+  .chip-l img[alt="ServiceNow"]{height:17px}
+  .chip-l.wide{height:60px;border-color:rgba(61,90,254,.55);box-shadow:0 0 0 4px rgba(61,90,254,.12)}
+  .chip-l.wide img{height:28px}
+  .chip-l .notion-mark{font-size:16px}
+  .chip-l .notion-mark img{height:20px!important;width:20px!important}
+  .way-tag{display:table;margin-top:6px;font-style:normal;font-size:10px;letter-spacing:.1em;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:3px 9px}
+  .step-when{margin-top:-8px;font-size:13px;line-height:1.45;color:var(--muted)}
+  .way-note{font-size:13px;line-height:1.45;color:var(--muted)}
+  #how .ways .logo.hook{height:auto;padding:12px;margin-top:auto}
+  .btn-ext{display:inline-flex;align-items:center;justify-content:center;gap:9px}
   .howdown{display:block;position:relative;width:2px;height:34px;margin:8px 0 10px 40px;background:repeating-linear-gradient(180deg,#A79FFF 0 8px,transparent 8px 16px);background-size:2px 32px;animation:dashflowv 1.2s linear infinite}
   .howdown::after{content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:9px solid var(--blurple)}
   .picklabel{margin:0 0 12px;font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.01em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;width:max-content}
   /* event chips fill their card */
-  #how .evs-col{flex:1;justify-content:space-between;align-items:stretch}
+  #how .evs-col{flex:1;justify-content:flex-start;align-items:stretch;gap:14px}
   #how .evs-col .ev{display:flex;align-items:center;justify-content:center;flex:1;max-height:58px;min-height:44px;font-size:14px}
   /* providers: 2x2 logos, webhook full width */
   #how .logos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(58px,1fr);gap:10px;flex:1}
@@ -382,6 +403,24 @@
   .recrow b{font-weight:500;color:var(--ink);font-family:var(--mono);font-size:12.5px}
   .recrow b.paid{color:#6FE0B0}
   .stepno{align-self:flex-start;margin-bottom:-8px;padding:4px 10px;border:1px solid rgba(167,159,255,.4);border-radius:999px;background:var(--blurple-soft);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text)}
+  /* "We integrate with:" — endless logo carousel (JS clones the set and adds .is-looping) */
+  .intcard{margin-top:20px;gap:16px;overflow:hidden}
+  .logoloop{overflow:hidden}
+  .logoloop.is-looping{-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+  .logotrack{display:flex;flex-wrap:wrap;gap:12px}
+  .logotrack{--logo-dur:30s}
+  /* !important: keeps scrolling even under the page-wide reduced-motion rule */
+  .is-looping .logotrack{flex-wrap:nowrap;width:max-content;padding-right:12px;animation:logo-scroll var(--logo-dur) linear infinite!important}
+  .logoloop:hover .logotrack{animation-play-state:paused!important}
+  .logotrack .lchip{flex:0 0 210px;height:84px}
+  .logotrack .lchip img{height:26px}
+  .logotrack .lchip img[alt="monday.com"]{height:21px}
+  .logotrack .lchip img[alt="ServiceNow"]{height:24px}
+  .logotrack .lchip img[alt="Moveworks"]{height:36px}
+  .logotrack .lchip .notion-mark{font-size:18px}
+  .logotrack .lchip .notion-mark img{height:24px!important;width:24px!important}
+  @keyframes logo-scroll{to{transform:translateX(-50%)}}
+  @media(max-width:560px){.logotrack .lchip{flex-basis:160px;height:70px}}
   /* compliance: 4 cards, one row on desktop */
   @media(min-width:961px){.cgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
   @media(max-width:560px){.installstrip{flex-direction:column;align-items:stretch}.installstrip .btn{text-align:center}}
@@ -445,28 +484,17 @@
 <!--        </div>-->
       </div>
 
-      <div class="paycards">
-        <div class="paycard">
-          <div class="pk2"><small>Compatible with:</small></div>
-          <div class="lchips">
-            <span class="lchip on"><img src="logo-jotform.svg" alt="JotForm" width="367" height="66" loading="lazy"></span>
+      <div class="paycard intcard">
+        <div class="pk2"><small>We integrate with:</small></div>
+        <div class="logoloop" id="logoloop">
+          <div class="logotrack">
+            <span class="lchip"><img src="logo-jotform.svg" alt="JotForm" width="367" height="66" loading="lazy"></span>
             <span class="lchip"><img src="logo-airtable.svg" alt="Airtable" width="680" height="148" loading="lazy"></span>
             <span class="lchip"><span class="notion-mark"><img src="logo-notion.svg" alt="" width="100" height="100" loading="lazy"><b>Notion</b></span></span>
             <span class="lchip"><img src="logo-monday.svg" alt="monday.com" width="467" height="47" loading="lazy"></span>
+            <span class="lchip"><img src="logo-servicenow.svg" alt="ServiceNow" width="130" height="19" loading="lazy"></span>
+            <span class="lchip"><img src="logo-moveworks.svg" alt="Moveworks" width="150" height="36" loading="lazy"></span>
           </div>
-        </div>
-        <div class="paycard built">
-          <div class="pk2"><small>Additionally, we support integrations with: </small></div>
-          <div class="blogos">
-            <span class="blogo"><img src="logo-servicenow.svg" alt="ServiceNow" width="130" height="19" loading="lazy"></span>
-            <span class="blogo"><img src="logo-moveworks.svg" alt="Moveworks" width="150" height="36" loading="lazy"></span>
-          </div>
-          <ul class="kw">
-            <li>Follow your ITSM approach</li>
-            <li>Refunds with approval</li>
-            <li>Agents interacting with scoped information</li>
-          </ul>
-          <a class="btn" href="https://calendly.com/eberteo/new-meeting" target="_blank" rel="noopener">Book a free call</a>
         </div>
       </div>
     </div>
@@ -476,12 +504,11 @@
     <div class="wrap">
       <h2 class="sh">3 Steps after installing our plugin</h2>
       <div class="tile installstrip">
-        <h3>Install the plugin from here:</h3>
 <!--        TODO: replace href with the Stripe App Marketplace listing URL once it is live -->
-        <a class="btn" href="#">Stripe App Marketplace ↗</a>
+        <a class="btn btn-ext" href="#" target="_blank" rel="noopener">Install the plugin here<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
       </div>
       <span class="howdown" aria-hidden="true"></span>
-      <p class="picklabel">Pick:</p>
+      <p class="picklabel">Then pick:</p>
       <div class="grid3">
         <div class="tile">
           <span class="stepno">Step 1</span>
@@ -490,18 +517,30 @@
         </div>
         <div class="tile">
           <span class="stepno">Step 2</span>
-          <h3>Your Form Provider</h3>
-          <span class="logos">
-            <span class="logo"><span class="lmark"><img src="logo-jotform.svg" alt="JotForm" width="367" height="66" loading="lazy"></span></span>
-            <span class="logo"><span class="lmark"><img src="logo-airtable.svg" alt="Airtable" width="680" height="148" loading="lazy"></span></span>
-            <span class="logo"><span class="lmark"><span class="notion-mark"><img src="logo-notion.svg" alt="" width="100" height="100" loading="lazy"><b>Notion</b></span></span></span>
-            <span class="logo"><span class="lmark"><img src="logo-monday.svg" alt="monday.com" width="467" height="47" loading="lazy"></span></span>
-            <span class="logo hook"><b>Webhook mode</b><small>any REST endpoint</small></span>
-          </span>
+          <h3>Where it goes</h3>
+          <div class="ways">
+            <div class="way">
+              <span class="way-k">Record it</span>
+              <span class="way-chips">
+                <span class="chip-l"><img src="logo-jotform.svg" alt="JotForm" width="367" height="66" loading="lazy"></span>
+                <span class="chip-l"><img src="logo-airtable.svg" alt="Airtable" width="680" height="148" loading="lazy"></span>
+                <span class="chip-l"><span class="notion-mark"><img src="logo-notion.svg" alt="" width="100" height="100" loading="lazy"><b>Notion</b></span></span>
+                <span class="chip-l"><img src="logo-monday.svg" alt="monday.com" width="467" height="47" loading="lazy"></span>
+                <span class="chip-l"><img src="logo-servicenow.svg" alt="ServiceNow" width="130" height="19" loading="lazy"></span>
+              </span>
+            </div>
+            <div class="way">
+              <span class="way-k">Or directly start a conversation <em class="way-tag">no record saved</em></span>
+              <span class="way-chips">
+                <span class="chip-l wide"><img src="logo-moveworks.svg" alt="Moveworks" width="150" height="36" loading="lazy"></span>
+              </span>
+            </div>
+          </div>
         </div>
         <div class="tile">
           <span class="stepno">Step 3</span>
           <h3>The Field Mapping</h3>
+          <span class="step-when">Only when a record is saved. Not needed for Moveworks only.</span>
           <span class="maps maptable">
             <span class="map"><code>status</code><i>→</i><code>Payment status</code></span>
             <span class="map"><code>receipt_url</code><i>→</i><code>Receipt link</code></span>
@@ -527,15 +566,6 @@
         <div class="tile ccard"><p>Surcharge-integration for Credit Cards in external Payment Links.</p></div>
         <div class="tile ccard"><p>No extra SaaS, no extra license, no extra server to run.</p></div>
         <div class="tile ccard"><p>API Keys are stored in your Stripe's Secret Store, never in our code.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="doc" id="pricing">
-    <div class="wrap">
-      <h2 class="sh">Free while in early access</h2>
-      <div class="price0">
-        <div class="p0-big" aria-label="0 dollars">$0</div>
       </div>
     </div>
   </section>
@@ -654,5 +684,21 @@
   })();
 </script>
 
+<script>
+  // "We integrate with:": duplicate the logos once so the row can scroll forever without a jump.
+  (function () {
+    var box = document.getElementById("logoloop");
+    if (!box) return;
+    var track = box.querySelector(".logotrack");
+    var items = Array.prototype.slice.call(track.children);
+    items.forEach(function (it) {
+      var c = it.cloneNode(true);
+      c.setAttribute("aria-hidden", "true");
+      track.appendChild(c);
+    });
+    track.style.setProperty("--logo-dur", (items.length * 5) + "s");
+    box.classList.add("is-looping");
+  })();
+</script>
 </body>
 </html>
