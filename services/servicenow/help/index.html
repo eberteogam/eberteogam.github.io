@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which SKU do you need? — CLP</title>
+<meta name="description" content="The harness your ServiceNow Otto runs is set by the SKUs you own. Check the chart or schedule a call with CLP.">
+<link rel="canonical" href="https://eberteogam.github.io/services/servicenow/help/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sub.css?v=6">
+<style>
+  .c-mw{color:var(--mw)}
+  .c-sn{color:var(--sn)}
+  .help-cta{display:inline-block;margin-top:28px;padding:13px 26px}
+  .hm-wrap{margin-top:34px;border-radius:20px;border:1px solid transparent;background:linear-gradient(rgba(14,24,22,.94),rgba(14,24,22,.94)) padding-box,var(--grad) border-box;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+  .hmatrix{width:100%;border-collapse:collapse}
+  .hmatrix thead th{padding:18px 22px;text-align:left;font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line2)}
+  .hmatrix thead .c-mw,.hmatrix thead .c-sn{font-weight:600}
+  .hm-group th{padding:14px 22px 8px;text-align:left;font-family:var(--mono);font-weight:500;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--sn);background:rgba(255,255,255,.02)}
+  .hmatrix tbody tr:not(.hm-group){border-top:1px solid var(--line)}
+  .hmatrix tbody tr:not(.hm-group):hover{background:rgba(255,255,255,.03)}
+  .hmatrix tbody th[scope=row],.hmatrix td{padding:16px 22px;text-align:left;vertical-align:middle}
+  .hm-sku{display:block;font-family:var(--display);font-weight:800;font-size:17px;line-height:1.25}
+  .hm-sub{display:block;margin-top:3px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .hx{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;padding:6px 12px 6px 7px;border-radius:999px;border:1px solid}
+  .hx i{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-style:normal;font-size:11px;font-weight:700}
+  .hx.on-mw{color:#C9D4FF;border-color:rgba(61,90,254,.6);background:rgba(61,90,254,.14)}
+  .hx.on-mw i{background:var(--mw);color:#fff}
+  .hx.on-sn{color:#D6F5C9;border-color:rgba(98,216,78,.6);background:rgba(98,216,78,.10)}
+  .hx.on-sn i{background:var(--sn);color:#0C1A0F}
+  .hx.off{border-color:transparent;padding-left:0;color:var(--muted)}
+  .hx.off i{width:auto;font-weight:400;opacity:.5}
+  .hm-scope{display:inline-block;font-size:14px;color:var(--dim)}
+  .hm-scope.none{color:var(--muted);font-style:italic}
+  .hm-dash{color:var(--muted);opacity:.5}
+  .hx-n{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .hm-legend{margin-top:14px;font-size:14px;color:var(--muted)}
+  .hm-legend b{color:var(--text)}
+  .hmatrix .hc{text-align:center}
+  .hd{display:inline-block;width:16px;height:16px;border-radius:50%;vertical-align:middle}
+  .hd.on-mw{background:var(--mw);box-shadow:0 0 0 4px rgba(61,90,254,.18),0 0 14px rgba(61,90,254,.6)}
+  .hd.on-sn{background:var(--sn);box-shadow:0 0 0 4px rgba(98,216,78,.16),0 0 14px rgba(98,216,78,.5)}
+  .hd.off{width:auto;height:auto;border-radius:0;color:var(--muted);opacity:.55;font-family:var(--mono)}
+  .hd-l{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .hm-scope{font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--dim)}
+  .hmatrix tbody.legacy th[scope=row] .hm-sku{color:var(--muted)}
+  .hm-group .upg{float:right;display:inline-flex;align-items:center;gap:8px;color:var(--dim);letter-spacing:.08em;text-transform:none;font-size:11.5px}
+  .upg-arrow{position:relative;display:inline-block;width:2px;height:16px;background:repeating-linear-gradient(180deg,var(--sn) 0 4px,transparent 4px 7px);background-size:2px 14px;animation:upflow 1s linear infinite}
+  .upg-arrow::before{content:"";position:absolute;left:50%;top:-5px;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:7px solid var(--sn)}
+  @keyframes upflow{to{background-position:0 -14px}}
+  .hm-legend .hd{width:11px;height:11px;margin:0 4px 0 10px;box-shadow:none}
+  .hm-legend .hd.on-mw{margin-left:0}
+  .hm-legend .hm-dash{margin:0 4px 0 10px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @media(max-width:760px){
+    .hmatrix thead{display:none}
+    .hmatrix,.hmatrix tbody,.hmatrix tr,.hmatrix th,.hmatrix td{display:block;width:100%}
+    .hmatrix tbody tr:not(.hm-group){display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;padding:16px 18px}
+    .hmatrix tbody th[scope=row]{grid-column:1/-1;padding:0}
+    .hmatrix td{padding:0}
+    .hmatrix .hc{text-align:left}
+    .hmatrix td.hc{display:flex;align-items:center;gap:8px}
+    .hd-l{position:static;width:auto;height:auto;clip:auto;font-family:var(--mono);font-size:12px;color:var(--dim)}
+    .hd-l.off{color:var(--muted);opacity:.7}
+    .hd.off{display:none}
+    .hmatrix td.hf{grid-column:1/-1}
+    .hmatrix td.hf:has(.hm-dash){display:none}
+    .hm-group .upg{float:none;display:flex;margin-top:8px}
+    .hm-group th{padding:14px 18px 6px}
+    .hx-n{position:static;width:auto;height:auto;clip:auto}
+</style>
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span></div>
+
+<header class="site">
+  <div class="site-inner">
+    <a class="wordmark" href="../" aria-label="CLP">CLP<span class="wm-star" aria-hidden="true">★</span></a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <a class="back" href="../">← Back</a>
+      <h1>The harness your Otto runs is set by the SKUs you own</h1>
+      <p class="lead">For us to work together, we have to make sure you have the right SKU. Look at our chart for your review, or schedule a call with us.</p>
+      <a class="btn help-cta" href="https://calendly.com/eberteo/new-meeting" target="_blank" rel="noopener">Schedule a call</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="hm-wrap">
+        <table class="hmatrix">
+          <caption class="sr">Which harness each ServiceNow SKU gives you</caption>
+          <thead>
+            <tr><th scope="col">SKU</th><th scope="col" class="hc"><span class="c-mw">Moveworks harness</span></th><th scope="col" class="hc"><span class="c-sn">Now Assist harness</span></th><th scope="col">For</th></tr>
+          </thead>
+          <tbody>
+            <tr class="hm-group"><th colspan="4" scope="colgroup">Current packaging</th></tr>
+            <tr>
+              <th scope="row"><span class="hm-sku">EmployeeWorks</span></th>
+              <td class="hc" data-h="Moveworks"><span class="hd on-mw" role="img" aria-label="Moveworks harness"></span><span class="hd-l">Moveworks</span></td>
+              <td class="hc" data-h="Now Assist"><span class="hd off" role="img" aria-label="No Now Assist harness">–</span><span class="hd-l off">No Now Assist</span></td>
+              <td class="hf" data-h="For"><span class="hm-dash" aria-hidden="true">–</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="hm-sku">ITSM Foundation / Advanced</span></th>
+              <td class="hc" data-h="Moveworks"><span class="hd on-mw" role="img" aria-label="Moveworks harness"></span><span class="hd-l">Moveworks</span></td>
+              <td class="hc" data-h="Now Assist"><span class="hd on-sn" role="img" aria-label="Now Assist harness"></span><span class="hd-l">Now Assist</span></td>
+              <td class="hf" data-h="For"><span class="hm-scope">IT · built-in</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="hm-sku">ITSM Prime</span></th>
+              <td class="hc" data-h="Moveworks"><span class="hd on-mw" role="img" aria-label="Moveworks harness"></span><span class="hd-l">Moveworks</span></td>
+              <td class="hc" data-h="Now Assist"><span class="hd on-sn" role="img" aria-label="Now Assist harness"></span><span class="hd-l">Now Assist</span></td>
+              <td class="hf" data-h="For"><span class="hm-scope">IT · custom</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="hm-sku">HRSD AI Packages</span></th>
+              <td class="hc" data-h="Moveworks"><span class="hd on-mw" role="img" aria-label="Moveworks harness"></span><span class="hd-l">Moveworks</span></td>
+              <td class="hc" data-h="Now Assist"><span class="hd on-sn" role="img" aria-label="Now Assist harness"></span><span class="hd-l">Now Assist</span></td>
+              <td class="hf" data-h="For"><span class="hm-scope">HR</span></td>
+            </tr>
+          </tbody>
+          <tbody class="legacy">
+            <tr class="hm-group"><th colspan="4" scope="colgroup">Legacy contracts<span class="upg"><i class="upg-arrow" aria-hidden="true"></i>renews into Foundation, Advanced or Prime</span></th></tr>
+            <tr>
+              <th scope="row"><span class="hm-sku">Standard / Pro / Enterprise</span></th>
+              <td class="hc" data-h="Moveworks"><span class="hd off" role="img" aria-label="No Moveworks harness">–</span><span class="hd-l off">No Moveworks</span></td>
+              <td class="hc" data-h="Now Assist"><span class="hd off" role="img" aria-label="No Now Assist harness">–</span><span class="hd-l off">No Now Assist</span></td>
+              <td class="hf" data-h="For"><span class="hm-dash" aria-hidden="true">–</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="hm-sku">Pro Plus / Enterprise Plus</span></th>
+              <td class="hc" data-h="Moveworks"><span class="hd off" role="img" aria-label="No Moveworks harness">–</span><span class="hd-l off">No Moveworks</span></td>
+              <td class="hc" data-h="Now Assist"><span class="hd on-sn" role="img" aria-label="Now Assist harness"></span><span class="hd-l">Now Assist</span></td>
+              <td class="hf" data-h="For"><span class="hm-dash" aria-hidden="true">–</span></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="hm-group"><th colspan="4" scope="colgroup">Standalone</th></tr>
+            <tr>
+              <th scope="row"><span class="hm-sku">Moveworks</span></th>
+              <td class="hc" data-h="Moveworks"><span class="hd off" role="img" aria-label="No Moveworks harness">–</span><span class="hd-l off">No Moveworks</span></td>
+              <td class="hc" data-h="Now Assist"><span class="hd off" role="img" aria-label="No Now Assist harness">–</span><span class="hd-l off">No Now Assist</span></td>
+              <td class="hf" data-h="For"><span class="hm-scope">Moveworks without Otto</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap foot-inner">
+    <p>© 2026 Cali Live Play LLC</p>
+    <p><a href="https://www.linkedin.com/company/caliliveplay/">LinkedIn</a> · <a href="https://eberteogam.github.io">Engineering notes</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
