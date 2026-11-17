@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EmployeeWorks plugins — CLP</title>
-<meta name="description" content="Ready-to-use plugins for EmployeeWorks from CLP: UKG, Workday, SailPoint ISC and SAP. Download the XML and import it.">
+<meta name="description" content="Ready-to-use plugins for EmployeeWorks from CLP: UKG, Workday, SailPoint, SAP, Microsoft, ServiceNow, Jira, DocuSign, Stripe, Jotform, Bynder and ADP. Download the XML and import it.">
 <link rel="canonical" href="https://eberteogam.github.io/services/servicenow/plugins/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../sub.css?v=6">
+<link rel="stylesheet" href="../sub.css?v=11">
 </head>
 <body>
 
@@ -40,84 +40,541 @@
 
   <section>
     <div class="wrap">
-      <div class="vendor" style="margin-top:0">
-        <h2><span class="v-logo"><img src="../img/logo-ukg.svg" alt="" loading="lazy"></span>UKG</h2>
-        <div class="pgrid">
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">ukg_accruals_balance</span></span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>Employees ask “How much vacation, sick or personal leave do I have?” and get their current balance from UKG.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">ukg_time_off_request</span></span><span class="p-counts" aria-label="5 HTTP actions, 2 compound actions, 1 conversational process"><span>5<i class="dot h"></i></span><span>2<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>Employees request time off in the chat. Before it’s sent, they see the type, the dates and who will approve it. Then it goes to their manager.</p>
-          </article>
+      <nav class="flt" aria-label="Filter">
+        <div class="flt-row">
+          <span class="flt-k" id="flt-bk">Brand</span>
+          <div class="flt-chips" role="group" aria-labelledby="flt-bk">
+            <button type="button" class="chip chip-all" data-b="" aria-pressed="true">All brands</button>
+            <button type="button" class="chip chip-logo" data-b="ukg" aria-pressed="false" title="UKG"><img src="../img/logo-ukg.svg" alt="UKG"></button>
+            <button type="button" class="chip chip-logo" data-b="workday" aria-pressed="false" title="Workday"><img src="../img/logo-workday.svg" alt="Workday"></button>
+            <button type="button" class="chip chip-logo" data-b="sailpoint" aria-pressed="false" title="SailPoint"><img src="../img/logo-sailpoint.svg" alt="SailPoint"></button>
+            <button type="button" class="chip chip-logo" data-b="sap" aria-pressed="false" title="SAP"><img src="../img/logo-sap.svg" alt="SAP"></button>
+            <button type="button" class="chip chip-logo" data-b="microsoft" aria-pressed="false" title="Microsoft"><img src="../img/logo-microsoft.svg" alt="Microsoft"></button>
+            <button type="button" class="chip chip-logo" data-b="servicenow" aria-pressed="false" title="ServiceNow"><img src="../img/logo-servicenow.svg" alt="ServiceNow"></button>
+            <button type="button" class="chip chip-logo" data-b="jira" aria-pressed="false" title="Atlassian Jira"><img src="../img/logo-jira.svg" alt="Atlassian Jira"></button>
+            <button type="button" class="chip chip-logo" data-b="docusign" aria-pressed="false" title="DocuSign"><img src="../img/logo-docusign.svg" alt="DocuSign"></button>
+            <button type="button" class="chip chip-logo" data-b="stripe" aria-pressed="false" title="Stripe"><img src="../img/logo-stripe.svg" alt="Stripe"></button>
+            <button type="button" class="chip chip-logo" data-b="jotform" aria-pressed="false" title="Jotform"><img src="../img/logo-jotform.svg" alt="Jotform"></button>
+            <button type="button" class="chip chip-logo" data-b="bynder" aria-pressed="false" title="Bynder"><img src="../img/logo-bynder.svg" alt="Bynder"></button>
+            <button type="button" class="chip chip-logo" data-b="adp" aria-pressed="false" title="ADP Workforce Now"><img src="../img/logo-adp.svg" alt="ADP Workforce Now"></button>
+          </div>
+        </div>
+        <div class="flt-row flt-lic" hidden>
+          <span class="flt-k" id="flt-lk">License</span>
+          <div class="flt-chips" role="group" aria-labelledby="flt-lk">
+            <button type="button" class="chip" data-for="ukg" data-l="" aria-pressed="true" hidden>All UKG</button>
+            <button type="button" class="chip" data-for="ukg" data-l="ukg-pro" aria-pressed="false" hidden>UKG Pro</button>
+            <button type="button" class="chip" data-for="ukg" data-l="ukg-pro-workforce-management" aria-pressed="false" hidden>UKG Pro Workforce Management</button>
+            <button type="button" class="chip" data-for="ukg" data-l="ukg-ready" aria-pressed="false" hidden>UKG Ready</button>
+            <button type="button" class="chip" data-for="workday" data-l="" aria-pressed="true" hidden>All Workday</button>
+            <button type="button" class="chip" data-for="workday" data-l="workday-hcm-core" aria-pressed="false" hidden>Workday HCM · Core</button>
+            <button type="button" class="chip" data-for="workday" data-l="workday-absence-management" aria-pressed="false" hidden>Workday Absence Management</button>
+            <button type="button" class="chip" data-for="workday" data-l="workday-time-tracking" aria-pressed="false" hidden>Workday Time Tracking</button>
+            <button type="button" class="chip" data-for="workday" data-l="workday-payroll" aria-pressed="false" hidden>Workday Payroll</button>
+            <button type="button" class="chip" data-for="workday" data-l="workday-expenses-spend-mgmt" aria-pressed="false" hidden>Workday Expenses (Spend Mgmt)</button>
+            <button type="button" class="chip" data-for="workday" data-l="workday-procurement-spend-mgmt" aria-pressed="false" hidden>Workday Procurement (Spend Mgmt)</button>
+            <button type="button" class="chip" data-for="workday" data-l="workday-financial-management" aria-pressed="false" hidden>Workday Financial Management</button>
+            <button type="button" class="chip" data-for="sailpoint" data-l="" aria-pressed="true" hidden>All SailPoint</button>
+            <button type="button" class="chip" data-for="sailpoint" data-l="sailpoint-identity-security" aria-pressed="false" hidden>SailPoint Identity Security</button>
+            <button type="button" class="chip" data-for="sailpoint" data-l="sailpoint-identityiq" aria-pressed="false" hidden>SailPoint IdentityIQ</button>
+            <button type="button" class="chip" data-for="sailpoint" data-l="sailpoint-entro" aria-pressed="false" hidden>SailPoint Entro</button>
+            <button type="button" class="chip" data-for="sap" data-l="" aria-pressed="true" hidden>All SAP</button>
+            <button type="button" class="chip" data-for="sap" data-l="sap-s-4hana" aria-pressed="false" hidden>SAP S/4HANA</button>
+            <button type="button" class="chip" data-for="sap" data-l="sap-concur" aria-pressed="false" hidden>SAP Concur</button>
+            <button type="button" class="chip" data-for="sap" data-l="sap-successfactors-employee-central" aria-pressed="false" hidden>SAP SuccessFactors · Employee Central</button>
+            <button type="button" class="chip" data-for="sap" data-l="sap-ec-payroll" aria-pressed="false" hidden>SAP EC Payroll</button>
+            <button type="button" class="chip" data-for="microsoft" data-l="" aria-pressed="true" hidden>All Microsoft</button>
+            <button type="button" class="chip" data-for="microsoft" data-l="microsoft-entra-id" aria-pressed="false" hidden>Microsoft Entra ID</button>
+            <button type="button" class="chip" data-for="microsoft" data-l="power-automate" aria-pressed="false" hidden>Power Automate</button>
+          </div>
+        </div>
+        <p class="flt-count" aria-live="polite"></p>
+      </nav>
+      <div class="vendor" data-fb="ukg">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-ukg.svg" alt="UKG" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="ukg-pro">
+          <h3 class="v-group">UKG Pro</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="ukg-pro" data-chat>
+              <div class="p-head"><span class="p-name">ukg_pro_pto_balance</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “How much PTO do I have left this year?” and get their plan balances.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_pro_pto_balance" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-pro" data-chat>
+              <div class="p-head"><span class="p-name">ukg_pro_manager_lookup</span><span class="p-counts" aria-label="2 HTTP actions, 0 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>0<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Who is my manager?” and get their supervisor’s name, title and location.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_pro_manager_lookup" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-pro" data-chat>
+              <div class="p-head"><span class="p-name">ukg_pro_pay_statement</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Show me my last pay statement” and get the period and net-pay summary.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_pro_pay_statement" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-pro" data-chat>
+              <div class="p-head"><span class="p-name">ukg_pro_employment_details</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “When was I hired?” and get hire date, position and tenure on file.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_pro_employment_details" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="ukg-pro-workforce-management">
+          <h3 class="v-group">UKG Pro Workforce Management</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="ukg-pro-workforce-management" data-chat>
+              <div class="p-head"><span class="p-name">ukg_prowfm_accruals_balance</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “How much vacation, sick or personal leave do I have?” and get their current balance from the WFM accruals engine.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_prowfm_accruals_balance" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-pro-workforce-management" data-chat>
+              <div class="p-head"><span class="p-name">ukg_prowfm_time_off_request</span><span class="p-counts" aria-label="5 HTTP actions, 2 compound actions, 1 conversational process"><span>5<i class="dot h"></i></span><span>2<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees say “I want Friday off” and see the type, dates and who will approve it before it’s sent. Then it goes to their manager.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_prowfm_time_off_request" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-pro-workforce-management" data-chat>
+              <div class="p-head"><span class="p-name">ukg_prowfm_timeoff_approvals</span><span class="p-counts" aria-label="4 HTTP actions, 1 compound actions, 1 conversational process"><span>4<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Managers ask “What time-off requests are waiting on me?” and approve or reject them in the chat.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_prowfm_timeoff_approvals" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-pro-workforce-management" data-chat>
+              <div class="p-head"><span class="p-name">ukg_prowfm_my_schedule</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “When do I work this week?” and get their upcoming shifts.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_prowfm_my_schedule" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-pro-workforce-management" data-chat>
+              <div class="p-head"><span class="p-name">ukg_prowfm_timecard_status</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Did my punch go through?” and get timecard exceptions to fix before payroll runs.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_prowfm_timecard_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-pro-workforce-management" data-chat>
+              <div class="p-head"><span class="p-name">ukg_prowfm_team_absence</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Managers ask “Who’s off today?” and get the team’s absences for the week.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_prowfm_team_absence" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="ukg-ready">
+          <h3 class="v-group">UKG Ready</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="ukg-ready" data-chat>
+              <div class="p-head"><span class="p-name">ukg_ready_time_off_balance</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “How much time off do I have?” and get their accrual balances.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_ready_time_off_balance" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-ready" data-chat>
+              <div class="p-head"><span class="p-name">ukg_ready_time_off_request</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees say “Book me off next Monday” and the request routes to their manager for approval.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_ready_time_off_request" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="ukg-ready" data-chat>
+              <div class="p-head"><span class="p-name">ukg_ready_my_schedule</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “What’s my schedule?” and get upcoming shifts and changes.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_ukg_ready_my_schedule" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
         </div>
       </div>
-      <div class="vendor">
-        <h2><span class="v-logo"><img src="../img/logo-workday.svg" alt="" loading="lazy"></span>Workday</h2>
-        <div class="pgrid">
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">workday_worker_lookup</span></span><span class="p-counts" aria-label="2 HTTP actions, 0 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>0<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>“Who is Jordan’s manager?” Shows a coworker’s manager, job title and location.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">workday_time_off_balance</span></span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>“How much time off do I have?” Shows the employee’s balances from Workday.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">workday_request_time_off</span></span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>Employees pick the type of time off and the dates, confirm, and the request goes into Workday for approval.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">workday_direct_reports</span></span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>Managers ask “Who reports to me?” and see their team.</p>
-          </article>
+      <div class="vendor" data-fb="workday">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-workday.svg" alt="Workday" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="workday-hcm-core">
+          <h3 class="v-group">Workday HCM · Core</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="workday-hcm-core" data-chat>
+              <div class="p-head"><span class="p-name">workday_worker_lookup</span><span class="p-counts" aria-label="2 HTTP actions, 0 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>0<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Who is Jordan’s manager?” and get a coworker’s manager, job title and location.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_workday_worker_lookup" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="workday-hcm-core" data-chat>
+              <div class="p-head"><span class="p-name">workday_direct_reports</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Managers ask “Who reports to me?” and see their team.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_workday_direct_reports" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="workday-hcm-core" data-chat>
+              <div class="p-head"><span class="p-name">wd_inbox_approvals</span><span class="p-counts" aria-label="4 HTTP actions, 1 compound actions, 1 conversational process"><span>4<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Managers ask “What’s in my Workday inbox?” and approve or send back time-off, expense and other tasks from the chat. One plugin covers approvals across modules, because Workday routes them all through the inbox.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_wd_inbox_approvals" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="workday-absence-management">
+          <h3 class="v-group">Workday Absence Management</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="workday-absence-management" data-chat>
+              <div class="p-head"><span class="p-name">workday_time_off_balance</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “How much time off do I have?” and get their balances from Workday.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_workday_time_off_balance" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="workday-absence-management" data-chat>
+              <div class="p-head"><span class="p-name">workday_request_time_off</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees say “Request next Friday off as vacation,” confirm type and dates, and it goes in for approval.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_workday_request_time_off" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="workday-time-tracking">
+          <h3 class="v-group">Workday Time Tracking</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="workday-time-tracking" data-chat>
+              <div class="p-head"><span class="p-name">wd_clock_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Did I clock in? How many hours this week?” and get their time entries and totals.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_wd_clock_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="workday-payroll">
+          <h3 class="v-group">Workday Payroll</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="workday-payroll" data-chat>
+              <div class="p-head"><span class="p-name">wd_payslip</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Show my latest payslip” and get net pay and the period summary.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_wd_payslip" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="workday-expenses-spend-mgmt">
+          <h3 class="v-group">Workday Expenses (Spend Mgmt)</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="workday-expenses-spend-mgmt" data-chat>
+              <div class="p-head"><span class="p-name">wd_expense_report_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Was my expense report approved?” and get the status of each report.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_wd_expense_report_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="workday-expenses-spend-mgmt" data-chat>
+              <div class="p-head"><span class="p-name">wd_create_expense</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees say “Start an expense report for my San José trip” and get a draft waiting to finish in Workday.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_wd_create_expense" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="workday-procurement-spend-mgmt">
+          <h3 class="v-group">Workday Procurement (Spend Mgmt)</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="workday-procurement-spend-mgmt" data-chat>
+              <div class="p-head"><span class="p-name">wd_po_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Requesters ask “Where’s my purchase order?” and get its status and the supplier.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_wd_po_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="workday-financial-management">
+          <h3 class="v-group">Workday Financial Management</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="workday-financial-management" data-chat>
+              <div class="p-head"><span class="p-name">wd_supplier_invoice_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Has invoice 4471 been paid?” and get where it stands with accounts payable.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_wd_supplier_invoice_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
         </div>
       </div>
-      <div class="vendor">
-        <h2><span class="v-logo"><img src="../img/logo-sailpoint.svg" alt="" loading="lazy"></span>SailPoint ISC <small>Human Fabric + Agentic Fabric</small></h2>
-        <div class="pgrid">
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">sailpoint_request_access</span></span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>“I need access to the finance share.” Employees find the access they need and request it. It follows the normal approval path.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">sailpoint_request_status</span></span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>“Where is my access request?” Shows where it stands and who it’s waiting on.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">sailpoint_access_approvals</span></span><span class="p-counts" aria-label="4 HTTP actions, 1 compound actions, 1 conversational process"><span>4<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>Approvers see the requests waiting on them and approve or reject them in the chat.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">sailpoint_my_access_reviews</span></span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>Reviewers see which access reviews they owe and how much is left, with a link to finish them in SailPoint.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">sailpoint_machine_accounts_i_own</span></span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>Owners see the service accounts and bots they’re responsible for, and can hand one to a new owner. <em>Needs Agentic Fabric, or the older Machine Identity Security add-on.</em></p>
-          </article>
+      <div class="vendor" data-fb="sailpoint">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-sailpoint.svg" alt="SailPoint" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="sailpoint-identity-security sailpoint-identityiq">
+          <h3 class="v-group">SailPoint Identity Security</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="sailpoint-identity-security sailpoint-identityiq" data-chat>
+              <div class="p-head"><span class="p-name">sp_request_access</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Human Fabric ✓ · IIQ ✓ via LCM workflow</p>
+              <p>Employees say “I need access to the finance share,” find the right item and request it. It follows the normal approval path.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sp_request_access" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="sailpoint-identity-security sailpoint-identityiq" data-chat>
+              <div class="p-head"><span class="p-name">sp_request_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Human Fabric ✓ · IIQ via workflow results or bridge</p>
+              <p>Employees ask “Where is my access request?” and see where it stands and who it’s waiting on.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sp_request_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="sailpoint-identity-security sailpoint-identityiq" data-chat>
+              <div class="p-head"><span class="p-name">sp_access_approvals</span><span class="p-counts" aria-label="4 HTTP actions, 1 compound actions, 1 conversational process"><span>4<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Human Fabric ✓ · IIQ via bridge</p>
+              <p>Approvers ask “What’s waiting on me?” and approve or reject in the chat.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sp_access_approvals" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="sailpoint-identity-security sailpoint-identityiq" data-chat>
+              <div class="p-head"><span class="p-name">sp_my_access_reviews</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Human Fabric ✓ · IIQ via bridge</p>
+              <p>Reviewers ask “Which access reviews do I owe?” and get progress plus a link to finish them.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sp_my_access_reviews" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="sailpoint-identity-security" data-chat>
+              <div class="p-head"><span class="p-name">sp_machine_accounts_i_own</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Agentic Fabric required · IIQ not possible</p>
+              <p>Owners ask “What service accounts am I responsible for?” and can hand one to a new owner.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sp_machine_accounts_i_own" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="sailpoint-identityiq">
+          <h3 class="v-group">SailPoint IdentityIQ</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="sailpoint-identityiq">
+              <div class="p-head"><span class="p-name">clp_iiq_bridge</span><span class="p-kind">IIQ bridge</span></div>
+              <p class="p-note">IdentityIQ 8.5/9.0</p>
+              <p>Not a chat plugin: the IIQ JAR exposing approvals and certification REST endpoints that powers the “via bridge” rows above.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_clp_iiq_bridge" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="sailpoint-entro">
+          <h3 class="v-group">SailPoint Entro</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="sailpoint-entro" data-chat>
+              <div class="p-head"><span class="p-name">entro_secrets_i_own</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Owners ask “What secrets and tokens am I responsible for?” and get their inventory with risk level.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_entro_secrets_i_own" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="sailpoint-entro" data-chat>
+              <div class="p-head"><span class="p-name">entro_my_findings</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Owners ask “Do I have any exposed secrets?” and get open findings with severity.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_entro_my_findings" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
         </div>
       </div>
-      <div class="vendor">
-        <h2><span class="v-logo"><img src="../img/logo-sap.svg" alt="" loading="lazy"></span>SAP</h2>
-        <div class="pgrid">
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">sap_s4_po_status</span><span class="p-prod">S/4HANA</span></span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>“Where’s my purchase order?” Shows its status and the supplier.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">sap_concur_expense_status</span><span class="p-prod">Concur</span></span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>“Was my expense report approved?” Shows the status of the employee’s expense reports.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">sap_sf_time_off_balance</span><span class="p-prod">SuccessFactors</span></span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>“How much time off do I have?” for companies on SuccessFactors.</p>
-          </article>
-          <article class="pcard">
-            <div class="p-head"><span><span class="p-name">sap_sf_request_time_off</span><span class="p-prod">SuccessFactors</span></span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
-            <p>Employees request time off in SuccessFactors from the chat.</p>
-          </article>
+      <div class="vendor" data-fb="sap">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-sap.svg" alt="SAP" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="sap-s-4hana">
+          <h3 class="v-group">SAP S/4HANA</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="sap-s-4hana" data-chat>
+              <div class="p-head"><span class="p-name">sap_s4_po_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Buyers ask “Where’s my purchase order?” and get its status and the supplier.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sap_s4_po_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="sap-concur">
+          <h3 class="v-group">SAP Concur</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="sap-concur" data-chat>
+              <div class="p-head"><span class="p-name">sap_concur_expense_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Was my expense report approved?” and get the status of each report.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sap_concur_expense_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="sap-concur" data-chat>
+              <div class="p-head"><span class="p-name">sap_concur_expense_approvals</span><span class="p-counts" aria-label="4 HTTP actions, 1 compound actions, 1 conversational process"><span>4<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Approvers ask “Which expense reports are waiting on me?” and approve or send back in the chat.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sap_concur_expense_approvals" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="sap-concur" data-chat>
+              <div class="p-head"><span class="p-name">sap_concur_quick_expense</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees say “Expense this $23 lunch” and a quick expense lands in Concur ready to attach to a report.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sap_concur_quick_expense" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="sap-successfactors-employee-central">
+          <h3 class="v-group">SAP SuccessFactors · Employee Central</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="sap-successfactors-employee-central" data-chat>
+              <div class="p-head"><span class="p-name">sap_sf_time_off_balance</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “How much time off do I have?” and get balances from Employee Central.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sap_sf_time_off_balance" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="sap-successfactors-employee-central" data-chat>
+              <div class="p-head"><span class="p-name">sap_sf_request_time_off</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees say “Request Dec 26 as vacation” and the request lands in SuccessFactors for approval.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sap_sf_request_time_off" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="sap-successfactors-employee-central" data-chat>
+              <div class="p-head"><span class="p-name">sap_sf_timeoff_approvals</span><span class="p-counts" aria-label="4 HTTP actions, 1 compound actions, 1 conversational process"><span>4<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Managers ask “What requests are pending my approval?” and approve or reject them in the chat.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sap_sf_timeoff_approvals" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="sap-ec-payroll">
+          <h3 class="v-group">SAP EC Payroll</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="sap-ec-payroll" data-chat>
+              <div class="p-head"><span class="p-name">sap_sf_pay_statement</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Needs EC Payroll, its own licensed product</p>
+              <p>Employees ask “Show my payslip” and get net pay for the period.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_sap_sf_pay_statement" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="vendor" data-fb="microsoft">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-microsoft.svg" alt="Microsoft" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="microsoft-entra-id">
+          <h3 class="v-group">Microsoft Entra ID</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="microsoft-entra-id" data-chat>
+              <div class="p-head"><span class="p-name">entra_my_groups</span><span class="p-counts" aria-label="2 HTTP actions, 0 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>0<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “What groups am I in?” and get their group and team memberships.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_entra_my_groups" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="microsoft-entra-id" data-chat>
+              <div class="p-head"><span class="p-name">entra_access_package_request</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Needs Entra ID Governance</p>
+              <p>Employees say “I need the Finance Analysts access package” and request it through entitlement management.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_entra_access_package_request" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="microsoft-entra-id" data-chat>
+              <div class="p-head"><span class="p-name">entra_access_approvals</span><span class="p-counts" aria-label="4 HTTP actions, 1 compound actions, 1 conversational process"><span>4<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Needs Entra ID Governance</p>
+              <p>Approvers ask “What access requests are waiting on me?” and approve or deny in the chat.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_entra_access_approvals" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+        <div class="v-grp" data-fl="power-automate">
+          <h3 class="v-group">Power Automate</h3>
+          <div class="pgrid">
+            <article class="pcard" data-fl="power-automate" data-chat>
+              <div class="p-head"><span class="p-name">m365_pending_approvals</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “What approvals are waiting on me?” and act on Power Automate approvals from the chat.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_m365_pending_approvals" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="vendor" data-fb="servicenow">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-servicenow.svg" alt="ServiceNow" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="servicenow">
+          <div class="pgrid">
+            <article class="pcard" data-fl="servicenow" data-chat>
+              <div class="p-head"><span class="p-name">snow_ticket_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Where’s my incident?” and get its state, assignee and latest comment.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_snow_ticket_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="servicenow" data-chat>
+              <div class="p-head"><span class="p-name">snow_my_approvals</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Approvers ask “What’s waiting on me?” and approve or reject in the chat.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_snow_my_approvals" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="servicenow" data-chat>
+              <div class="p-head"><span class="p-name">snow_walkup_checkin</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Needs Walk-up Experience</p>
+              <p>Employees say “Check me in for the IT help desk” and get their queue spot and wait estimate.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_snow_walkup_checkin" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="vendor" data-fb="jira">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-jira.svg" alt="Atlassian Jira" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="atlassian-jira">
+          <div class="pgrid">
+            <article class="pcard" data-fl="atlassian-jira" data-chat>
+              <div class="p-head"><span class="p-name">jira_my_issues</span><span class="p-counts" aria-label="2 HTTP actions, 0 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>0<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “What’s assigned to me?” and get their open issues with status.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_jira_my_issues" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="atlassian-jira" data-chat>
+              <div class="p-head"><span class="p-name">jira_ticket_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Where’s PROJ-123?” and get its status, assignee and last comment.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_jira_ticket_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="atlassian-jira" data-chat>
+              <div class="p-head"><span class="p-name">jira_create_issue</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees say “Report a bug: the login page is broken” and an issue is created in the right project.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_jira_create_issue" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="atlassian-jira" data-chat>
+              <div class="p-head"><span class="p-name">jira_jsm_approvals</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p class="p-note">Needs Jira Service Management</p>
+              <p>Approvers ask “What requests are waiting on me?” and approve or decline in the chat.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_jira_jsm_approvals" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="vendor" data-fb="docusign">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-docusign.svg" alt="DocuSign" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="docusign">
+          <div class="pgrid">
+            <article class="pcard" data-fl="docusign" data-chat>
+              <div class="p-head"><span class="p-name">docusign_envelope_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Where’s my signature request?” and get who has signed and who it’s waiting on.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_docusign_envelope_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="docusign" data-chat>
+              <div class="p-head"><span class="p-name">docusign_my_pending_signatures</span><span class="p-counts" aria-label="2 HTTP actions, 0 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>0<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “What do I need to sign?” and get the envelopes waiting on them with signing links.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_docusign_my_pending_signatures" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="docusign" data-chat>
+              <div class="p-head"><span class="p-name">docusign_send_reminder</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees say “Remind the signers on the vendor contract” and the outstanding recipients get a nudge.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_docusign_send_reminder" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="vendor" data-fb="stripe">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-stripe.svg" alt="Stripe" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="stripe">
+          <div class="pgrid">
+            <article class="pcard" data-fl="stripe" data-chat>
+              <div class="p-head"><span class="p-name">stripe_payment_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Staff ask “Did the payment for permit 123 go through?” and get the charge status.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_stripe_payment_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="stripe" data-chat>
+              <div class="p-head"><span class="p-name">stripe_refund_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Staff ask “Where’s the refund for receipt 4471?” and get its state and expected date.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_stripe_refund_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="vendor" data-fb="jotform">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-jotform.svg" alt="Jotform" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="jotform">
+          <div class="pgrid">
+            <article class="pcard" data-fl="jotform" data-chat>
+              <div class="p-head"><span class="p-name">jotform_submission_status</span><span class="p-counts" aria-label="2 HTTP actions, 0 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>0<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Staff ask “Did the vendor submit the W-9 form?” and get the submission status and a link.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_jotform_submission_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="vendor" data-fb="bynder">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-bynder.svg" alt="Bynder" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="bynder">
+          <div class="pgrid">
+            <article class="pcard" data-fl="bynder" data-chat>
+              <div class="p-head"><span class="p-name">bynder_asset_search</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Find the latest approved logo, dark version” and get matching assets with preview links.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_bynder_asset_search" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="bynder" data-chat>
+              <div class="p-head"><span class="p-name">bynder_usage_rights</span><span class="p-counts" aria-label="2 HTTP actions, 0 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>0<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Can I use this photo in a paid campaign?” and get the asset’s license and usage terms.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_bynder_usage_rights" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="bynder" data-chat>
+              <div class="p-head"><span class="p-name">bynder_upload_status</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Was my upload approved?” and get where it sits in the review workflow.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_bynder_upload_status" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="vendor" data-fb="adp">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-adp.svg" alt="ADP Workforce Now" loading="lazy"></span></h2>
+        <div class="v-grp" data-fl="adp-workforce-now">
+          <h3 class="v-group">ADP Workforce Now</h3>
+          <p class="v-note">Partner-gated API: collections verify against client-supplied credentials.</p>
+          <div class="pgrid">
+            <article class="pcard" data-fl="adp-workforce-now" data-chat>
+              <div class="p-head"><span class="p-name">adp_pay_statement</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “Show my last pay statement” and get the period and net-pay summary.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_adp_pay_statement" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="adp-workforce-now" data-chat>
+              <div class="p-head"><span class="p-name">adp_time_off_balance</span><span class="p-counts" aria-label="2 HTTP actions, 1 compound actions, 1 conversational process"><span>2<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees ask “How much PTO do I have?” and get their balances.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_adp_time_off_balance" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+            <article class="pcard" data-fl="adp-workforce-now" data-chat>
+              <div class="p-head"><span class="p-name">adp_time_off_request</span><span class="p-counts" aria-label="3 HTTP actions, 1 compound actions, 1 conversational process"><span>3<i class="dot h"></i></span><span>1<i class="dot c"></i></span><span>1<i class="dot p"></i></span></span></div>
+              <p>Employees say “Request Thursday off” and the request goes to their manager for approval.</p>
+              <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="plugin_adp_time_off_request" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Download</a>
+            </article>
+          </div>
         </div>
       </div>
     </div>
@@ -129,6 +586,37 @@
       <img src="../img/stack.png" alt="Moveworks harness builds plugins in Agent Studio, or Now Assist harness builds AI agents in AI Agent Studio; both feed CI/CD. CI/CD on your agents is what differentiates us from others." width="1121" height="653" loading="lazy">
     </div>
   </section>
+
+<script>
+(function(){
+  var bar=document.querySelector('.flt');if(!bar)return;
+  var licRow=bar.querySelector('.flt-lic'),out=bar.querySelector('.flt-count');
+  var st={b:'',l:''};
+  var q=new URLSearchParams(location.search);
+  if(bar.querySelector('[data-b="'+(q.get('brand')||'')+'"]'))st.b=q.get('brand')||'';
+  if(st.b&&bar.querySelector('[data-for="'+st.b+'"][data-l="'+(q.get('license')||'')+'"]'))st.l=q.get('license')||'';
+  function apply(){
+    bar.querySelectorAll('[data-b]').forEach(function(c){c.setAttribute('aria-pressed',String(c.getAttribute('data-b')===st.b));});
+    var lic=bar.querySelectorAll('[data-for]'),any=false;
+    lic.forEach(function(c){var on=c.getAttribute('data-for')===st.b;c.hidden=!on;if(on)any=true;c.setAttribute('aria-pressed',String(on&&c.getAttribute('data-l')===st.l));});
+    licRow.hidden=!any;
+    document.querySelectorAll('[data-fb]').forEach(function(el){el.hidden=!!st.b&&el.getAttribute('data-fb')!==st.b;});
+    document.querySelectorAll('[data-fl]').forEach(function(el){el.hidden=!!st.l&&el.getAttribute('data-fl').split(' ').indexOf(st.l)<0;});
+    bar.toggleAttribute('data-active',!!st.b);
+    out.textContent=(function(){var n=[].slice.call(document.querySelectorAll('.pcard[data-chat]')).filter(function(el){return !el.closest('[hidden]');}).length;return 'Showing '+n+' '+(n===1?'plugin':'plugins');})();
+    var u=new URL(location.href);u.searchParams.delete('brand');u.searchParams.delete('license');
+    if(st.b)u.searchParams.set('brand',st.b);if(st.l)u.searchParams.set('license',st.l);
+    history.replaceState(null,'',u);
+  }
+  bar.addEventListener('click',function(e){
+    var c=e.target.closest('button');if(!c)return;
+    if(c.hasAttribute('data-b')){st.b=c.getAttribute('data-b');st.l='';}
+    else{st.l=c.getAttribute('data-l');}
+    apply();
+  });
+  apply();
+})();
+</script>
 </main>
 
 <footer class="site">

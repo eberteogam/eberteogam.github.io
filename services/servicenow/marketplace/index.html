@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>API Collection Marketplace — CLP</title>
-<meta name="description" content="CLP API Collection Marketplace: verified Bruno and Postman collections for UKG, Workday, SailPoint and SAP, checked around the clock.">
+<meta name="description" content="CLP API Collection Marketplace: verified Bruno and Postman collections for the systems behind our EmployeeWorks plugins, checked around the clock.">
 <link rel="canonical" href="https://eberteogam.github.io/services/servicenow/marketplace/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../sub.css?v=6">
+<link rel="stylesheet" href="../sub.css?v=11">
 </head>
 <body>
 
@@ -37,39 +37,446 @@
 
   <section>
     <div class="wrap">
+      <nav class="flt" aria-label="Filter">
+        <div class="flt-row">
+          <span class="flt-k" id="flt-bk">Brand</span>
+          <div class="flt-chips" role="group" aria-labelledby="flt-bk">
+            <button type="button" class="chip chip-all" data-b="" aria-pressed="true">All brands</button>
+            <button type="button" class="chip chip-logo" data-b="ukg" aria-pressed="false" title="UKG"><img src="../img/logo-ukg.svg" alt="UKG"></button>
+            <button type="button" class="chip chip-logo" data-b="workday" aria-pressed="false" title="Workday"><img src="../img/logo-workday.svg" alt="Workday"></button>
+            <button type="button" class="chip chip-logo" data-b="sailpoint" aria-pressed="false" title="SailPoint"><img src="../img/logo-sailpoint.svg" alt="SailPoint"></button>
+            <button type="button" class="chip chip-logo" data-b="sap" aria-pressed="false" title="SAP"><img src="../img/logo-sap.svg" alt="SAP"></button>
+            <button type="button" class="chip chip-logo" data-b="microsoft" aria-pressed="false" title="Microsoft"><img src="../img/logo-microsoft.svg" alt="Microsoft"></button>
+            <button type="button" class="chip chip-logo" data-b="servicenow" aria-pressed="false" title="ServiceNow"><img src="../img/logo-servicenow.svg" alt="ServiceNow"></button>
+            <button type="button" class="chip chip-logo" data-b="jira" aria-pressed="false" title="Atlassian Jira"><img src="../img/logo-jira.svg" alt="Atlassian Jira"></button>
+            <button type="button" class="chip chip-logo" data-b="docusign" aria-pressed="false" title="DocuSign"><img src="../img/logo-docusign.svg" alt="DocuSign"></button>
+            <button type="button" class="chip chip-logo" data-b="stripe" aria-pressed="false" title="Stripe"><img src="../img/logo-stripe.svg" alt="Stripe"></button>
+            <button type="button" class="chip chip-logo" data-b="jotform" aria-pressed="false" title="Jotform"><img src="../img/logo-jotform.svg" alt="Jotform"></button>
+            <button type="button" class="chip chip-logo" data-b="bynder" aria-pressed="false" title="Bynder"><img src="../img/logo-bynder.svg" alt="Bynder"></button>
+            <button type="button" class="chip chip-logo" data-b="adp" aria-pressed="false" title="ADP Workforce Now"><img src="../img/logo-adp.svg" alt="ADP Workforce Now"></button>
+          </div>
+        </div>
+        <div class="flt-row flt-lic" hidden>
+          <span class="flt-k" id="flt-lk">License</span>
+          <div class="flt-chips" role="group" aria-labelledby="flt-lk">
+            <button type="button" class="chip" data-for="ukg" data-l="" aria-pressed="true" hidden>All UKG</button>
+            <button type="button" class="chip" data-for="ukg" data-l="ukg-pro" aria-pressed="false" hidden>UKG Pro</button>
+            <button type="button" class="chip" data-for="ukg" data-l="ukg-pro-wfm" aria-pressed="false" hidden>UKG Pro WFM</button>
+            <button type="button" class="chip" data-for="ukg" data-l="ukg-ready" aria-pressed="false" hidden>UKG Ready</button>
+            <button type="button" class="chip" data-for="sailpoint" data-l="" aria-pressed="true" hidden>All SailPoint</button>
+            <button type="button" class="chip" data-for="sailpoint" data-l="sailpoint-identity-security" aria-pressed="false" hidden>SailPoint Identity Security</button>
+            <button type="button" class="chip" data-for="sailpoint" data-l="sailpoint-identityiq" aria-pressed="false" hidden>SailPoint IdentityIQ</button>
+            <button type="button" class="chip" data-for="sailpoint" data-l="sailpoint-entro" aria-pressed="false" hidden>SailPoint Entro</button>
+            <button type="button" class="chip" data-for="sap" data-l="" aria-pressed="true" hidden>All SAP</button>
+            <button type="button" class="chip" data-for="sap" data-l="sap-s4hana" aria-pressed="false" hidden>SAP S/4HANA</button>
+            <button type="button" class="chip" data-for="sap" data-l="sap-concur" aria-pressed="false" hidden>SAP Concur</button>
+            <button type="button" class="chip" data-for="sap" data-l="sap-successfactors" aria-pressed="false" hidden>SAP SuccessFactors</button>
+            <button type="button" class="chip" data-for="sap" data-l="sap-ec-payroll" aria-pressed="false" hidden>SAP EC Payroll</button>
+            <button type="button" class="chip" data-for="microsoft" data-l="" aria-pressed="true" hidden>All Microsoft</button>
+            <button type="button" class="chip" data-for="microsoft" data-l="microsoft-graph" aria-pressed="false" hidden>Microsoft Graph</button>
+            <button type="button" class="chip" data-for="microsoft" data-l="power-automate" aria-pressed="false" hidden>Power Automate</button>
+          </div>
+        </div>
+        <p class="flt-count" aria-live="polite"></p>
+      </nav>
       <div class="total">
-        <div><b>40</b><span>verified endpoints</span></div>
-        <p>You can create over <b>15</b> customized plugins with these endpoints.</p>
+        <div><b id="t-h">154</b><span>verified HTTP endpoints</span></div>
+        <p>You can create over <b id="t-n">62</b> customized <em id="t-w">plugins</em> with these endpoints.</p>
       </div>
-      <div class="cgrid">
-        <article class="ccard">
-          <span class="c-logo"><img src="../img/logo-ukg.svg" alt="" loading="lazy"></span>
-          <h2>UKG</h2>
-          
-          <p class="c-make">You can create over <b>2</b> customized plugins with these endpoints.</p>
-        </article>
-        <article class="ccard">
-          <span class="c-logo"><img src="../img/logo-workday.svg" alt="" loading="lazy"></span>
-          <h2>Workday</h2>
-          
-          <p class="c-make">You can create over <b>4</b> customized plugins with these endpoints.</p>
-        </article>
-        <article class="ccard">
-          <span class="c-logo"><img src="../img/logo-sailpoint.svg" alt="" loading="lazy"></span>
-          <h2>SailPoint ISC</h2>
-          <small>Human Fabric + Agentic Fabric</small>
-          <p class="c-make">You can create over <b>5</b> customized plugins with these endpoints.</p>
-        </article>
-        <article class="ccard">
-          <span class="c-logo"><img src="../img/logo-sap.svg" alt="" loading="lazy"></span>
-          <h2>SAP</h2>
-          <small>S/4HANA · Concur · SuccessFactors</small>
-          <p class="c-make">You can create over <b>4</b> customized plugins with these endpoints.</p>
-        </article>
+      <div class="vendor" data-fb="ukg">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-ukg.svg" alt="UKG" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="ukg-pro">
+            <h3>UKG Pro</h3>
+            <p class="c-math"><span><b>9</b><i class="dot h"></i>HTTP endpoints</span><span><b>4</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (4)</summary>
+              <ul>
+                <li><q>How much PTO do I have left this year?</q><code>ukg_pro_pto_balance</code></li>
+                <li><q>Who is my manager?</q><code>ukg_pro_manager_lookup</code></li>
+                <li><q>Show me my last pay statement</q><code>ukg_pro_pay_statement</code></li>
+                <li><q>When was I hired?</q><code>ukg_pro_employment_details</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>4</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_ukg-pro" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+          <article class="ccard" data-fl="ukg-pro-wfm">
+            <h3>UKG Pro WFM</h3>
+            <p class="c-math"><span><b>18</b><i class="dot h"></i>HTTP endpoints</span><span><b>6</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (6)</summary>
+              <ul>
+                <li><q>How much vacation, sick or personal leave do I have?</q><code>ukg_prowfm_accruals_balance</code></li>
+                <li><q>I want Friday off</q><code>ukg_prowfm_time_off_request</code></li>
+                <li><q>What time-off requests are waiting on me?</q><code>ukg_prowfm_timeoff_approvals</code></li>
+                <li><q>When do I work this week?</q><code>ukg_prowfm_my_schedule</code></li>
+                <li><q>Did my punch go through?</q><code>ukg_prowfm_timecard_status</code></li>
+                <li><q>Who’s off today?</q><code>ukg_prowfm_team_absence</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>6</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_ukg-pro-wfm" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+          <article class="ccard" data-fl="ukg-ready">
+            <h3>UKG Ready</h3>
+            <p class="c-math"><span><b>7</b><i class="dot h"></i>HTTP endpoints</span><span><b>3</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (3)</summary>
+              <ul>
+                <li><q>How much time off do I have?</q><code>ukg_ready_time_off_balance</code></li>
+                <li><q>Book me off next Monday</q><code>ukg_ready_time_off_request</code></li>
+                <li><q>What’s my schedule?</q><code>ukg_ready_my_schedule</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>3</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_ukg-ready" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="workday">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-workday.svg" alt="Workday" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="workday">
+            <h3>Workday</h3>
+            <p class="c-detail">HCM Core · Absence · Time Tracking · Payroll · Expenses · Procurement · Financials</p>
+            <p class="c-math"><span><b>26</b><i class="dot h"></i>HTTP endpoints</span><span><b>11</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (11)</summary>
+              <ul>
+                <li><q>Who is Jordan’s manager?</q><code>workday_worker_lookup</code></li>
+                <li><q>Who reports to me?</q><code>workday_direct_reports</code></li>
+                <li><q>What’s in my Workday inbox?</q><code>wd_inbox_approvals</code></li>
+                <li><q>How much time off do I have?</q><code>workday_time_off_balance</code></li>
+                <li><q>Request next Friday off as vacation,</q><code>workday_request_time_off</code></li>
+                <li><q>Did I clock in? How many hours this week?</q><code>wd_clock_status</code></li>
+                <li><q>Show my latest payslip</q><code>wd_payslip</code></li>
+                <li><q>Was my expense report approved?</q><code>wd_expense_report_status</code></li>
+                <li><q>Start an expense report for my San José trip</q><code>wd_create_expense</code></li>
+                <li><q>Where’s my purchase order?</q><code>wd_po_status</code></li>
+                <li><q>Has invoice 4471 been paid?</q><code>wd_supplier_invoice_status</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>11</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_workday" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="sailpoint">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-sailpoint.svg" alt="SailPoint" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="sailpoint-identity-security">
+            <h3>SailPoint Identity Security</h3>
+            <p class="c-detail">Human Fabric · Agentic Fabric</p>
+            <p class="c-math"><span><b>15</b><i class="dot h"></i>HTTP endpoints</span><span><b>5</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (5)</summary>
+              <ul>
+                <li><q>I need access to the finance share,</q><code>sp_request_access</code></li>
+                <li><q>Where is my access request?</q><code>sp_request_status</code></li>
+                <li><q>What’s waiting on me?</q><code>sp_access_approvals</code></li>
+                <li><q>Which access reviews do I owe?</q><code>sp_my_access_reviews</code></li>
+                <li><q>What service accounts am I responsible for?</q><code>sp_machine_accounts_i_own</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>5</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_sailpoint-identity-security" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+          <article class="ccard" data-fl="sailpoint-identityiq">
+            <h3>SailPoint IdentityIQ</h3>
+            <p class="c-math"><span><b>12</b><i class="dot h"></i>HTTP endpoints</span><span><b>4</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (4)</summary>
+              <ul>
+                <li><q>I need access to the finance share,</q><code>sp_request_access</code></li>
+                <li><q>Where is my access request?</q><code>sp_request_status</code></li>
+                <li><q>What’s waiting on me?</q><code>sp_access_approvals</code></li>
+                <li><q>Which access reviews do I owe?</q><code>sp_my_access_reviews</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>4</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_sailpoint-identityiq" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+          <article class="ccard" data-fl="sailpoint-entro">
+            <h3>SailPoint Entro</h3>
+            <p class="c-math"><span><b>4</b><i class="dot h"></i>HTTP endpoints</span><span><b>2</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (2)</summary>
+              <ul>
+                <li><q>What secrets and tokens am I responsible for?</q><code>entro_secrets_i_own</code></li>
+                <li><q>Do I have any exposed secrets?</q><code>entro_my_findings</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>2</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_sailpoint-entro" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="sap">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-sap.svg" alt="SAP" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="sap-s4hana">
+            <h3>SAP S/4HANA</h3>
+            <p class="c-detail">Two environment files: Public · Private</p>
+            <p class="c-math"><span><b>2</b><i class="dot h"></i>HTTP endpoints</span><span><b>1</b><i class="dot p"></i>conversational process</span></p>
+            <details class="c-samples">
+              <summary>See the conversation sample</summary>
+              <ul>
+                <li><q>Where’s my purchase order?</q><code>sap_s4_po_status</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>1</b> customized plugin with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_sap-s4hana" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+          <article class="ccard" data-fl="sap-concur">
+            <h3>SAP Concur</h3>
+            <p class="c-math"><span><b>8</b><i class="dot h"></i>HTTP endpoints</span><span><b>3</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (3)</summary>
+              <ul>
+                <li><q>Was my expense report approved?</q><code>sap_concur_expense_status</code></li>
+                <li><q>Which expense reports are waiting on me?</q><code>sap_concur_expense_approvals</code></li>
+                <li><q>Expense this $23 lunch</q><code>sap_concur_quick_expense</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>3</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_sap-concur" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+          <article class="ccard" data-fl="sap-successfactors">
+            <h3>SAP SuccessFactors</h3>
+            <p class="c-math"><span><b>9</b><i class="dot h"></i>HTTP endpoints</span><span><b>3</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (3)</summary>
+              <ul>
+                <li><q>How much time off do I have?</q><code>sap_sf_time_off_balance</code></li>
+                <li><q>Request Dec 26 as vacation</q><code>sap_sf_request_time_off</code></li>
+                <li><q>What requests are pending my approval?</q><code>sap_sf_timeoff_approvals</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>3</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_sap-successfactors" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+          <article class="ccard" data-fl="sap-ec-payroll">
+            <h3>SAP EC Payroll</h3>
+            <p class="c-math"><span><b>2</b><i class="dot h"></i>HTTP endpoints</span><span><b>1</b><i class="dot p"></i>conversational process</span></p>
+            <details class="c-samples">
+              <summary>See the conversation sample</summary>
+              <ul>
+                <li><q>Show my payslip</q><code>sap_sf_pay_statement</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>1</b> customized plugin with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_sap-ec-payroll" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="microsoft">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-microsoft.svg" alt="Microsoft" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="microsoft-graph">
+            <h3>Microsoft Graph</h3>
+            <p class="c-detail">Entra ID · Entra ID Governance</p>
+            <p class="c-math"><span><b>9</b><i class="dot h"></i>HTTP endpoints</span><span><b>3</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (3)</summary>
+              <ul>
+                <li><q>What groups am I in?</q><code>entra_my_groups</code></li>
+                <li><q>I need the Finance Analysts access package</q><code>entra_access_package_request</code></li>
+                <li><q>What access requests are waiting on me?</q><code>entra_access_approvals</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>3</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_microsoft-graph" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+          <article class="ccard" data-fl="power-automate">
+            <h3>Power Automate</h3>
+            <p class="c-detail">Dataverse</p>
+            <p class="c-math"><span><b>3</b><i class="dot h"></i>HTTP endpoints</span><span><b>1</b><i class="dot p"></i>conversational process</span></p>
+            <details class="c-samples">
+              <summary>See the conversation sample</summary>
+              <ul>
+                <li><q>What approvals are waiting on me?</q><code>m365_pending_approvals</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>1</b> customized plugin with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_power-automate" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="servicenow">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-servicenow.svg" alt="ServiceNow" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="servicenow">
+            <h3>ServiceNow</h3>
+            <p class="c-detail">ITSM · Walk-up</p>
+            <p class="c-math"><span><b>8</b><i class="dot h"></i>HTTP endpoints</span><span><b>3</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (3)</summary>
+              <ul>
+                <li><q>Where’s my incident?</q><code>snow_ticket_status</code></li>
+                <li><q>What’s waiting on me?</q><code>snow_my_approvals</code></li>
+                <li><q>Check me in for the IT help desk</q><code>snow_walkup_checkin</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>3</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_servicenow" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="jira">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-jira.svg" alt="Atlassian Jira" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="jira">
+            <h3>Atlassian Jira</h3>
+            <p class="c-detail">Jira · Jira Service Management</p>
+            <p class="c-math"><span><b>9</b><i class="dot h"></i>HTTP endpoints</span><span><b>4</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (4)</summary>
+              <ul>
+                <li><q>What’s assigned to me?</q><code>jira_my_issues</code></li>
+                <li><q>Where’s PROJ-123?</q><code>jira_ticket_status</code></li>
+                <li><q>Report a bug: the login page is broken</q><code>jira_create_issue</code></li>
+                <li><q>What requests are waiting on me?</q><code>jira_jsm_approvals</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>4</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_jira" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="docusign">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-docusign.svg" alt="DocuSign" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="docusign">
+            <h3>DocuSign</h3>
+            <p class="c-math"><span><b>6</b><i class="dot h"></i>HTTP endpoints</span><span><b>3</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (3)</summary>
+              <ul>
+                <li><q>Where’s my signature request?</q><code>docusign_envelope_status</code></li>
+                <li><q>What do I need to sign?</q><code>docusign_my_pending_signatures</code></li>
+                <li><q>Remind the signers on the vendor contract</q><code>docusign_send_reminder</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>3</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_docusign" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="stripe">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-stripe.svg" alt="Stripe" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="stripe">
+            <h3>Stripe</h3>
+            <p class="c-math"><span><b>4</b><i class="dot h"></i>HTTP endpoints</span><span><b>2</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (2)</summary>
+              <ul>
+                <li><q>Did the payment for permit 123 go through?</q><code>stripe_payment_status</code></li>
+                <li><q>Where’s the refund for receipt 4471?</q><code>stripe_refund_status</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>2</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_stripe" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="jotform">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-jotform.svg" alt="Jotform" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="jotform">
+            <h3>Jotform</h3>
+            <p class="c-math"><span><b>2</b><i class="dot h"></i>HTTP endpoints</span><span><b>1</b><i class="dot p"></i>conversational process</span></p>
+            <details class="c-samples">
+              <summary>See the conversation sample</summary>
+              <ul>
+                <li><q>Did the vendor submit the W-9 form?</q><code>jotform_submission_status</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>1</b> customized plugin with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_jotform" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="bynder">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-bynder.svg" alt="Bynder" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="bynder">
+            <h3>Bynder</h3>
+            <p class="c-math"><span><b>6</b><i class="dot h"></i>HTTP endpoints</span><span><b>3</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (3)</summary>
+              <ul>
+                <li><q>Find the latest approved logo, dark version</q><code>bynder_asset_search</code></li>
+                <li><q>Can I use this photo in a paid campaign?</q><code>bynder_usage_rights</code></li>
+                <li><q>Was my upload approved?</q><code>bynder_upload_status</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>3</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_bynder" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
+      </div>
+      <div class="vendor" data-fb="adp">
+        <h2 class="v-logos"><span class="v-logo"><img src="../img/logo-adp.svg" alt="ADP Workforce Now" loading="lazy"></span></h2>
+        <div class="cgrid">
+          <article class="ccard" data-fl="adp-workforce-now">
+            <h3>ADP Workforce Now</h3>
+            <p class="c-math"><span><b>7</b><i class="dot h"></i>HTTP endpoints</span><span><b>3</b><i class="dot p"></i>conversational processes</span></p>
+            <details class="c-samples">
+              <summary>See the conversation samples (3)</summary>
+              <ul>
+                <li><q>Show my last pay statement</q><code>adp_pay_statement</code></li>
+                <li><q>How much PTO do I have?</q><code>adp_time_off_balance</code></li>
+                <li><q>Request Thursday off</q><code>adp_time_off_request</code></li>
+              </ul>
+            </details>
+            <p class="c-make">You can create over <b>3</b> customized plugins with these endpoints.</p>
+            <a class="p-dl" href="https://calendly.com/eberteo/new-meeting" data-ref="collection_adp-workforce-now" target="_blank" rel="noopener"><svg class="dl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Get the collection</a>
+          </article>
+        </div>
       </div>
       <p class="note">When a third-party provider ships a new release, you're notified about your API collection.</p>
     </div>
   </section>
+
+<script>var CLP_CHAT=[[2,["ukg-pro"]],[2,["ukg-pro"]],[3,["ukg-pro"]],[2,["ukg-pro"]],[2,["ukg-pro-wfm"]],[5,["ukg-pro-wfm"]],[4,["ukg-pro-wfm"]],[2,["ukg-pro-wfm"]],[3,["ukg-pro-wfm"]],[2,["ukg-pro-wfm"]],[2,["ukg-ready"]],[3,["ukg-ready"]],[2,["ukg-ready"]],[2,["workday"]],[2,["workday"]],[4,["workday"]],[2,["workday"]],[3,["workday"]],[2,["workday"]],[2,["workday"]],[2,["workday"]],[3,["workday"]],[2,["workday"]],[2,["workday"]],[3,["sailpoint-identity-security","sailpoint-identityiq"]],[2,["sailpoint-identity-security","sailpoint-identityiq"]],[4,["sailpoint-identity-security","sailpoint-identityiq"]],[3,["sailpoint-identity-security","sailpoint-identityiq"]],[3,["sailpoint-identity-security"]],[2,["sailpoint-entro"]],[2,["sailpoint-entro"]],[2,["sap-s4hana"]],[2,["sap-concur"]],[4,["sap-concur"]],[2,["sap-concur"]],[2,["sap-successfactors"]],[3,["sap-successfactors"]],[4,["sap-successfactors"]],[2,["sap-ec-payroll"]],[2,["microsoft-graph"]],[3,["microsoft-graph"]],[4,["microsoft-graph"]],[3,["power-automate"]],[2,["servicenow"]],[3,["servicenow"]],[3,["servicenow"]],[2,["jira"]],[2,["jira"]],[2,["jira"]],[3,["jira"]],[2,["docusign"]],[2,["docusign"]],[2,["docusign"]],[2,["stripe"]],[2,["stripe"]],[2,["jotform"]],[2,["bynder"]],[2,["bynder"]],[2,["bynder"]],[2,["adp-workforce-now"]],[2,["adp-workforce-now"]],[3,["adp-workforce-now"]]];</script>
+<script>
+(function(){
+  var bar=document.querySelector('.flt');if(!bar)return;
+  var licRow=bar.querySelector('.flt-lic'),out=bar.querySelector('.flt-count');
+  var st={b:'',l:''};
+  var q=new URLSearchParams(location.search);
+  if(bar.querySelector('[data-b="'+(q.get('brand')||'')+'"]'))st.b=q.get('brand')||'';
+  if(st.b&&bar.querySelector('[data-for="'+st.b+'"][data-l="'+(q.get('license')||'')+'"]'))st.l=q.get('license')||'';
+  function apply(){
+    bar.querySelectorAll('[data-b]').forEach(function(c){c.setAttribute('aria-pressed',String(c.getAttribute('data-b')===st.b));});
+    var lic=bar.querySelectorAll('[data-for]'),any=false;
+    lic.forEach(function(c){var on=c.getAttribute('data-for')===st.b;c.hidden=!on;if(on)any=true;c.setAttribute('aria-pressed',String(on&&c.getAttribute('data-l')===st.l));});
+    licRow.hidden=!any;
+    document.querySelectorAll('[data-fb]').forEach(function(el){el.hidden=!!st.b&&el.getAttribute('data-fb')!==st.b;});
+    document.querySelectorAll('[data-fl]').forEach(function(el){el.hidden=!!st.l&&el.getAttribute('data-fl').split(' ').indexOf(st.l)<0;});
+    bar.toggleAttribute('data-active',!!st.b);
+    out.textContent=(function(){
+      var ids=[].slice.call(document.querySelectorAll('.ccard')).filter(function(el){return !el.closest('[hidden]');}).map(function(c){return c.getAttribute('data-fl');});
+      var h=0,n=0;CLP_CHAT.forEach(function(p){if(p[1].some(function(c){return ids.indexOf(c)>=0;})){h+=p[0];n++;}});
+      document.getElementById('t-h').textContent=h;document.getElementById('t-n').textContent=n;
+      document.getElementById('t-w').textContent=n===1?'plugin':'plugins';
+      return 'Showing '+ids.length+' '+(ids.length===1?'collection':'collections');
+    })();
+    var u=new URL(location.href);u.searchParams.delete('brand');u.searchParams.delete('license');
+    if(st.b)u.searchParams.set('brand',st.b);if(st.l)u.searchParams.set('license',st.l);
+    history.replaceState(null,'',u);
+  }
+  bar.addEventListener('click',function(e){
+    var c=e.target.closest('button');if(!c)return;
+    if(c.hasAttribute('data-b')){st.b=c.getAttribute('data-b');st.l='';}
+    else{st.l=c.getAttribute('data-l');}
+    apply();
+  });
+  apply();
+})();
+</script>
 </main>
 
 <footer class="site">
